@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: rules.c,v 1.17 2004/05/27 00:18:45 erik Exp $
+ * $Id: rules.c,v 1.18 2004/05/30 22:51:15 erik Exp $
  */
 
 #include "rules.h"
@@ -40,17 +41,17 @@ static int numrules = 0;
 static regex_t *preg;
 
 int
-rule_init (rule *r, int nr)
+rule_init (rule * r, int nr)
 {
     int x;
 
     numrules = nr;
     rules = (rule *) r;
-    preg = (void *) malloc (sizeof (regex_t) * (numrules + 1));
+    preg = (void *)malloc (sizeof (regex_t) * (numrules + 1));
     memset (preg, 0, sizeof (regex_t) * (numrules + 1));
     for (x = 0; x < numrules; x++)
 	regcomp (&preg[x], rules[x].regex,
-		 REG_EXTENDED | REG_ICASE | REG_NOSUB);
+	    REG_EXTENDED | REG_ICASE | REG_NOSUB);
     return GEMS_TRUE;
 }
 
@@ -88,12 +89,12 @@ rule_check (message * m)
     if (m == NULL)
 	return inbox;
     for (x = 0; x < numrules; x++)
-      {
-	  c = rule_concern (&rules[x], m);
-	  if (c)
-	      if (regexec (&preg[x], c, 0, NULL, 0) == 0)
-		  return rules[x].mbox;
-      }
+    {
+	c = rule_concern (&rules[x], m);
+	if (c)
+	    if (regexec (&preg[x], c, 0, NULL, 0) == 0)
+		return rules[x].mbox;
+    }
     return inbox;
 }
 
@@ -103,11 +104,11 @@ rule_close ()
     int x;
 
     for (x = 0; x < numrules; x++)
-      {
-	  regfree (&preg[x]);
-	  free (rules[x].regex);
-	  free (rules[x].mbox);
-      }
+    {
+	regfree (&preg[x]);
+	free (rules[x].regex);
+	free (rules[x].mbox);
+    }
     free (preg);
     free (rules);
     return GEMS_TRUE;

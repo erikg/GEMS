@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: ll.c,v 1.7 2003/04/05 18:36:27 erik Exp $
+ * $Id: ll.c,v 1.8 2004/05/30 22:51:15 erik Exp $
  */
 
 #include <stdio.h>		/* for NULL */
@@ -33,20 +34,16 @@
 /*
  * singly linked list 
  */
-typedef struct anode
-{
+typedef struct anode {
     char *line;
     struct anode *next;
-}
-node;
+} node;
 
-typedef struct alist
-{
+typedef struct alist {
     node *head;
     node *current;
     node *last;
-}
-list;
+} list;
 
 
 /*
@@ -59,12 +56,12 @@ ll_newlist ()
 
     x = (list *) malloc (sizeof (list));
     if (x != NULL)
-      {
-	  x->head = NULL;
-	  x->current = NULL;
-	  x->last = NULL;
-	  return x;
-      }
+    {
+	x->head = NULL;
+	x->current = NULL;
+	x->last = NULL;
+	return x;
+    }
     oops ("Failed to gnerate new list", NULL);
     return NULL;
 }
@@ -107,7 +104,7 @@ ll_addnode (void *this, char *line)
     if (x == NULL)
 	return GEMS_FALSE;
 
-    x->line = (char *) malloc (sizeof (char) * (strlen (line) + 1));
+    x->line = (char *)malloc (sizeof (char) * (strlen (line) + 1));
     if (x->line == NULL)
 	return GEMS_FALSE;	/* no malloc */
 
@@ -119,10 +116,10 @@ ll_addnode (void *this, char *line)
     if (l->head == NULL)
 	l->head = l->current = l->last = x;
     else
-      {
-	  l->last->next = x;
-	  l->last = x;
-      }
+    {
+	l->last->next = x;
+	l->last = x;
+    }
 
     return GEMS_TRUE;
 }

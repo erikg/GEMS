@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: sckt.c,v 1.4 2003/04/05 18:36:27 erik Exp $
+ * $Id: sckt.c,v 1.5 2004/05/30 22:51:15 erik Exp $
  */
 
 #include <stdio.h>
@@ -47,17 +48,17 @@ socket_open (char *hostname, int port)
     sockinf.sin_family = AF_INET;
     sockinf.sin_port = htons (port);
     sockinf.sin_addr.s_addr =
-	inet_addr (inet_ntoa (*((struct in_addr *) h->h_addr_list[0])));
+	inet_addr (inet_ntoa (*((struct in_addr *)h->h_addr_list[0])));
 
     if ((s = socket (AF_INET, SOCK_STREAM, 0)) == -1)
-      {
-	  perror ("socket_open socket");
-	  exit (-1);
-      }
-    if (connect (s, (struct sockaddr *) &sockinf, sizeof (struct sockaddr)))
-      {
-	  perror ("socket_open connect");
-	  exit (-1);
-      }
+    {
+	perror ("socket_open socket");
+	exit (-1);
+    }
+    if (connect (s, (struct sockaddr *)&sockinf, sizeof (struct sockaddr)))
+    {
+	perror ("socket_open connect");
+	exit (-1);
+    }
     return s;
 }

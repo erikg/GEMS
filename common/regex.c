@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: regex.c,v 1.5 2003/04/05 18:36:27 erik Exp $
+ * $Id: regex.c,v 1.6 2004/05/30 22:51:15 erik Exp $
  */
 
 #include <stdio.h>
@@ -35,7 +36,7 @@ regex (char *r, char *s)
     void *preg;
     int val;
 
-    preg = (void *) malloc (1000 * sizeof (void *));
+    preg = (void *)malloc (1000 * sizeof (void *));
 
     regcomp (preg, r, 0);
 

@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: ll-block.c,v 1.4 2003/04/05 18:36:27 erik Exp $
+ * $Id: ll-block.c,v 1.5 2004/05/30 22:51:15 erik Exp $
  */
 
 #include <stdio.h>
@@ -28,14 +29,12 @@
 #include "defs.h"
 #include "ll.h"
 
-typedef struct _ll
-{
+typedef struct _ll {
     int size;
     struct _ll *head;
     struct _ll *tail;
     struct _ll *current;
-}
-ll;
+} ll;
 
 void *
 ll_newlist (void)
@@ -59,11 +58,11 @@ ll_next (void *list)
     ll *x;
 
     x = (ll *) list;
-    if (x != NULL && (int) (x->current) != 0)
-      {
-	  x->current += (int) (x->current);
-	  return GEMS_TRUE;
-      }
+    if (x != NULL && (int)(x->current) != 0)
+    {
+	x->current += (int)(x->current);
+	return GEMS_TRUE;
+    }
     return GEMS_FALSE;
 }
 
@@ -86,18 +85,18 @@ ll_addnode (void *list, char *line)
 	return GEMS_FALSE;
     x = (ll *) list;
     while ((x->tail + nodelen) > (x->head + x->size))
-      {
-	  int current_offset, tail_offset;
+    {
+	int current_offset, tail_offset;
 
-	  current_offset = x->current - x->head;
-	  tail_offset = x->tail - x->head;
-	  x->head = realloc (x->head, x->size << 1);
-	  x->current = x->head + current_offset;
-	  x->tail = x->head + tail_offset;
-	  memset (x->head + x->size, 0, x->size);
-	  x->size = x->size << 1;
-      }
-    *(int *) (x->tail) = nodelen;
+	current_offset = x->current - x->head;
+	tail_offset = x->tail - x->head;
+	x->head = realloc (x->head, x->size << 1);
+	x->current = x->head + current_offset;
+	x->tail = x->head + tail_offset;
+	memset (x->head + x->size, 0, x->size);
+	x->size = x->size << 1;
+    }
+    *(int *)(x->tail) = nodelen;
     strncpy (x->tail + 4, line, strlen (line));
 }
 
@@ -121,7 +120,7 @@ ll_showline (void *list)
     if (list == NULL)
 	return NULL;
     l = (ll *) list;
-    return (char *) ((int) (l->current) + 4);
+    return (char *)((int)(l->current) + 4);
 }
 
 int
@@ -140,7 +139,7 @@ ll_clearlist (void *list)
 int
 ll_empty (void *list)
 {
-    if ((int) (((ll *) list)->head) == 0)
+    if ((int)(((ll *) list)->head) == 0)
 	return GEMS_TRUE;
     return GEMS_FALSE;
 }
@@ -148,7 +147,7 @@ ll_empty (void *list)
 int
 ll_end (void *list)
 {
-    if ((int) (((ll *) list)->current) == 0)
+    if ((int)(((ll *) list)->current) == 0)
 	return GEMS_TRUE;
     return GEMS_FALSE;
 }

@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: stringinate.c,v 1.5 2003/04/05 18:36:27 erik Exp $
+ * $Id: stringinate.c,v 1.6 2004/05/30 22:51:15 erik Exp $
  */
 
 #include <stdio.h>
@@ -42,46 +43,45 @@ stringinate (void *list)
     int l = 0;
 
     x = NULL;
-    line = (char *) malloc (1024);
+    line = (char *)malloc (1024);
 
     if (ll_rewind (list) == GEMS_FALSE)
-      {
-	  oops ("Stringinate", "failed to rewind");
-	  exit (EXIT_FAILURE);
-      }
+    {
+	oops ("Stringinate", "failed to rewind");
+	exit (EXIT_FAILURE);
+    }
     do
-      {
-	  char *blah;
+    {
+	char *blah;
 
-	  blah = ll_showline (list);
-	  l += (strlen (blah) + 1);
-      }
+	blah = ll_showline (list);
+	l += (strlen (blah) + 1);
+    }
     while (ll_next (list) == GEMS_TRUE);
     l++;
 
-    x = (char *) malloc (sizeof (char) * (l + 1));
+    x = (char *)malloc (sizeof (char) * (l + 1));
     if (x == NULL)
-      {
-	  oops ("Stringinate", "Failed to allocate");
-	  exit (EXIT_FAILURE);
-      }
-    else
+    {
+	oops ("Stringinate", "Failed to allocate");
+	exit (EXIT_FAILURE);
+    } else
 	memset (x, (size_t) 0, (size_t) l);
 
     if (ll_rewind (list) == GEMS_FALSE)
 	oops ("Stringinate", "failed rewind");
     do
-      {
-	  char *blah;
+    {
+	char *blah;
 
-	  blah = ll_showline (list);
-	  if (blah == NULL)
-	    {
-		oops ("Stringinate", "bad ll_showline()");
-		exit (EXIT_FAILURE);
-	    }
-	  strcat (x, blah);
-      }
+	blah = ll_showline (list);
+	if (blah == NULL)
+	{
+	    oops ("Stringinate", "bad ll_showline()");
+	    exit (EXIT_FAILURE);
+	}
+	strcat (x, blah);
+    }
     while (ll_next (list) == GEMS_TRUE);
     free (line);
     return x;
@@ -97,40 +97,40 @@ read_file_to_list (char *filename)
 
     if (stat (filename, &sb) || sb.st_size == 0
 	|| !(sb.st_mode & (S_IFREG | S_IFLNK)))
-      {
-	  printf ("Not readable...\n");
-	  return NULL;
-      }
+    {
+	printf ("Not readable...\n");
+	return NULL;
+    }
     list = ll_newlist ();
     fd = open (filename, O_RDONLY);
     printf ("fd: %d\n", fd);
     if (fd == -1)
 	return NULL;
-    s = buf = (char *) malloc (sizeof (char) * sb.st_size);
+    s = buf = (char *)malloc (sizeof (char) * sb.st_size);
     read (fd, buf, sb.st_size);
     printf ("buf: %s\n\n", buf);
     while (s < (buf + sb.st_size))
-      {
-	  if (*s == '\n' || *s == '\r')
-	      *s = 0;
-	  ++s;
-      }
+    {
+	if (*s == '\n' || *s == '\r')
+	    *s = 0;
+	++s;
+    }
     s = buf;
     while (s < (buf + sb.st_size))
-      {
-	  char sigline[1024];
+    {
+	char sigline[1024];
 
 #if 0
-	  while
+	while
 #else
-	  if
+	if
 #endif
-	      (*s == 0)
-	      ++s;
-	  printf ("Adding line: %s\n", s);
-	  snprintf (sigline, 1023, "%s\n", s);
-	  ll_addnode (list, sigline);
-	  s += strlen (s);
-      }
+	    (*s == 0)
+	    ++s;
+	printf ("Adding line: %s\n", s);
+	snprintf (sigline, 1023, "%s\n", s);
+	ll_addnode (list, sigline);
+	s += strlen (s);
+    }
     return list;
 }

@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: message.c,v 1.15 2004/02/13 00:53:30 erik Exp $
+ * $Id: message.c,v 1.16 2004/05/30 22:51:15 erik Exp $
  */
 
 #include <stdio.h>
@@ -68,88 +69,82 @@ message_build_from_list (void *list)
     ll_rewind (list);
 
     while (strcmp ((line = ll_showline (list)), "\n\0") != 0)
-      {
-	  if (ll_addnode (header, line) == GEMS_FALSE)
-	      return GEMS_FALSE;
-	  ll_next (header);
-	  ll_next (list);
-	  line[strlen (line) - 1] = 0;
+    {
+	if (ll_addnode (header, line) == GEMS_FALSE)
+	    return GEMS_FALSE;
+	ll_next (header);
+	ll_next (list);
+	line[strlen (line) - 1] = 0;
 
-	  if (strncmp ("Message-Id: ", line, 12) == 0)
-	    {
-		if (x->id != NULL)
-		    free (x->id);
-		x->id = mutilate_line (line, 12);
-	    }
-	  else if (strncmp ("Message-ID: ", line, 12) == 0)
-	    {
-		if (x->id != NULL)
-		    free (x->id);
-		x->id = mutilate_line (line, 12);
-	    }
-	  else if (strncmp ("Message-id: ", line, 12) == 0)
-	    {
-		if (x->id != NULL)
-		    free (x->id);
-		x->id = mutilate_line (line, 12);
-	    }
-	  else if (strncmp ("References: ", line, 12) == 0)
-	    {
-		if (x->references != NULL)
-		    free (x->references);
-		x->references = mutilate_line (line, 12);
-	    }
-	  else if (strncmp ("To: ", line, 4) == 0)
-	      x->recipt = mutilate_line (line, 4);
-	  else if (strncmp ("Cc: ", line, 4) == 0)
-	    {
-		if (x->recipt == NULL)
-		    x->recipt = mutilate_line (line, 4);
-	    }
-	  else if (strncmp ("Reply-To: ", line, 10) == 0)
-	      x->replyto = mutilate_line (line, 10);
-	  else if (strncmp ("Date: ", line, 6) == 0)
-	      x->senddate = mutilate_line (line, 6);
-	  else if (strncmp ("From: ", line, 6) == 0)
-	      x->sender = mutilate_line (line, 6);
-	  else if (strncmp ("Subject: ", line, 9) == 0)
-	      x->subject = mutilate_line (line, 9);
-	  /*
-	   * need some way to get recvdate? 
-	   */
-      }
+	if (strncmp ("Message-Id: ", line, 12) == 0)
+	{
+	    if (x->id != NULL)
+		free (x->id);
+	    x->id = mutilate_line (line, 12);
+	} else if (strncmp ("Message-ID: ", line, 12) == 0)
+	{
+	    if (x->id != NULL)
+		free (x->id);
+	    x->id = mutilate_line (line, 12);
+	} else if (strncmp ("Message-id: ", line, 12) == 0)
+	{
+	    if (x->id != NULL)
+		free (x->id);
+	    x->id = mutilate_line (line, 12);
+	} else if (strncmp ("References: ", line, 12) == 0)
+	{
+	    if (x->references != NULL)
+		free (x->references);
+	    x->references = mutilate_line (line, 12);
+	} else if (strncmp ("To: ", line, 4) == 0)
+	    x->recipt = mutilate_line (line, 4);
+	else if (strncmp ("Cc: ", line, 4) == 0)
+	{
+	    if (x->recipt == NULL)
+		x->recipt = mutilate_line (line, 4);
+	} else if (strncmp ("Reply-To: ", line, 10) == 0)
+	    x->replyto = mutilate_line (line, 10);
+	else if (strncmp ("Date: ", line, 6) == 0)
+	    x->senddate = mutilate_line (line, 6);
+	else if (strncmp ("From: ", line, 6) == 0)
+	    x->sender = mutilate_line (line, 6);
+	else if (strncmp ("Subject: ", line, 9) == 0)
+	    x->subject = mutilate_line (line, 9);
+	/*
+	 * need some way to get recvdate? 
+	 */
+    }
     if (x->replyto == NULL)
-      {
-	  if (x->sender)
-	    {
-		x->replyto =
-		    (char *) malloc (sizeof (char) * strlen (x->sender) + 1);
-		strcpy (x->replyto, x->sender);
-	    }
-	  else
-	    {
-		x->replyto = strdup ("(null)");
-	    }
-      }
+    {
+	if (x->sender)
+	{
+	    x->replyto =
+		(char *)malloc (sizeof (char) * strlen (x->sender) + 1);
+	    strcpy (x->replyto, x->sender);
+	} else
+	{
+	    x->replyto = strdup ("(null)");
+	}
+    }
     if (x->subject == NULL)
-      {
-	  x->subject = (char *) malloc (1);
-	  x->subject[0] = 0;
-      }
+    {
+	x->subject = (char *)malloc (1);
+	x->subject[0] = 0;
+    }
     do
-      {
-	  line = ll_showline (list);
-	  ll_addnode (body, line);
-      }
+    {
+	line = ll_showline (list);
+	ll_addnode (body, line);
+    }
     while (ll_next (list) != GEMS_FALSE);
 
-    x->header = (char *) stringinate ((void *) header);
-    x->body = (char *) stringinate ((void *) body);
+    x->header = (char *)stringinate ((void *)header);
+    x->body = (char *)stringinate ((void *)body);
 
     ll_clearlist (body);
     ll_clearlist (header);
 
-    x->mbox = (char *) malloc (6);
+    x->mbox = (char *)malloc (6);
     sprintf (x->mbox, "inbox");
 
     return x;
@@ -175,19 +170,21 @@ message_build_from_buffer (char *buf)
 
     m = (message *) malloc (sizeof (message));
     memset (m, 0, sizeof (message));	/* fill out NULLs */
-    
-    x=0;
-    while ( buf[x] )
-	if( (buf[x]=='\n'||buf[x]=='\r') &&
-		(  !strncmp(buf+x,"\n\n",2)
-		|| !strncmp(buf+x,"\n\r\n\r",4)
-		|| !strncmp(buf+x,"\r\n\r\n",4)))
-		goto OUT;
+
+    x = 0;
+    while (buf[x])
+	if ((buf[x] == '\n' || buf[x] == '\r') &&
+	    (!strncmp (buf + x, "\n\n", 2)
+		|| !strncmp (buf + x, "\n\r\n\r", 4)
+		|| !strncmp (buf + x, "\r\n\r\n", 4)))
+	    goto OUT;
 	else
-		x++;
-OUT:
-    if (buf[x] == 0){
-	    printf("\nUgh, bad message %s:%d:%s\n", __FILE__,__LINE__,__FUNCTION__);
+	    x++;
+  OUT:
+    if (buf[x] == 0)
+    {
+	printf ("\nUgh, bad message %s:%d:%s\n", __FILE__, __LINE__,
+	    __FUNCTION__);
 	return NULL;		/* bad message */
     }
     buf[x] = 0;
@@ -200,48 +197,48 @@ OUT:
 	if (buf[i] == '\n')
 	    buf[i] = 0;
     while (i < x)
-      {
-	  switch (tolower (buf[i]))
-	    {
-	    case 'c':
-		if (!strncmp (buf + i, "Cc: ", 4))
-		    m->recipt = strdup (buf + i + 4);
-		break;
-	    case 'd':
-		if (!strncmp (buf + i, "Date: ", 6))
-		    m->senddate = strdup (buf + i + 6);
-		break;
-	    case 'f':
-		if (!strncmp (buf + i, "From: ", 6))
-		    m->sender = strdup (buf + i + 6);
-		break;
-	    case 'm':
-		if (!strncmp (buf + i, "Message-", 8)
-		    && (tolower (buf[i + 8]) == 'i')
-		    && (tolower (buf[i + 9]) == 'd')
-		    && !strncmp (buf + i + 10, ": ", 2))
-		    m->id = strdup (buf + i + 12);
-		break;
-	    case 'r':
-		if (!strncmp (buf + i, "References: ", 12))
-		    m->references = strdup (buf + i + 12);
-		if (!strncmp (buf + i, "Reply-To: ", 10))
-		    m->replyto = strdup (buf + i + 10);
-		break;
-	    case 's':
-		if (!strncmp (buf + i, "Subject: ", 9))
-		    m->subject = strdup (buf + i + 9);
-		break;
-	    case 't':
-		if (!strncmp (buf + i, "To: ", 4))
-		    m->recipt = strdup (buf + i + 4);
-		break;
-	    default:
-	    }
-	  while (buf[i] != 0)
-	      i++;
-	  i++;
-      }
+    {
+	switch (tolower (buf[i]))
+	{
+	case 'c':
+	    if (!strncmp (buf + i, "Cc: ", 4))
+		m->recipt = strdup (buf + i + 4);
+	    break;
+	case 'd':
+	    if (!strncmp (buf + i, "Date: ", 6))
+		m->senddate = strdup (buf + i + 6);
+	    break;
+	case 'f':
+	    if (!strncmp (buf + i, "From: ", 6))
+		m->sender = strdup (buf + i + 6);
+	    break;
+	case 'm':
+	    if (!strncmp (buf + i, "Message-", 8)
+		&& (tolower (buf[i + 8]) == 'i')
+		&& (tolower (buf[i + 9]) == 'd')
+		&& !strncmp (buf + i + 10, ": ", 2))
+		m->id = strdup (buf + i + 12);
+	    break;
+	case 'r':
+	    if (!strncmp (buf + i, "References: ", 12))
+		m->references = strdup (buf + i + 12);
+	    if (!strncmp (buf + i, "Reply-To: ", 10))
+		m->replyto = strdup (buf + i + 10);
+	    break;
+	case 's':
+	    if (!strncmp (buf + i, "Subject: ", 9))
+		m->subject = strdup (buf + i + 9);
+	    break;
+	case 't':
+	    if (!strncmp (buf + i, "To: ", 4))
+		m->recipt = strdup (buf + i + 4);
+	    break;
+	default:
+	}
+	while (buf[i] != 0)
+	    i++;
+	i++;
+    }
     if (m->replyto == NULL && m->sender)
 	m->replyto = strdup (m->sender);
     return m;

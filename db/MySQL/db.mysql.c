@@ -346,25 +346,40 @@ db_read_synopsis (int mbox, int status)
 mboxs **
 db_read_mboxlist (void)
 {
-    int x, mboxcount;
-    mboxs **mboxlist;
+    int x, y, realcount, mboxcount;
+    mboxs **mboxlist, **mboxlistf;
     MYSQL_RES *result;
     MYSQL_ROW row;
 
-    if (mysql_query (con, "select mboxname,mbox from mmbox order by mbox") != 0)
+    if (mysql_query (con, "select max(mbox) from mmbox") != 0)
     {
 	oops ("failed to read mailbox list", mysql_error (con));
 	exit (0);
     }
     result = mysql_store_result (con);
-    mboxcount = mysql_num_rows (result);
+    row = mysql_fetch_row (result);
+    realcount = mboxcount = atoi (row[0]);
+    mysql_free_result (result);
+    mboxlist = (mboxs **) malloc (sizeof (mboxs *) * (mboxcount + 2));
+    memset (mboxlist, 0, sizeof (mboxs *) * mboxcount + 1);
+    mboxlistf = (mboxs **) malloc (sizeof (mboxs *) * (mboxcount + 2));
+    memset (mboxlistf, 0, sizeof (mboxs *) * mboxcount + 1);
 
-    mboxlist = (mboxs **) malloc (sizeof (void *) * (mboxcount + 1));
+    if (mysql_query (con, "select mboxname,mbox from mmbox order by mbox") !=
+	0)
+    {
+	oops ("failed to read mailbox list", mysql_error (con));
+	exit (0);
+    }
+    result = mysql_store_result (con);
+
     for (x = 0; (row = mysql_fetch_row (result)) != NULL; x++)
     {
-	mboxlist[x] = (mboxs *) malloc (sizeof (mboxs));
-	mboxlist[x]->name = (char *) malloc (strlen (row[0] + 1));
-	if (mboxlist[x] == NULL || mboxlist[x]->name == NULL)
+	int y = atoi (row[1]);
+
+	mboxlist[y] = (mboxs *) malloc (sizeof (mboxs));
+	mboxlist[y]->name = (char *) malloc (strlen (row[0] + 1));
+	if (mboxlist[y] == NULL || mboxlist[y]->name == NULL)
 	{
 	    oops ("malloc failed building mbox's", NULL);
 	    exit (-1);
@@ -374,12 +389,12 @@ db_read_mboxlist (void)
 	    oops ("NULL row", NULL);
 	    exit (-1);
 	}
-	strcpy (mboxlist[x]->name, row[0]);
-	mboxlist[x]->id = atoi (row[1]);
-	mboxlist[x]->hasunread = 0;
+	strcpy (mboxlist[y]->name, row[0]);
+	mboxlist[y]->id = atoi (row[1]);
+	mboxlist[y]->hasunread = 0;
     }
-    // mysql_free_result (result);
-    mboxlist[mboxcount] = NULL;
+    mboxlist[mysql_num_rows (result)] = NULL;
+    mysql_free_result (result);
 
     if (mysql_query
 	(con,
@@ -394,11 +409,27 @@ db_read_mboxlist (void)
 
     while ((row = mysql_fetch_row (result)) != NULL)
     {
-	mboxlist[atoi (row[0]) - 1]->hasunread = atoi (row[1]);
+	y = atoi (row[0]);
+
+	if (mboxlist[y] != NULL)
+	    mboxlist[y]->hasunread = atoi (row[1]);
     }
     mysql_free_result (result);
 
-    return mboxlist;
+    /*
+     * crunch 
+     */
+    x = 0;
+    y = 0;
+    while (x<=realcount)
+    {
+	if(mboxlist[x])
+            mboxlistf[y++]=mboxlist[x];
+	x++;
+    }
+    free(mboxlist);
+
+    return mboxlistf;
 }
 
 char *

@@ -35,14 +35,13 @@ update_mboxlist (gpointer nothing)
     mboxs **mboxlist;
     GtkCTree *tree;
     int x = 0;
-
     mboxlist = (mboxs **) db_read_mboxlist ();
     tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
     gtk_clist_freeze (&GTK_CTREE (tree)->clist);
     x = 0;
     while (mboxlist[x] != NULL)
     {
-	gtk_clist_set_foreground (&(tree->clist), x-1,
+	gtk_clist_set_foreground (&(tree->clist), x,
 				  (mboxlist[x]->hasunread >
 				   0) ? color_magenta : color_black);
 	x++;

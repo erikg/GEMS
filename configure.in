@@ -1,4 +1,4 @@
-dnl $Id: configure.in,v 1.20 2003/04/05 19:00:30 erik Exp $
+dnl $Id: configure.in,v 1.21 2003/04/11 17:17:23 erik Exp $
 
 AC_INIT(README)
 AC_CANONICAL_HOST
@@ -94,6 +94,7 @@ AC_SUBST(POSTGRESQL)
 dnl the faces
 AC_SUBST(GTK)
 AC_SUBST(GNOME)
+AC_SUBST(GNOME2)
 AC_SUBST(CURSES)
 
 AC_CHECK_FUNCS(dlopen, [MY_LDADD=""], [
@@ -114,6 +115,7 @@ receptor/Makefile transmitter/Makefile
 db/MySQL/Makefile
 face/GTK/Makefile face/GTK/e/Makefile
 face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile
+face/GNOME2/Makefile face/GNOME2/o/Makefile
 doc/Makefile
 ])
 
@@ -134,6 +136,9 @@ echo -n "GTK+ "
 fi
 if test "$GNOME" = "GNOME"; then
 echo -n "GNOME "
+fi
+if test "$GNOME2" = "GNOME2"; then
+echo -n "GNOME2 "
 fi
 if test "$CURSES" = "curses"; then
 echo -n "curses"

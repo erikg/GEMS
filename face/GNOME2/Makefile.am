@@ -1,0 +1,6 @@
+# $Id: Makefile.am,v 1.1 2003/04/11 17:17:23 erik Exp $
+
+SUBDIRS = o
+
+LDADD = @GNOME2_LIBS@ @MY_LDADD@
+CFLAGS = @GNOME2_CFLAGS@

@@ -175,10 +175,11 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
   ctree1 = lookup_widget (gems, "ctree1");
   appbar = lookup_widget (gems, "appbar1");
 
-  /* update the mboxlist (ctree2) */
   update_mboxlist();
-  /*** TODO XXX TODO ***/
-  
+
+  /*** TODO *** clear the mail things */
+  putmail(NULL);
+ 
   gnome_appbar_push (GNOME_APPBAR (stat), _("Reading synopsis"));
   while (gtk_events_pending ())
     gtk_main_iteration ();

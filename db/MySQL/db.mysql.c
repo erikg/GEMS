@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.34 2003/11/11 12:36:14 erik Exp $
+ * $Id: db.mysql.c,v 1.35 2003/11/11 12:45:22 erik Exp $
  */
 
 #include <stdio.h>
@@ -192,12 +192,13 @@ db_insert_msg (char *mboxname, message * m)
     sprintf (q, "insert into body values (%ld,'%s','false')", id, a);
     if (mysql_query (con, q) != 0)
     {
-	 FILE *dump;
+	FILE *dump;
 
 	oops ("failed to insert body", NULL);
 
-	 dump = fopen ("/tmp/dump", "a"); fprintf (dump, "%s\n%s\n", m->header,
-	 m->body); fclose (dump);
+	dump = fopen ("/tmp/dump", "a");
+	fprintf (dump, "%s\n%s\n", m->header, m->body);
+	fclose (dump);
     }
     if (m->sender == NULL)
 	oops ("NULL sender", NULL);
@@ -322,40 +323,14 @@ db_close ()
 }
 
 synopsis **
-db_read_synopsis (int mbox, int status)
+db_read_synopsis_raw (char *query)
 {
     synopsis **synops;
     MYSQL_RES *result;
     MYSQL_ROW row;
     int x, numrows;
 
-    switch (status)
-    {
-    case DB_READ:
-	sprintf (q,
-	    "select id,sender,senddate,subject from synopsis where mbox=%d and status='read' order by senddate",
-	    mbox);
-	break;
-    case DB_MARKED:
-	sprintf (q,
-	    "select id,sender,senddate,subject from synopsis where mbox=%d and status='marked' order by senddate",
-	    mbox);
-	break;
-    case DB_ALL:
-	sprintf (q,
-	    "select id,sender,senddate,subject from synopsis where mbox=%d order by senddate",
-	    mbox);
-	break;
-    case DB_UNREAD:
-	sprintf (q,
-	    "select id,sender,senddate,subject from synopsis where mbox=%d and status!='read' order by senddate",
-	    mbox);
-	break;
-    default:
-	oops ("Invalid action specified", "Cannot retreive synopsis");
-	break;
-    }
-    if (mysql_query (con, q) != 0)
+    if (mysql_query (con, query) != 0)
     {
 	oops ("failed to read synopsis list", mysql_error (con));
 	exit (0);
@@ -387,6 +362,37 @@ db_read_synopsis (int mbox, int status)
     return synops;
 }
 
+synopsis **
+db_read_synopsis (int mbox, int status)
+{
+    switch (status)
+    {
+    case DB_READ:
+	sprintf (q,
+	    "select id,sender,senddate,subject from synopsis where mbox=%d and status='read' order by senddate",
+	    mbox);
+	break;
+    case DB_MARKED:
+	sprintf (q,
+	    "select id,sender,senddate,subject from synopsis where mbox=%d and status='marked' order by senddate",
+	    mbox);
+	break;
+    case DB_ALL:
+	sprintf (q,
+	    "select id,sender,senddate,subject from synopsis where mbox=%d order by senddate",
+	    mbox);
+	break;
+    case DB_UNREAD:
+	sprintf (q,
+	    "select id,sender,senddate,subject from synopsis where mbox=%d and status!='read' order by senddate",
+	    mbox);
+	break;
+    default:
+	oops ("Invalid action specified", "Cannot retreive synopsis");
+	return NULL;
+    }
+    return db_read_synopsis_raw (q);
+}
 
 mboxs **
 db_read_mboxlist (void)
@@ -680,7 +686,7 @@ db_normalize ()
 	if (mysql_query (con, q) != 0)
 	{
 	    oops ("couldn't grok the id during normalization", row[0]);
-	     exit (-1);
+	    exit (-1);
 	} else
 	{
 	    ir = mysql_store_result (con);

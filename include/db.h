@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.h,v 1.5 2003/04/19 18:08:13 erik Exp $
+ * $Id: db.h,v 1.6 2003/11/11 12:45:22 erik Exp $
  */
 
 #ifndef __DB_H
@@ -63,6 +63,7 @@ extern int db_close ();
 /** read the sender/subject/date/etc from a mailbox
  * matching the status */
 extern synopsis **db_read_synopsis (int mbox, int status);
+extern synopsis **db_read_synopsis_raw (char *query);
 
 /** read a list of all mailboxes on the system */
 extern mboxs **db_read_mboxlist (void);

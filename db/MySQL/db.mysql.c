@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.40 2004/05/30 22:46:03 erik Exp $
+ * $Id: db.mysql.c,v 1.41 2004/05/31 12:07:32 erik Exp $
  */
 
 #include <stdio.h>
@@ -50,16 +50,12 @@ static char monthlist[12][4] =
 static char *
 stuff (MYSQL_RES * result, MYSQL_ROW row, int x, int box)
 {
-    static char stuff_box[10][1024 * 1024];
-    char *a = stuff_box[box];
+    char *a = NULL;
 
     if (result == NULL || row == NULL)
 	return NULL;
 
-    /*
-     * a = (char *) malloc (sizeof (char) * (mysql_fetch_lengths (result)[x]
-     * + 1));
-     */
+    a = (char *)malloc (sizeof (char) * (mysql_fetch_lengths (result)[x] + 1));
     sprintf (a, "%s", row[x]);
     return a;
 }

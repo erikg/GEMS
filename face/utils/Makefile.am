@@ -1,8 +1,9 @@
-# $Id: Makefile.am,v 1.12 2004/10/17 17:12:06 erik Exp $
+# $Id: Makefile.am,v 1.13 2004/10/17 17:14:57 erik Exp $
 
 gemslibdir = $(libdir)/gems
 
 gemslib_LTLIBRARIES = \
+	libgems_face.check.la \
 	libgems_face.cleantables.la \
 	libgems_face.cull.la \
 	libgems_face.initdb.la \
@@ -14,8 +15,9 @@ gemslib_LTLIBRARIES = \
 	libgems_face.spool2sqlfast.la \
 	libgems_face.sql2spool.la \
 	libgems_face.synhash.la \
-	libgems_face.test.la \
+	libgems_face.test.la
 
+libgems_face_check_la_SOURCES = check.c  
 libgems_face_cleantables_la_SOURCES = cleantables.c  
 libgems_face_cull_la_SOURCES = cull.c  
 libgems_face_initdb_la_SOURCES = initdb.c  

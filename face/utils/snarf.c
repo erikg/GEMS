@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: snarf.c,v 1.11 2003/10/18 02:52:39 erik Exp $
+ * $Id: snarf.c,v 1.12 2003/10/19 16:08:32 erik Exp $
  */
 
 #include <stdio.h>
@@ -34,7 +34,7 @@
 
 #define MEGS *1024*1024
 
-	/* 8 megs */
+/* 8 megs */
 #define BIGBUFSIZ (8 MEGS)
 
 #ifndef _
@@ -74,7 +74,6 @@ parse (char *buf, unsigned int size)
 		line = realloc (line, (linecountsize *= 2) * sizeof (char *));
 	    line[linecount++] = walk + 1;
 	}
-
     for (i = 0; i < linecount; ++i)
 	if (!strncmp (line[i], "From ", 5))
 	    if (i == 0 || line[i - 1][0] == '\n')
@@ -84,20 +83,21 @@ parse (char *buf, unsigned int size)
 		msg[msgcount] = line[i];
 		msgcount++;
 	    }
+    msgcount--;
+    for (i = 0; i <= msgcount; ++i)
+    {
+	message *m;
 
-    i=0;
-    while (i < msgcount)
-	{
-		message *m;
-		m = message_build_from_buffer(msg[++i]);
-		if(m==NULL)
-			continue;
-		mbox = rule_check(m);
-		db_insert_msg(mbox,m);	/* this sucks up time */
-		message_destroy(m);
-		printf("\r%d/%d  (%.2f%%)           ", i, msgcount, 100.0*(float)i/(float)msgcount); fflush(stdout);
-	}
-	printf("\n");
+	m = message_build_from_buffer (msg[i]);
+	if (m == NULL)
+	    continue;
+	mbox = rule_check (m);
+	db_insert_msg (mbox, m);/* this sucks up time */
+	message_destroy (m);
+	printf ("\r%d/%d  (%.2f%%)           ", i, msgcount, 100.0 * (float)i / (float)msgcount);
+	fflush (stdout);
+    }
+    printf ("\n");
     return 0;
 }
 
@@ -115,10 +115,9 @@ face_run (int argc, char **argv)
 
     if (rule_init () == GEMS_FALSE)
     {
-        printf (_("Failed to initialize ruleset\n"));
-        exit (EXIT_FAILURE);
+	printf (_ ("Failed to initialize ruleset\n"));
+	exit (EXIT_FAILURE);
     }
-
     buf = (char *)malloc (BIGBUFSIZ);
 
     size = read (fd, buf, BIGBUFSIZ);
@@ -127,9 +126,8 @@ face_run (int argc, char **argv)
 
     if (rule_close () == GEMS_FALSE)
     {
-        printf (_("Failed closing ruleset\n"));
+	printf (_ ("Failed closing ruleset\n"));
     }
-
     free (buf);
     close (fd);
     return GEMS_TRUE;

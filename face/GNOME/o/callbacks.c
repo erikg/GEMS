@@ -224,7 +224,7 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
 	x++;
     }
     free (syn);
-    gtk_clist_set_sort_column (clist, 2);
+    gtk_clist_set_sort_column (clist, 1);
     gtk_clist_set_sort_type (clist, GTK_SORT_ASCENDING);
     gtk_clist_sort (clist);
     gtk_clist_thaw (clist);

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: snarf.c,v 1.13 2003/11/11 12:36:14 erik Exp $
+ * $Id: snarf.c,v 1.14 2004/02/16 13:43:11 erik Exp $
  */
 
 #include <stdio.h>
@@ -84,13 +84,13 @@ parse (char *buf, unsigned int size)
 		msg[msgcount] = line[i];
 		msgcount++;
 	    }
-    msgcount--;
-    for (i = 0; i <= msgcount; ++i)
+
+    for (i = 1; i <= msgcount; ++i)
     {
 	message *m;
 	int ins;
 
-	m = message_build_from_buffer (msg[i]);
+	m = message_build_from_buffer (msg[i-1]);
 	if (m == NULL)
 	    continue;
 	mbox = rule_check (m); 

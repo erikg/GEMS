@@ -1,3 +1,19 @@
-# $Id: Makefile.am,v 1.3 2003/04/11 17:17:23 erik Exp $
+# $Id: Makefile.am,v 1.4 2004/05/21 13:28:40 erik Exp $
 
-SUBDIRS = utils @GNOME@ @GNOME2@ @GTK@ @CURSES@
+if GNOME
+GNOME=GNOME
+endif
+
+if GNOME2
+GNOME2=GNOME2
+endif
+
+if GTK1
+GTK=GTK
+endif
+
+if HAS_CURSES
+CURSES=curses
+endif
+
+SUBDIRS = utils $(GNOME) $(GNOME2) $(GTK) $(CURSES)

@@ -1,3 +1,12 @@
-# $Id: Makefile.am,v 1.2 2003/04/05 18:06:01 erik Exp $
+# $Id: Makefile.am,v 1.3 2004/05/21 13:28:40 erik Exp $
 
-SUBDIRS = @MYSQL@ @POSTGRESQL@
+if MYSQL
+MYSQLDIR = MySQL
+endif
+
+if POSTGRESQL
+PGSQLDIR = PostgreSQL
+endif
+
+SUBDIRS= $(MYSQLDIR) $(PGSQLDIR)
+

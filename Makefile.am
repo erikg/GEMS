@@ -1,6 +1,8 @@
-# $Id: Makefile.am,v 1.9 2004/03/03 13:02:10 erik Exp $
+# $Id: Makefile.am,v 1.10 2004/05/21 13:28:40 erik Exp $
 
-# $Id: Makefile.am,v 1.9 2004/03/03 13:02:10 erik Exp $
+if INTL
+intl = intl
+endif
 
 SUBDIRS = $(intl) include common receptor transmitter db face shell doc
 

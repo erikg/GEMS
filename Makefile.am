@@ -1,4 +1,4 @@
-SUBDIRS = po intl include common receptor transmitter db face shell
+SUBDIRS = po intl include common receptor transmitter db face shell doc
 
 EXTRA_DIST=ChangeLog rpm-$(PACKAGE).spec
 

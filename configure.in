@@ -110,6 +110,7 @@ receptor/Makefile transmitter/Makefile
 db/MySQL/Makefile
 face/GTK/Makefile face/GTK/e/Makefile
 face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile
+doc/Makefile
 ])
 
 dnl print out what we learned...

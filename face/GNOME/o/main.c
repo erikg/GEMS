@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: main.c,v 1.18 2004/01/23 00:34:38 erik Exp $
+ * $Id: main.c,v 1.19 2004/01/23 00:40:01 erik Exp $
  */
 
 
@@ -139,12 +139,6 @@ set_mboxlist ()
 }
 
 void
-init ()
-{
-    printf ("Hi\n");
-}
-
-void
 face_init ()
 {
     return;
@@ -163,15 +157,13 @@ face_run (int argc, char *argv[])
     int a = 0, b = 0;
     GtkCList *c;
 
-    printf ("ding\n");
-    fflush (stdout);
-
     face_init ();
 
 #ifdef ENABLE_NLS
     bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
     textdomain (PACKAGE);
 #endif
+
     gnome_init ("gems", VERSION, argc, argv);
     gems = create_gems ();
     gtk_widget_realize (gems);

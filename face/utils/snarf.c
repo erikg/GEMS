@@ -29,15 +29,12 @@ int
 parse (char *buf, unsigned int size)
 {
     int i, linecount, linecountsize, msgcount, msgcountsize;
-    char **line, *walk;
-    struct msg_s {
-	char *head, *body;
-    } *msg;
+    char **line, *walk, **msg, *mbox;
 
     msgcount = linecount = 0;
     msgcountsize = linecountsize = 1024;
     line = malloc (sizeof (char *) * linecountsize);
-    msg = malloc (sizeof (struct msg_s) * msgcountsize);
+    msg = malloc (sizeof (char *) * msgcountsize);
 
     if (!strncmp ("From ", buf, 5))
 	line[linecount++] = buf;
@@ -55,16 +52,20 @@ parse (char *buf, unsigned int size)
 	    {
 		if (i > 0)
 		    line[i - 1][0] = 0;
-		msg[msgcount].head = line[i];
+		msg[msgcount] = line[i];
 		msgcount++;
 	    }
 
     for (i = 0; i < msgcount; i++)
 	{
 		message *m;
-		m = message_build_from_buffer(msg[i].head);
+		printf(".");
+		m = message_build_from_buffer(msg[i]);
+		mbox = rule_check(m);
+		db_insert_msg(mbox,m);
 		message_destroy(m);
 	}
+	printf("\n");
     return 0;
 }
 
@@ -80,12 +81,24 @@ face_run (int argc, char **argv)
     if (fd <= 0)
 	return (-1);
 
+    if (rule_init () == GEMS_FALSE)
+    {
+        printf (_("Failed to initialize ruleset\n"));
+        exit (EXIT_FAILURE);
+    }
+
     buf = (char *)malloc (BIGBUFSIZ);	// 4 meg buffer
 
     size = read (fd, buf, BIGBUFSIZ);
     buf[size] = 0;
-
+printf("Parsing\n");
     parse (buf, size);
+printf("Parsed\n");
+
+    if (rule_close () == GEMS_FALSE)
+    {
+        printf (_("Failed closing ruleset\n"));
+    }
 
     free (buf);
     close (fd);

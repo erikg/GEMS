@@ -359,9 +359,9 @@ db_read_mboxlist (void)
     realcount = mboxcount = atoi (row[0]);
     mysql_free_result (result);
     mboxlist = (mboxs **) malloc (sizeof (mboxs *) * (mboxcount + 1));
-    memset (mboxlist, 0, sizeof (mboxs *) * mboxcount + 1);
+    memset (mboxlist, 0, sizeof (mboxs *) * (mboxcount + 1));
     mboxlistf = (mboxs **) malloc (sizeof (mboxs *) * (mboxcount + 1));
-    memset (mboxlistf, 0, sizeof (mboxs *) * mboxcount + 1);
+    memset (mboxlistf, 0, sizeof (mboxs *) * (mboxcount + 1));
 
     if (mysql_query (con, "select mboxname,mbox from mmbox order by mbox") !=
 	0)

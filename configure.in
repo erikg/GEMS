@@ -1,6 +1,8 @@
-dnl $Id: configure.in,v 1.23 2003/04/17 15:49:45 erik Exp $
+dnl $Id: configure.in,v 1.24 2003/10/11 17:17:01 erik Exp $
 
 AC_INIT(README)
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE(gems, 0.0)
 AM_MAINTAINER_MODE
 
@@ -139,7 +141,7 @@ receptor/Makefile transmitter/Makefile
 db/MySQL/Makefile
 face/GTK/Makefile face/GTK/e/Makefile
 face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile
-face/GNOME2/Makefile face/GNOME2/o/Makefile
+face/GNOME2/Makefile face/GNOME2/Makefile face/GNOME2/o/Makefile
 doc/Makefile
 ])
 

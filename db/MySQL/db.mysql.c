@@ -360,9 +360,9 @@ db_read_mboxlist (void)
     row = mysql_fetch_row (result);
     realcount = mboxcount = atoi (row[0]);
     mysql_free_result (result);
-    mboxlist = (mboxs **) malloc (sizeof (mboxs *) * (mboxcount + 2));
+    mboxlist = (mboxs **) malloc (sizeof (mboxs *) * (mboxcount + 1));
     memset (mboxlist, 0, sizeof (mboxs *) * mboxcount + 1);
-    mboxlistf = (mboxs **) malloc (sizeof (mboxs *) * (mboxcount + 2));
+    mboxlistf = (mboxs **) malloc (sizeof (mboxs *) * (mboxcount + 1));
     memset (mboxlistf, 0, sizeof (mboxs *) * mboxcount + 1);
 
     if (mysql_query (con, "select mboxname,mbox from mmbox order by mbox") !=
@@ -393,8 +393,8 @@ db_read_mboxlist (void)
 	mboxlist[y]->id = atoi (row[1]);
 	mboxlist[y]->hasunread = 0;
     }
+/* XXX causes crash in linux? */
     mysql_free_result (result);
-
     if (mysql_query
 	(con,
 	 "select mbox,count(*) from synopsis where status!='read' group by mbox")

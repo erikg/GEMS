@@ -32,6 +32,10 @@ AC_CHECK_FUNCS(getopt_long , , [
 AC_SUBST(GETOPT_LONG_LIBS)
 AC_SUBST(GETOPT_LONG_CFLAGS)
 
+LDL_LIBS=""
+AC_CHECK_FUNCS(dlopen , , [AC_CHECK_LIB(dl, dlopen, LDL_LIBS="")])
+AC_SUBST(LDL_LIBS)
+
 GTK=
 AC_ARG_ENABLE(gtk,
 [  --enable-gtk            Use GTK (default=yes)],use_gtk=no,use_gtk=yes)
@@ -96,7 +100,7 @@ AC_SUBST(MY_LDADD)
 
 AC_OUTPUT([
 Makefile po/Makefile.in intl/Makefile common/Makefile db/Makefile face/Makefile
-face/utils/Makefile shell/Makefile include/Makefile getopt_long/Makefile
+face/utils/Makefile shell/Makefile include/Makefile
 receptor/Makefile transmitter/Makefile
 db/MySQL/Makefile
 face/GTK/Makefile face/GTK/e/Makefile

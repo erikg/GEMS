@@ -35,7 +35,11 @@ putmail (GtkWidget * widget)
 	n = gtk_ctree_node_nth (GTK_CTREE (widget),
 				(&(GTK_CTREE (widget)->clist))->focus_row);
 	s = (synopsis *) gtk_ctree_node_get_row_data (GTK_CTREE (widget), n);
-	shtuff = (char *) db_read_body (s->id);
+	if(s)
+		shtuff = (char *) db_read_body (s->id);
+	else{
+		printf("synopsis for row %d is NULL!\n", n); return FALSE;
+	}
     } else
     {
 	s = (synopsis *) malloc (sizeof (synopsis));
@@ -75,7 +79,7 @@ replyify (char *buf)
     char tbuf[1024];
     void *list;
     int s = 0, x = 0, len;
-
+printf("buf: %x\n", buf);
     len = strlen (buf);
     list = ll_newlist ();
     while (x < len)

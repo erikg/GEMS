@@ -3,7 +3,7 @@ commondir = $(libdir)/gems
 common_LIBRARIES = libgemscommon.a
 common_LTLIBRARIES = libgemscommon.la
 
-SRCFILES =	ll.c message.c regex.c rules.c spoolread.c stringinate.c
+SRCFILES = ll-block.c message.c regex.c rules.c spoolread.c stringinate.c
 		
 		
 

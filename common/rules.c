@@ -67,7 +67,7 @@ rule_check (message * m)
   for (x = 0; x < numrules; x++)
     {
       c = rule_concern (&rules[x], m);
-      if (regexec (preg[x], c, strlen (c), pmatch, 0/*REG_NOSUB*/) == 0)
+      if (regexec (preg[x], c, strlen (c), pmatch, REG_NOSUB) == 0)
 	  return rules[x].mbox;
     }
   return inbox;

@@ -122,12 +122,12 @@ LTLIBRARIES =  $(gemslib_LTLIBRARIES)
 
 DEFS =  -DPACKAGE=\"gems\" -DVERSION=\"0.0\" -DSTDC_HEADERS=1 -DHAVE_ALLOCA=1 -DHAVE_UNISTD_H=1 -DHAVE_GETPAGESIZE=1 -DHAVE_MMAP=1 -DHAVE_LIMITS_H=1 -DHAVE_LOCALE_H=1 -DHAVE_NL_TYPES_H=1 -DHAVE_STRING_H=1 -DHAVE_UNISTD_H=1 -DHAVE_SYS_PARAM_H=1 -DHAVE_GETCWD=1 -DHAVE_MUNMAP=1 -DHAVE_PUTENV=1 -DHAVE_SETENV=1 -DHAVE_SETLOCALE=1 -DHAVE_STRCHR=1 -DHAVE_STRCASECMP=1 -DHAVE_STRDUP=1 -DHAVE_LC_MESSAGES=1 -DENABLE_NLS=1  -I. -I$(srcdir) 
 CPPFLAGS = 
-LIBS =  -Wl,-E -L/usr/X11R6/lib -L/usr/local/lib -lXpm -ljpeg -lgnomeui -lart_lgpl -lgdk_imlib -ltiff -lungif -lpng -lz -lSM -lICE -lgtk12 -lgdk12 -lgmodule12 -lxpg4 -lXext -lX11 -lgnome -lgnomesupport -lintl -lesd -laudiofile -lm -lglib12
+LIBS = 
 libgems_face_GNOME_e_la_LDFLAGS = 
 libgems_face_GNOME_e_la_LIBADD = 
 libgems_face_GNOME_e_la_OBJECTS =  callbacks.lo interface.lo main.lo \
 support.lo
-CFLAGS = -O0 -mpentium -pg -I$(top_srcdir)/include -I/usr/local/include -I/usr/X11R6/include -DNEED_GNOMESUPPORT_H -I/usr/X11R6/include/gtk12 -I/usr/local/include/glib12 -I/usr/local/include
+CFLAGS = -pg -ggdb -O0 -mpentium -I$(top_srcdir)/include -I/usr/local/include
 COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.h,v 1.5 2003/11/11 13:31:07 erik Exp $
+ * $Id: callbacks.h,v 1.6 2003/11/11 15:05:22 erik Exp $
  */
 
 #include <gnome.h>
@@ -132,4 +132,16 @@ void on_rule_new_rule_clicked (GtkButton * button, gpointer user_data);
 
 void
 on_custom1_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_mboxcustomok_clicked                (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_mboxcustomapply_clicked             (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_mboxcustomcancel_clicked            (GtkButton       *button,
                                         gpointer         user_data);

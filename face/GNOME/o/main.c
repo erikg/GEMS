@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: main.c,v 1.15 2003/11/11 12:36:14 erik Exp $
+ * $Id: main.c,v 1.16 2003/11/11 15:05:22 erik Exp $
  */
 
 
@@ -237,7 +237,7 @@ printf("ding\n");fflush(stdout);
 	c->column[1].width = atoi (x);
 
     gtk_widget_show (gems);
-    gtk_timeout_add (600000, update_mboxlist, NULL);
+    gtk_timeout_add (60000, update_mboxlist, NULL);
     gtk_main ();
 
     return 0;

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.h,v 1.6 2003/11/11 12:45:22 erik Exp $
+ * $Id: db.h,v 1.7 2003/11/11 15:05:22 erik Exp $
  */
 
 #ifndef __DB_H
@@ -50,6 +50,7 @@ extern int db_insert_msg (char *mbox, message *);
 
 /** add a mailbox to the db */
 extern int db_addmbox (char *mbox);
+extern int db_addmbox_view (char *mbox, char *query);
 
 /** drop a mailbox */
 extern int db_dropmbox (char *mbox);

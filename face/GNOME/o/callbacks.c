@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.17 2003/11/11 13:31:07 erik Exp $
+ * $Id: callbacks.c,v 1.18 2003/11/11 15:05:22 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -861,6 +861,37 @@ void
 on_custom1_activate                    (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
+    gtk_widget_show (create_custom_mbox ());
+}
 
+
+void
+on_mboxcustomok_clicked                (GtkButton       *button,
+                                        gpointer         user_data)
+{
+    db_addmbox_view (
+	gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "mbox_create_custom_name"))),
+	gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "mbox_create_custom_query"))));
+    gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "custom_mbox"));
+    set_mboxlist ();
+}
+
+
+void
+on_mboxcustomapply_clicked             (GtkButton       *button,
+                                        gpointer         user_data)
+{
+    db_addmbox_view (
+	gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "mbox_create_custom_name"))),
+	gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "mbox_create_custom_query"))));
+    set_mboxlist ();
+}
+
+
+void
+on_mboxcustomcancel_clicked            (GtkButton       *button,
+                                        gpointer         user_data)
+{
+    gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "custom_mbox"));
 }
 

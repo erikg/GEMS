@@ -1430,6 +1430,16 @@ create_custom_mbox (void)
   gtk_widget_show (button25);
   GTK_WIDGET_SET_FLAGS (button25, GTK_CAN_DEFAULT);
 
+  gtk_signal_connect (GTK_OBJECT (button23), "clicked",
+                      GTK_SIGNAL_FUNC (on_mboxcustomok_clicked),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (button24), "clicked",
+                      GTK_SIGNAL_FUNC (on_mboxcustomapply_clicked),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (button25), "clicked",
+                      GTK_SIGNAL_FUNC (on_mboxcustomcancel_clicked),
+                      NULL);
+
   return custom_mbox;
 }
 

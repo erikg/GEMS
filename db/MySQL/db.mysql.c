@@ -352,6 +352,7 @@ db_read_mboxlist (void)
     MYSQL_ROW row;
     my_ulonglong mboxcount;
 
+printf("db_read_mboxlist: get the names\n");fflush(stdout);    
     sprintf (q, "select mboxname,mbox from mmbox");
     if (mysql_query (con, q) != 0)
     {
@@ -361,7 +362,9 @@ db_read_mboxlist (void)
     result = mysql_store_result (con);
     mboxcount = mysql_num_rows (result);
 
+printf("db_read_mboxlist: allocate the table\n");fflush(stdout);    
     mboxlist = (mboxs **) malloc (sizeof (void *) * (mboxcount + 1));
+printf("db_read_mboxlist: put the names in the table\n");fflush(stdout);    
     for (x = 0; x < mboxcount; x++)
     {
 	row = mysql_fetch_row (result);
@@ -380,8 +383,11 @@ db_read_mboxlist (void)
 	strcpy (mboxlist[x]->name, row[0]);
 	mboxlist[x]->id = atoi (row[1]);
     }
-    mysql_free_result (result);
+printf("db_read_mboxlist: free\n");fflush(stdout);    
+printf("%x\n", result);
+//    mysql_free_result (result);
 
+printf("db_read_mboxlist: calculate the read messages\n");fflush(stdout);    
     for (x = 0; x < mboxcount; x++)
     {
 	sprintf (q,
@@ -398,6 +404,7 @@ db_read_mboxlist (void)
 	mysql_free_result (result);
     }
 
+printf("db_read_mboxlist: all done, lets go\n");fflush(stdout);    
     mboxlist[mboxcount] = NULL;
     return mboxlist;
 }

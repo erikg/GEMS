@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: message.c,v 1.12 2003/04/05 18:36:27 erik Exp $
+ * $Id: message.c,v 1.13 2003/04/19 13:55:38 erik Exp $
  */
 
 #include <stdio.h>
@@ -175,10 +175,19 @@ message_build_from_buffer (char *buf)
 
     m = (message *) malloc (sizeof (message));
     memset (m, 0, sizeof (message));	/* fill out NULLs */
-    while (!(buf[x] == 0 || (buf[x] == '\n' && buf[x + 1] == '\n')))
-	x++;
-    if (buf[x] == 0)
+    
+    while ( buf[x] )
+	if(
+		!strncmp(buf+x,"\n\n",2)
+		|| !strncmp(buf+x,"\n\r\n\r",4)
+		|| !strncmp(buf+x,"\r\n\r\n",4))
+		continue;
+	else
+		x++;
+    if (buf[x] == 0){
+	    printf("\nUgh, bad message %s:%d:%s\n", __FILE__,__LINE__,__FUNCTION__);
 	return NULL;		/* bad message */
+    }
     buf[x] = 0;
     m->header = strdup (buf);
     m->body = strdup (buf + x + 2);

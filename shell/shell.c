@@ -55,7 +55,7 @@ main (int argc, char **argv)
 
   commonname =
     (char *) malloc (strlen (p->libdir) +
-		     strlen ("/gems/libgemscommon.so."));
+		     strlen ("gems/libgemscommon.so."));
 
   dbifullname =
     (char *) malloc (strlen (p->libdir) + strlen (p->dbiname) +
@@ -70,7 +70,7 @@ main (int argc, char **argv)
 	       p->dbiname);
       sprintf (facefullname, "%s/gems/libgems_face.%s.so", p->libdir,
 	       p->facename);
-      sprintf (commonname, "%s/gems/libgemscommon.so", p->libdir);
+      sprintf (commonname, "%sgems/libgemscommon.so", p->libdir);
     }
   else
     {

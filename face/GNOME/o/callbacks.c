@@ -224,12 +224,12 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
 	x++;
     }
     free (syn);
+    gtk_clist_thaw (clist);
 
     update_mboxlist ();
 
     gnome_appbar_set_progress (GNOME_APPBAR (appbar), 0.0);
 
-    gtk_clist_thaw (clist);
     gnome_appbar_pop (GNOME_APPBAR (stat));
 
     /*

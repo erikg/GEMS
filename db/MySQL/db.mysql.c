@@ -346,16 +346,12 @@ db_read_synopsis (int mbox, int status)
 mboxs **
 db_read_mboxlist (void)
 {
-    int x;
+    int x, mboxcount;
     mboxs **mboxlist;
     MYSQL_RES *result;
     MYSQL_ROW row;
-    my_ulonglong mboxcount;
 
-    printf ("db_read_mboxlist: get the names\n");
-    fflush (stdout);
-    sprintf (q, "select mboxname,mbox from mmbox");
-    if (mysql_query (con, q) != 0)
+    if (mysql_query (con, "select mboxname,mbox from mmbox") != 0)
     {
 	oops ("failed to read mailbox list", mysql_error (con));
 	exit (0);
@@ -363,14 +359,9 @@ db_read_mboxlist (void)
     result = mysql_store_result (con);
     mboxcount = mysql_num_rows (result);
 
-    printf ("db_read_mboxlist: allocate the table\n");
-    fflush (stdout);
     mboxlist = (mboxs **) malloc (sizeof (void *) * (mboxcount + 1));
-    printf ("db_read_mboxlist: put the names in the table\n");
-    fflush (stdout);
-    for (x = 0; x < mboxcount; x++)
+    for (x = 0; (row = mysql_fetch_row (result)) != NULL; x++)
     {
-	row = mysql_fetch_row (result);
 	mboxlist[x] = (mboxs *) malloc (sizeof (mboxs));
 	mboxlist[x]->name = (char *) malloc (strlen (row[0] + 1));
 	if (mboxlist[x] == NULL || mboxlist[x]->name == NULL)
@@ -385,33 +376,28 @@ db_read_mboxlist (void)
 	}
 	strcpy (mboxlist[x]->name, row[0]);
 	mboxlist[x]->id = atoi (row[1]);
+	mboxlist[x]->hasunread = 0;
     }
-    printf ("db_read_mboxlist: free\n");
-    fflush (stdout);
-    printf ("%x\n", result);
     // mysql_free_result (result);
-
-    printf ("db_read_mboxlist: calculate the read messages\n");
-    fflush (stdout);
-    for (x = 0; x < mboxcount; x++)
-    {
-	sprintf (q,
-		 "select count(*) from synopsis where mbox=%d and status not like '\%read\%'",
-		 mboxlist[x]->id);
-	if (mysql_query (con, q) != 0)
-	{
-	    oops ("failed to count unread messages", mysql_error (con));
-	    exit (0);
-	}
-	result = mysql_store_result (con);
-	row = mysql_fetch_row (result);
-	mboxlist[x]->hasunread = atoi (row[0]);
-	mysql_free_result (result);
-    }
-
-    printf ("db_read_mboxlist: all done, lets go\n");
-    fflush (stdout);
     mboxlist[mboxcount] = NULL;
+
+    if (mysql_query
+	(con,
+	 "select mbox,count(*) from synopsis where status!='read' group by mbox")
+	!= 0)
+    {
+	oops ("failed to count unread messages", mysql_error (con));
+	exit (0);
+    }
+    result = mysql_store_result (con);
+    mboxcount = mysql_num_rows (result);
+
+    while ((row = mysql_fetch_row (result)) != NULL)
+    {
+	mboxlist[atoi (row[0]) - 1]->hasunread = atoi (row[1]);
+    }
+    mysql_free_result (result);
+
     return mboxlist;
 }
 

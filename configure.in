@@ -1,4 +1,4 @@
-dnl $Id: configure.in,v 1.31 2004/02/01 19:09:13 erik Exp $
+dnl $Id: configure.in,v 1.32 2004/02/06 22:12:43 erik Exp $
 
 AC_INIT(README)
 AC_CANONICAL_TARGET
@@ -21,10 +21,10 @@ CFLAGS="$CFLAGS -I\$(top_srcdir)/include -I/usr/local/include"
 
 dnl AM_GNU_GETTEXT([external])
 dnl AM_GNU_GETTEXT()
-GETTEXT_PACKAGE=gems
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package?])
-AM_GLIB_GNU_GETTEXT
+dnl GETTEXT_PACKAGE=gems
+dnl AC_SUBST(GETTEXT_PACKAGE)
+dnl AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package?])
+dnl AM_GLIB_GNU_GETTEXT
 intl=
 AC_SUBST(intl)
 

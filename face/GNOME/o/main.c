@@ -39,7 +39,7 @@ update_mboxlist (gpointer nothing)
     mboxlist = (mboxs **) db_read_mboxlist ();
     tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
     gtk_clist_freeze (&GTK_CTREE (tree)->clist);
-    x = -1;
+    x = 0;
     while (mboxlist[x] != NULL)
     {
 	gtk_clist_set_foreground (&(tree->clist), x-1,

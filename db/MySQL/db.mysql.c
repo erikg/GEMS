@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.41 2004/05/31 12:07:32 erik Exp $
+ * $Id: db.mysql.c,v 1.42 2004/05/31 12:55:58 erik Exp $
  */
 
 #include <stdio.h>
@@ -576,8 +576,11 @@ db_read_message (int id)
 	exit (EXIT_FAILURE);
     }
     row = mysql_fetch_row (result);
-    m->body = (char *)malloc (*mysql_fetch_lengths (result) + 1);
-    sprintf (m->body, "%s", row[0]);
+    if (row)
+    {
+	m->body = (char *)malloc (*mysql_fetch_lengths (result) + 1);
+	sprintf (m->body, "%s", row[0]);
+    }
     mysql_free_result (result);
 
     /*

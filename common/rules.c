@@ -50,7 +50,6 @@ rule_concern (rule * r, message * m)
     if (!strcmp (c, "From"))
 	return m->sender;
     printf ("No peice!!@~!@~!@!@\n");
-    fflush (0);
     return NULL;
 }
 

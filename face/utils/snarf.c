@@ -59,7 +59,7 @@ parse (char *buf, unsigned int size)
     for (i = 0; i < msgcount; i++)
 	{
 		message *m;
-		printf(".");
+		printf(".");fflush(stdout);
 		m = message_build_from_buffer(msg[i]);
 		mbox = rule_check(m);
 		db_insert_msg(mbox,m);

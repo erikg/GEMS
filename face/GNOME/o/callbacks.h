@@ -33,12 +33,12 @@ on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data);
 
 
 void
- on_ctree2_tree_select_row (GtkCTree * ctree,
-			    GList * node, gint column, gpointer user_data);
+on_ctree2_tree_select_row (GtkCTree * ctree,
+			   GList * node, gint column, gpointer user_data);
 
 void
- on_ctree2_tree_select_row (GtkCTree * ctree,
-			    GList * node, gint column, gpointer user_data);
+on_ctree2_tree_select_row (GtkCTree * ctree,
+			   GList * node, gint column, gpointer user_data);
 
 void on_toolbar_prev_clicked (GtkButton * button, gpointer user_data);
 
@@ -55,7 +55,7 @@ void on_toolbar_reply_clicked (GtkButton * button, gpointer user_data);
 void on_toolbar_forward_clicked (GtkButton * button, gpointer user_data);
 
 void
- on_ctree1_click_column (GtkCList * clist, gint column, gpointer user_data);
+on_ctree1_click_column (GtkCList * clist, gint column, gpointer user_data);
 
 void on_create1_activate (GtkMenuItem * menuitem, gpointer user_data);
 
@@ -83,9 +83,9 @@ void on_mailboxcreatecancel_clicked (GtkButton * button, gpointer user_data);
 void on_toolbar_rule_clicked (GtkButton * button, gpointer user_data);
 
 void
- on_rule_list_select_row (GtkCList * clist,
-			  gint row,
-			  gint column, GdkEvent * event, gpointer user_data);
+on_rule_list_select_row (GtkCList * clist,
+			 gint row,
+			 gint column, GdkEvent * event, gpointer user_data);
 
 void on_rule_up_clicked (GtkButton * button, gpointer user_data);
 

@@ -1,8 +1,8 @@
-# $Id: Makefile.am,v 1.8 2004/02/27 00:08:28 erik Exp $
+# $Id: Makefile.am,v 1.9 2004/03/03 13:02:10 erik Exp $
 
-# $Id: Makefile.am,v 1.8 2004/02/27 00:08:28 erik Exp $
+# $Id: Makefile.am,v 1.9 2004/03/03 13:02:10 erik Exp $
 
-SUBDIRS = po $(intl) include common receptor transmitter db face shell doc
+SUBDIRS = $(intl) include common receptor transmitter db face shell doc
 
 EXTRA_DIST=ChangeLog rpm-$(PACKAGE).spec
 

@@ -1,4 +1,4 @@
-# $Id: Makefile.am,v 1.9 2004/02/01 22:03:49 erik Exp $
+# $Id: Makefile.am,v 1.10 2004/03/03 13:02:10 erik Exp $
 
 gemslibdir = $(libdir)/gems
 
@@ -6,7 +6,7 @@ gemslib_LTLIBRARIES = libgems_face.cleantables.la libgems_face.normalize.la libg
 
 libgems_face_cleantables_la_SOURCES = cleantables.c  
 libgems_face_cull_la_SOURCES = cull.c  
-libgems_face_initdb_la_SOURCES = initdb.c  
+#libgems_face_initdb_la_SOURCES = initdb.c  
 libgems_face_normalize_la_SOURCES = normalize.c
 libgems_face_pop3check_la_SOURCES = pop3check.c
 libgems_face_showmail_la_SOURCES = showmail.c  
@@ -17,5 +17,5 @@ libgems_face_sql2spool_la_SOURCES = sql2spool.c
 libgems_face_synhash_la_SOURCES = synhash.c  
 libgems_face_test_la_SOURCES = test.c  
 
-LDFLAGS = -rdynamic @MY_LDFLAGS@
-LDADD = @MY_LDADD@
+AM_LDFLAGS = -rdynamic @MY_LDFLAGS@
+LIBADD = @MY_LDADD@

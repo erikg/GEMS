@@ -1,4 +1,4 @@
-# $Id: Makefile.am,v 1.6 2004/01/23 01:01:31 erik Exp $
+# $Id: Makefile.am,v 1.7 2004/03/03 13:02:10 erik Exp $
 
 gemslibdir = $(libdir)/gems
 gemslib_LTLIBRARIES = libgems_face.GNOME2_o.la
@@ -14,7 +14,7 @@ INCLUDES = \
         -DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
         @GNOME2_CFLAGS@
 
-LDFLAGS  = -rdynamic -L/usr/X11R6/lib
+AM_LDFLAGS  = -rdynamic -L/usr/X11R6/lib
 LDADD = @GNOME2_LIBS@ $(INTLLIBS) $(toplevel_dir)/common/libgemscommon.a @MY_LDADD@
 
 

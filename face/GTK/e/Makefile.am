@@ -1,4 +1,4 @@
-# $Id: Makefile.am,v 1.2 2003/04/05 18:06:01 erik Exp $
+# $Id: Makefile.am,v 1.3 2004/03/03 13:02:10 erik Exp $
 
 gemslibdir = $(libdir)/gems
 
@@ -9,7 +9,7 @@ libgems_face_GTK_e_la_SOURCES = callbacks.c interface.c main.c support.c
 noinst_HEADERS = callbacks.h  interface.h  support.h
 
  
-INCLUDES =  @GTK_CFLAGS@ -I$(toplevel_dir)/intl -DLOCALEDIR=\"$(localedir)\" -DPACKAGE_LOCALE_DIR=\"$(localedir)\"
-LDFLAGS  = -rdynamic @GTK_LIBS@
-LDDADD   = @INTLLIBS@
+AM_INCLUDES =  @GTK_CFLAGS@ -I$(toplevel_dir)/intl -DLOCALEDIR=\"$(localedir)\" -DPACKAGE_LOCALE_DIR=\"$(localedir)\"
+AM_LDFLAGS  = -rdynamic @GTK_LIBS@
+AM_LDDADD   = @INTLLIBS@
 localedir= $(datadir)/locale

@@ -14,4 +14,6 @@ mboxview *new_mboxview (mboxs * mb, int status);
 
 int putmail (GtkWidget * widget);
 
+char *replyify(char *buf);
+
 #endif

@@ -3,6 +3,7 @@
 #include "defs.h"
 #include "message.h"
 #include "extra.h"
+#include "ll.h"
 
 extern GtkWidget *gems;
 
@@ -65,4 +66,32 @@ putmail (GtkWidget * widget)
 	free (shtuff);
     }
     return TRUE;
+}
+
+char *
+replyify (char *buf)
+{
+    char *newbuf;
+    char tbuf[1024];
+    void *list;
+    int s = 0, x = 0, len;
+
+    len = strlen (buf);
+    list = ll_newlist ();
+    while (x < len)
+    {
+	if (buf[x] == '\n')
+	{
+	    snprintf (tbuf, x - s + 4, "> %s\n", buf + s);
+	    ll_addnode (list, tbuf);
+	    memset (tbuf, 0, 1024);
+	    s = x + 1;
+	}
+	x++;
+    }
+    free (buf);
+    newbuf = stringinate (list);
+    ll_clearlist (list);
+    free (list);
+    return newbuf;
 }

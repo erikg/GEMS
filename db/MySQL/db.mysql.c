@@ -393,7 +393,6 @@ db_read_mboxlist (void)
 	mboxlist[y]->id = atoi (row[1]);
 	mboxlist[y]->hasunread = 0;
     }
-    mboxlist[mysql_num_rows (result)] = NULL;
     mysql_free_result (result);
 
     if (mysql_query

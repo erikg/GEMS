@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.h,v 1.4 2003/04/05 18:36:28 erik Exp $
+ * $Id: callbacks.h,v 1.5 2003/11/11 13:31:07 erik Exp $
  */
 
 #include <gnome.h>
@@ -129,3 +129,7 @@ void on_rule_mbox_changed (GtkEditable * editable, gpointer user_data);
 void on_rule_regex_changed (GtkEditable * editable, gpointer user_data);
 
 void on_rule_new_rule_clicked (GtkButton * button, gpointer user_data);
+
+void
+on_custom1_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.16 2003/04/05 18:36:28 erik Exp $
+ * $Id: callbacks.c,v 1.17 2003/11/11 13:31:07 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -856,3 +856,11 @@ on_rule_new_rule_clicked (GtkButton * button, gpointer user_data)
     gtk_clist_set_row_data (clist, x, r);
     gtk_clist_select_row (clist, x, 0);
 }
+
+void
+on_custom1_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+}
+

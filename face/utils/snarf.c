@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include "defs.h"
 #include "message.h"
 #include "db.h"
 
-#define BIGBUFSIZ (4096*1024*2)
+#define MEGS *1024*1024
+
+	/* 8 megs */
+#define BIGBUFSIZ (8 MEGS)
 
 #ifndef _
 #define _(X) (X)
@@ -56,10 +60,12 @@ parse (char *buf, unsigned int size)
 		msgcount++;
 	    }
 
-    for (i = 0; i < msgcount; i++)
+    --msgcount;
+    for (i = 0; i <= msgcount; i++)
 	{
 		message *m;
-		printf(".");fflush(stdout);
+		printf("             \r%d/%d  (%.2f%%)", i, msgcount, 100.0*(float)i/(float)msgcount);
+		fflush(stdout);
 		m = message_build_from_buffer(msg[i]);
 		mbox = rule_check(m);
 		db_insert_msg(mbox,m);
@@ -87,7 +93,7 @@ face_run (int argc, char **argv)
         exit (EXIT_FAILURE);
     }
 
-    buf = (char *)malloc (BIGBUFSIZ);	// 4 meg buffer
+    buf = (char *)malloc (BIGBUFSIZ);
 
     size = read (fd, buf, BIGBUFSIZ);
     buf[size] = 0;

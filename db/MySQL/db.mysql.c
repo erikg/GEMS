@@ -21,14 +21,17 @@ static char monthlist[12][4] =
 };
 
 static char *
-stuff (MYSQL_RES * result, MYSQL_ROW row, int x)
+stuff (MYSQL_RES * result, MYSQL_ROW row, int x, int box)
 {
-    char *a;
+	static char stuff_box[10][1024*1024];
+	char *a = stuff_box[box];
 
     if (result == NULL || row == NULL)
 	return NULL;
+    /*
     a = (char *) malloc (sizeof (char) *
 			 (mysql_fetch_lengths (result)[x] + 1));
+    */
     sprintf (a, "%s", row[x]);
     return a;
 }
@@ -44,14 +47,17 @@ db_init (char *host, char *db, char *user, char *pass)
     return GEMS_TRUE;
 }
 
-static char *
-spawn_escape_string (char *in)
-{
-    char *x;
+static char spawnbuf[4][1024*1024];
+float timeinspawn_escape_string=0;
 
+static char *
+spawn_escape_string (char *in, int buf)
+{
+    char *x = spawnbuf[buf];
+    memset(x,0,1024*1024-1);
     if (in == NULL)
 	return NULL;
-    x = (char *) malloc (2 * strlen (in) + 1);
+/*    x = (char *) malloc (2 * strlen (in) + 1);*/
     mysql_escape_string (x, in, strlen (in));
     return x;
 }
@@ -59,17 +65,13 @@ spawn_escape_string (char *in)
 static char *
 parse_date (char *in)
 {
-    char *a, mo[4];
+    static char a[24], mo[4];
     int year, month, day, hour, minute, second, x;
 
-    year = month = day = hour = minute = second = 0;
+    a[0] = year = month = day = hour = minute = second = 0;
 
     if (in == NULL)
-    {
-	a = (char *) malloc (1);
-	a[0] = 0;
 	return a;
-    }
     if (isalpha (in[0]))
 	in += 5;
 
@@ -80,7 +82,7 @@ parse_date (char *in)
 	if (strcasecmp (monthlist[x], mo) == 0)
 	    month = x + 1;
 
-    a = (char *) malloc (24);
+/*    a = (char *) malloc (24);*/
 
     sprintf (a, "%04d-%02d-%02d %02d:%02d:%02d",
 	     year, month, day, hour, minute, second);
@@ -96,6 +98,7 @@ db_insert_msg (char *mboxname, message * m)
     MYSQL_RES *result;
     MYSQL_ROW row;
 
+    /* 01 this can be table-ized or fixed in the db... */
     sprintf (q, "select mbox from mmbox where mboxname='%s'", mboxname);
     if (mysql_query (con, q) != 0)
     {
@@ -106,6 +109,7 @@ db_insert_msg (char *mboxname, message * m)
     row = mysql_fetch_row (result);
     mbox = atoi (row[0]);
     mysql_free_result (result);
+    /* /01 */
 
     /*
      * check if it's a redundant entry
@@ -118,11 +122,14 @@ db_insert_msg (char *mboxname, message * m)
     }
     result = mysql_store_result (con);
     row = mysql_fetch_row (result);
-    count = row == NULL ? 0 : atoi (row[0]);
+    if(row!=NULL)
+	   return GEMS_TRUE;
+    /*
+    count = (row == NULL ? 0 : atoi (row[0]));
     mysql_free_result (result);
     if (count != 0)
 	return GEMS_TRUE;
-
+*/
     /*
      * for(x=0;x<count;x++) { }
      * 
@@ -131,9 +138,9 @@ db_insert_msg (char *mboxname, message * m)
 
     if (m->header == NULL)
 	oops ("NULL header", NULL);
-    a = spawn_escape_string (m->header);
+    a = spawn_escape_string (m->header,0);
     sprintf (q, "insert into header values (0,'%s')", a);
-    free (a);
+/*    free (a);*/
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to insert header", NULL);
@@ -147,17 +154,19 @@ db_insert_msg (char *mboxname, message * m)
 
     if (m->body == NULL)
 	oops ("NULL body", NULL);
-    a = spawn_escape_string (m->body);
+    a = spawn_escape_string (m->body,0);
     sprintf (q, "insert into body values (%ld,'%s')", id, a);
-    free (a);
+/*    free (a);*/
     if (mysql_query (con, q) != 0)
     {
-	FILE *dump;
+/*	FILE *dump;*/
 
 	oops ("failed to insert body", NULL);
+	/*
 	dump = fopen ("dump", "a");
 	fprintf (dump, "%s\n%s\n", m->header, m->body);
 	fclose (dump);
+	*/
     }
     if (m->sender == NULL)
 	oops ("NULL sender", NULL);
@@ -165,17 +174,19 @@ db_insert_msg (char *mboxname, message * m)
 	oops ("NULL subject", NULL);
     if (m->senddate == NULL)
 	oops ("NULL senddate", NULL);
-    a = spawn_escape_string (m->sender);
-    b = spawn_escape_string (m->subject);
+    a = spawn_escape_string (m->sender,0);
+    b = spawn_escape_string (m->subject,1);
     c = parse_date (m->senddate);
-    d = spawn_escape_string (m->id);
+    d = spawn_escape_string (m->id,2);
     sprintf (q,
 	     "insert into synopsis values (%ld,%ld,'','%s','%s','%s','%s')",
 	     id, mbox, c, a, b, d);
+/*
     free (a);
     free (b);
     free (c);
     free (d);
+*/
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to insert synopsis", mysql_error (con));
@@ -183,9 +194,9 @@ db_insert_msg (char *mboxname, message * m)
     }
     if (m->recipt == NULL)
 	oops ("NULL recipt", NULL);
-    a = spawn_escape_string (m->recipt);
+    a = spawn_escape_string (m->recipt,0);
     sprintf (q, "insert into recipt values (%ld,'%s','to')", id, a);
-    free (a);
+/*    free (a);*/
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to insert recipt", NULL);
@@ -193,9 +204,9 @@ db_insert_msg (char *mboxname, message * m)
     }
     if (m->replyto == NULL)
 	oops ("NULL replyto", NULL);
-    a = spawn_escape_string (m->replyto);
+    a = spawn_escape_string (m->replyto,0);
     sprintf (q, "insert into replyto values (%ld,'%s')", id, a);
-    free (a);
+/*    free (a);*/
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to insert replyto", mysql_error (con));
@@ -203,9 +214,9 @@ db_insert_msg (char *mboxname, message * m)
     }
     if (m->references != NULL)
     {
-	a = spawn_escape_string (m->references);
+	a = spawn_escape_string (m->references,0);
 	sprintf (q, "insert into refs values (%ld,'%s',NULL)", id, a);
-	free (a);
+/*	free (a);*/
 	if (mysql_query (con, q) != 0)
 	{
 	    oops ("failed to insert refs", mysql_error (con));
@@ -448,7 +459,7 @@ db_read_body (int id)
 	exit (EXIT_FAILURE);
     }
     row = mysql_fetch_row (result);
-    body = stuff (result, row, 0);
+    body = stuff (result, row, 0, 0);
     mysql_free_result (result);
 
     sprintf (q, "update synopsis set status = 'read' where id='%d'", id);
@@ -527,12 +538,12 @@ db_read_message (int id)
 	exit (EXIT_FAILURE);
     }
     row = mysql_fetch_row (result);
-    m->mbox = stuff (result, row, 0);
-    m->status = stuff (result, row, 1);
-    m->senddate = stuff (result, row, 2);
-    m->sender = stuff (result, row, 3);
-    m->subject = stuff (result, row, 4);
-    m->id = stuff (result, row, 5);
+    m->mbox = stuff (result, row, 0, 0);
+    m->status = stuff (result, row, 1, 1);
+    m->senddate = stuff (result, row, 2, 2);
+    m->sender = stuff (result, row, 3, 3);
+    m->subject = stuff (result, row, 4, 4);
+    m->id = stuff (result, row, 5, 5);
     mysql_free_result (result);
 
     /*
@@ -571,7 +582,7 @@ db_read_message (int id)
 	exit (EXIT_FAILURE);
     }
     row = mysql_fetch_row (result);
-    m->references = stuff (result, row, 0);
+    m->references = stuff (result, row, 0, 6);
     mysql_free_result (result);
 
     /*
@@ -627,9 +638,9 @@ db_normalize ()
     {
 	char *blah;
 
-	blah = spawn_escape_string (row[0]);
+	blah = spawn_escape_string (row[0],0);
 	sprintf (q, "select id from synopsis where charid='%s'", blah);
-	free (blah);
+/*	free (blah);*/
 	if (mysql_query (con, q) != 0)
 	{
 	    oops ("couldn't grok the id during normalization", row[0]);

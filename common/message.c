@@ -125,6 +125,8 @@ message_build_from_buffer (char *buf)
     message *m;
     int x = 0, i;
 
+    if(buf==NULL)return NULL;
+    
     m = (message *) malloc (sizeof (message));
     memset (m, 0, sizeof (message));	/* fill out NULLs */
     while (!(buf[x] == 0 || (buf[x] == '\n' && buf[x + 1] == '\n')))

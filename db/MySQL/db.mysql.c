@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.31 2003/10/19 16:06:46 erik Exp $
+ * $Id: db.mysql.c,v 1.32 2003/10/19 16:24:51 erik Exp $
  */
 
 #include <stdio.h>
@@ -73,7 +73,6 @@ db_init (char *host, char *db, char *user, char *pass)
 	printf ("WHOA! %s\n", mysql_error (con));
 	return GEMS_FALSE;
     }
-    printf ("All good\n");
     return GEMS_TRUE;
 }
 

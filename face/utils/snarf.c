@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: snarf.c,v 1.14 2004/02/16 13:43:11 erik Exp $
+ * $Id: snarf.c,v 1.15 2004/05/27 00:18:45 erik Exp $
  */
 
 #include <stdio.h>
@@ -107,11 +107,13 @@ parse (char *buf, unsigned int size)
 int
 face_run (int argc, char **argv)
 {
-    int fd;
+    int fd, numrules;
     unsigned int size;
     char *buf;
+    rule *rules;
 
-    if (rule_init () == GEMS_FALSE)
+    rules = (rule *) db_fetch_rules ((int *) &numrules);
+    if (rule_init (rules, numrules) == GEMS_FALSE)
     {
 	printf (_("Failed to initialize ruleset\n"));
 	exit (EXIT_FAILURE);

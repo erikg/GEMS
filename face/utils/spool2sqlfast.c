@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: spool2sqlfast.c,v 1.4 2003/04/05 18:36:28 erik Exp $
+ * $Id: spool2sqlfast.c,v 1.5 2004/05/27 00:18:45 erik Exp $
  */
 
 #include <stdio.h>
@@ -55,12 +55,14 @@ face_run (int argc, char **margv)
 {
     message *mess;
     char *spoolname, *mbox, *buf;
-    int dirty = GEMS_FALSE, fd, i, j, s;
+    int numrules, dirty = GEMS_FALSE, fd, i, j, s;
+    rule *rules;
 
     spoolname = margv[1];
     buf = (char *) malloc (BUFSIZ);
 
-    if (rule_init () == GEMS_FALSE)
+    rules = (rule *) db_fetch_rules ((int *) &numrules);
+    if (rule_init (rules, numrules) == GEMS_FALSE)
     {
 	printf (_("Failed to initialize ruleset\n"));
 	exit (EXIT_FAILURE);

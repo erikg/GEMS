@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: spool2sql.c,v 1.8 2003/04/05 18:36:28 erik Exp $
+ * $Id: spool2sql.c,v 1.9 2004/05/27 00:18:45 erik Exp $
  */
 
 #include <stdio.h>
@@ -54,6 +54,8 @@ face_run (int argc, char **margv)
     void *list;
     message *mess;
     char *spoolname, *mbox;
+    rule *rules;
+    int numrules;
 
     /*
      * if(argc!=2){printf("this face requires the name of a spool\n%s
@@ -61,7 +63,8 @@ face_run (int argc, char **margv)
      */
     spoolname = margv[1];
 
-    if (rule_init () == GEMS_FALSE)
+    rules = (rule *) db_fetch_rules ((int *) &numrules);
+    if (rule_init (rules, numrules) == GEMS_FALSE)
     {
 	printf (_("Failed to initialize ruleset\n"));
 	exit (EXIT_FAILURE);

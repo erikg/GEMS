@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: rules.h,v 1.4 2004/02/01 18:23:06 erik Exp $
+ * $Id: rules.h,v 1.5 2004/05/27 00:18:45 erik Exp $
  */
 
 #ifndef __RULES_H
@@ -45,8 +45,8 @@ typedef struct _rule {
 /** a generic regex wrapper */
 int regex (char *, char *);
 
-/** load the rules and set them */
-int rule_init ();
+/** set the rules */
+int rule_init (rule *r, int nr);
 
 /** see which mbox this message belongs in */
 char *rule_check (message *);

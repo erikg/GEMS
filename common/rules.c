@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: rules.c,v 1.16 2003/10/19 16:11:04 erik Exp $
+ * $Id: rules.c,v 1.17 2004/05/27 00:18:45 erik Exp $
  */
 
 #include "rules.h"
@@ -40,11 +40,12 @@ static int numrules = 0;
 static regex_t *preg;
 
 int
-rule_init ()
+rule_init (rule *r, int nr)
 {
     int x;
 
-    rules = (rule *) db_fetch_rules (&numrules);
+    numrules = nr;
+    rules = (rule *) r;
     preg = (void *) malloc (sizeof (regex_t) * (numrules + 1));
     memset (preg, 0, sizeof (regex_t) * (numrules + 1));
     for (x = 0; x < numrules; x++)

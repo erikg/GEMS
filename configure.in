@@ -1,4 +1,4 @@
-dnl $Id: configure.in,v 1.32 2004/02/06 22:12:43 erik Exp $
+dnl $Id: configure.in,v 1.33 2004/02/27 00:08:28 erik Exp $
 
 AC_INIT(README)
 AC_CANONICAL_TARGET
@@ -150,7 +150,7 @@ AC_OUTPUT([
 	face/GTK/Makefile face/GTK/e/Makefile
 	face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile
 	face/GNOME2/Makefile face/GNOME2/o/Makefile
-	doc/Makefile gems.spec])
+	doc/Makefile gems.spec doc/doxygen.conf])
 
 dnl print out what we learned...
 echo -e \\n\\n

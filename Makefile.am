@@ -1,6 +1,6 @@
-# $Id: Makefile.am,v 1.7 2004/02/01 19:41:03 erik Exp $
+# $Id: Makefile.am,v 1.8 2004/02/27 00:08:28 erik Exp $
 
-# $Id: Makefile.am,v 1.7 2004/02/01 19:41:03 erik Exp $
+# $Id: Makefile.am,v 1.8 2004/02/27 00:08:28 erik Exp $
 
 SUBDIRS = po $(intl) include common receptor transmitter db face shell doc
 
@@ -31,3 +31,13 @@ lint:
 	make -C src lint
 indent:
 	make -C src indent
+
+docs:
+	doxygen doc/doxygen.conf
+	(cd doc/doxygen/latex && make)
+	dvips -f doc/doxygen/latex/refman.dvi > doc/@PACKAGE@-devmanual.ps
+	ps2pdf doc/@PACKAGE@-devmanual.ps doc/@PACKAGE@-devmanual.pdf
+
+test:
+	(cd tests && make test)
+

@@ -56,7 +56,7 @@ face_run (int argc, char **margv)
 	{
 	    m = db_read_message (msgs[j]->id);
 
-	    fprintf (fp, "%s%s", m->header, m->body);
+	    fprintf (fp, "\n%s%s", m->header, m->body);
 	    message_destroy (m);
 	    ++j;
 	}

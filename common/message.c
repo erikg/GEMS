@@ -185,7 +185,7 @@ message_build_from_buffer (char *buf)
 	    i++;
 	i++;
     }
-    if (m->replyto == NULL)
+    if (m->replyto == NULL && m->sender)
 	m->replyto = strdup (m->sender);
     return m;
 }

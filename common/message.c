@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: message.c,v 1.16 2004/05/30 22:51:15 erik Exp $
+ * $Id: message.c,v 1.17 2004/05/30 22:53:06 erik Exp $
  */
 
 #include <stdio.h>
@@ -249,30 +249,18 @@ message_destroy (message * m)
 {
     if (!m)
 	return GEMS_FALSE;
-    if (m->id)
-	free (m->id);
-    if (m->mbox)
-	free (m->mbox);
-    if (m->attachments)
-	free (m->attachments);
-    if (m->body)
-	free (m->body);
-    if (m->header)
-	free (m->header);
-    if (m->recipt)
-	free (m->recipt);
-    if (m->recvdate)
-	free (m->recvdate);
-    if (m->replyto)
-	free (m->replyto);
-    if (m->senddate)
-	free (m->senddate);
-    if (m->sender)
-	free (m->sender);
-    if (m->subject)
-	free (m->subject);
-    if (m->references)
-	free (m->references);
+    free (m->id);
+    free (m->mbox);
+    free (m->attachments);
+    free (m->body);
+    free (m->header);
+    free (m->recipt);
+    free (m->recvdate);
+    free (m->replyto);
+    free (m->senddate);
+    free (m->sender);
+    free (m->subject);
+    free (m->references);
 
     free (m);
     m = NULL;

@@ -21,14 +21,14 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.32 2003/10/19 16:24:51 erik Exp $
+ * $Id: db.mysql.c,v 1.33 2003/11/01 13:12:58 erik Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>		/* strcasecmp() */
 #include <ctype.h>
-#define USE_OLD_FUNCTIONS 1
+#include <dlfcn.h>
 #include <mysql/mysql.h>
 #include "defs.h"
 #include "message.h"
@@ -67,6 +67,7 @@ stuff (MYSQL_RES * result, MYSQL_ROW row, int x, int box)
 int
 db_init (char *host, char *db, char *user, char *pass)
 {
+    dlopen ("libmysqlclient.so", RTLD_LAZY);
     con = mysql_init (NULL);
     if (!mysql_real_connect (con, host, user, pass, db, 3306, NULL, 0))
     {
@@ -89,7 +90,7 @@ spawn_escape_string (char *in, int buf)
 	return NULL;
 
     /*
-     * x = (char *) malloc (2 * strlen (in) + 1); 
+     * x = (char *) malloc (2 * strlen (in) + 1);
      */
     mysql_escape_string (x, in, strlen (in));
     return x;
@@ -115,7 +116,7 @@ parse_date (char *in)
 	    month = x + 1;
 
     /*
-     * a = (char *) malloc (24); 
+     * a = (char *) malloc (24);
      */
 
     sprintf (a, "%04d-%02d-%02d %02d:%02d:%02d",
@@ -157,7 +158,7 @@ db_insert_msg (char *mboxname, message * m)
     mysql_free_result (result);
 
     /*
-     * 01 this can be table-ized or fixed in the db... 
+     * 01 this can be table-ized or fixed in the db...
      */
     sprintf (q, "select mbox from mmbox where mboxname='%s'", mboxname);
     if (mysql_query (con, q) != 0)
@@ -169,8 +170,9 @@ db_insert_msg (char *mboxname, message * m)
     row = mysql_fetch_row (result);
     mbox = atoi (row[0]);
     mysql_free_result (result);
+
     /*
-     * /01 
+     * /01
      */
 
     /*
@@ -190,7 +192,7 @@ db_insert_msg (char *mboxname, message * m)
     sprintf (q, "insert into header values (0,'%s','false')", a);
 
     /*
-     * free (a); 
+     * free (a);
      */
     if (mysql_query (con, q) != 0)
     {
@@ -209,13 +211,13 @@ db_insert_msg (char *mboxname, message * m)
     sprintf (q, "insert into body values (%ld,'%s','false')", id, a);
 
     /*
-     * free (a); 
+     * free (a);
      */
     if (mysql_query (con, q) != 0)
     {
 
 	/*
-	 * FILE *dump; 
+	 * FILE *dump;
 	 */
 
 	oops ("failed to insert body", NULL);
@@ -254,7 +256,7 @@ db_insert_msg (char *mboxname, message * m)
     sprintf (q, "insert into recipt values (%ld,'%s','to')", id, a);
 
     /*
-     * free (a); 
+     * free (a);
      */
     if (mysql_query (con, q) != 0)
     {
@@ -267,7 +269,7 @@ db_insert_msg (char *mboxname, message * m)
     sprintf (q, "insert into replyto values (%ld,'%s')", id, a);
 
     /*
-     * free (a); 
+     * free (a);
      */
     if (mysql_query (con, q) != 0)
     {
@@ -280,7 +282,7 @@ db_insert_msg (char *mboxname, message * m)
 	sprintf (q, "insert into refs values (%ld,'%s',NULL)", id, a);
 
 	/*
-	 * free (a); 
+	 * free (a);
 	 */
 	if (mysql_query (con, q) != 0)
 	{
@@ -707,7 +709,7 @@ db_normalize ()
 	sprintf (q, "select id from synopsis where charid='%s'", blah);
 
 	/*
-	 * free (blah); 
+	 * free (blah);
 	 */
 	if (mysql_query (con, q) != 0)
 	{

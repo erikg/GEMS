@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.pgsql.c,v 1.4 2004/02/02 23:27:40 erik Exp $
+ * $Id: db.pgsql.c,v 1.5 2004/02/14 19:41:28 erik Exp $
  */
 
 #include <libpq-fe.h>
@@ -82,6 +82,10 @@ db_addmbox_view (char *mbox, char *query)
 int
 db_dropmbox (char *mbox)
 {
+    char buf[BUFSIZ];
+    PGresult *res;
+    snprintf(buf,BUFSIZ,"delete from mbox where name=%s", mbox);
+    res = PGexec(con, buf);
     return;
 }
 
@@ -89,6 +93,10 @@ db_dropmbox (char *mbox)
 int
 db_flush (char *table)
 {
+    char buf[BUFSIZ];
+    PGresult *res;
+    snprintf(buf,BUFSIZ,"delete from %s", table);
+    res = PQexec(con, buf);
     return;
 }
 

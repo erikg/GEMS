@@ -73,15 +73,17 @@ putmail (GtkWidget * widget)
 }
 
 char *
-replyify (char *buf)
+replyify (synopsis * syn, char *buf)
 {
     char *newbuf;
     char tbuf[1024];
     void *list;
     int s = 0, x = 0, len;
-printf("buf: %x\n", buf);
+
     len = strlen (buf);
     list = ll_newlist ();
+    snprintf (tbuf, strlen (syn->sender) + 8, "%s said:\n", syn->sender);
+    ll_addnode (list, tbuf);
     while (x < len)
     {
 	if (buf[x] == '\n')
@@ -93,10 +95,12 @@ printf("buf: %x\n", buf);
 	}
 	x++;
     }
+
+    snprintf(tbuf, strlen(getenv("HOME"))+strlen("/.signature")+1, "%s/.signature", getenv("HOME")); 
+    printf("tbuf: %s\n", tbuf);
+    list = ll_append(list, read_file_to_list(tbuf));
     free (buf);
     newbuf = stringinate (list);
     ll_clearlist (list);
-//    if(list)
-//      free (list);
     return newbuf;
 }

@@ -387,26 +387,18 @@ on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
     GtkWidget *from, *to, *subj, *date, *recipt, *body, *comp, *widget;
     char *shtuff, *shtuff2, buf[1024];
 
-    widget = lookup_widget (gems, "ctree1");
-
-    if (widget != NULL)
-    {
-	n = gtk_ctree_node_nth (GTK_CTREE (widget),
-				(&(GTK_CTREE (widget)->clist))->focus_row);
-	s = (synopsis *) gtk_ctree_node_get_row_data (GTK_CTREE (widget), n);
-
-	shtuff = replyify ((char *) db_read_body (s->id));
-    } else
-	return;
-
+    if((widget = lookup_widget (gems, "ctree1"))==NULL)return;
     comp = create_compose ();
-
     from = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry1");
     // to = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry5");
     date = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry2");
     subj = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry6");
     recipt = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry4");
     body = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "text2");
+
+	n = gtk_ctree_node_nth (GTK_CTREE (widget), (&(GTK_CTREE (widget)->clist))->focus_row);
+	s = (synopsis *) gtk_ctree_node_get_row_data (GTK_CTREE (widget), n);
+	shtuff = replyify (s,(char *) db_read_body (s->id));
 
     gtk_entry_set_text (GTK_ENTRY (from), s->sender);
 	/* if(!strncasecmp("re: ", s->subject, 4)) */
@@ -416,6 +408,8 @@ on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
 	sprintf (buf, "Re: %s", s->subject);
     gtk_entry_set_text (GTK_ENTRY (subj), buf);
     gtk_entry_set_text (GTK_ENTRY (date), s->date);
+
+
     gtk_text_freeze (GTK_TEXT (body));
     gtk_text_set_point (GTK_TEXT (body), 0);
     gtk_text_forward_delete (GTK_TEXT (body),

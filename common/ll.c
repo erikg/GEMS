@@ -19,6 +19,7 @@ typedef struct alist {
     node *last;
 } list;
 
+
 /*
  * @null@ 
  */
@@ -185,3 +186,15 @@ ll_end (void *n)
 	return GEMS_TRUE;
     return GEMS_FALSE;
 }
+
+void *
+ll_append (void *lista, void *listb)
+{
+    if (lista == NULL)
+	return listb;
+    if (listb == NULL)
+	return lista;
+    ((list *)lista)->last->next = ((list *)listb)->head;
+    return lista;
+}
+

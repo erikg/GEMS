@@ -41,4 +41,8 @@ extern int ll_empty (void *list);
  */
 extern int ll_end (void *list);
 
+/** append two lists. Damages lista. */
+extern void *ll_append (void *lista, void *listb);
+
+
 #endif

@@ -1,0 +1,28 @@
+From root Sun Jan 23 16:13:34 2000
+Return-Path: <root>
+Received: by fenris
+	via send-mail from stdin
+	id <m12CVGI-000xyNC@fenris> (Debian Smail3.2.0.102)
+	for erik; Sun, 23 Jan 2000 16:13:34 -0600 (CST) 
+Message-Id: <m12CVGI-000xyNC@fenris>
+Date: Sun, 23 Jan 2000 16:13:34 -0600 (CST)
+From: root (root)
+To: erik
+Subject: test
+
+test
+
+From root Sun Jan 23 16:14:29 2000
+Return-Path: <root>
+Received: by fenris
+	via send-mail from stdin
+	id <m12CVHB-000xyNC@fenris> (Debian Smail3.2.0.102)
+	for erik; Sun, 23 Jan 2000 16:14:29 -0600 (CST) 
+Message-Id: <m12CVHB-000xyNC@fenris>
+Date: Sun, 23 Jan 2000 16:14:29 -0600 (CST)
+From: root (root)
+To: erik
+Subject: another test
+
+test 2
+

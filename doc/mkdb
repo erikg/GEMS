@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo y | mysqladmin -ppassword drop root_mail
+mysqladmin -ppassword create root_mail
+

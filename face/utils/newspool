@@ -1,0 +1,32 @@
+From erik Tue May 30 14:11:50 2000
+Return-Path: <erik>
+Received: by fenris
+	via send-mail from stdin
+	id <m12wrQc-000y28C@fenris> (Debian Smail3.2.0.102)
+	for erik; Tue, 30 May 2000 14:11:50 -0500 (CDT) 
+Message-Id: <m12wrQc-000y28C@fenris>
+Date: Tue, 30 May 2000 14:11:50 -0500 (CDT)
+From: erik
+To: erik
+Subject: test
+
+this is a test
+
+From erik Tue May 30 17:13:43 2000
+Return-Path: <erik>
+Received: by fenris
+	via send-mail from stdin
+	id <m12wuGd-000xyOC@fenris> (Debian Smail3.2.0.102)
+	for erik; Tue, 30 May 2000 17:13:43 -0500 (CDT) 
+Message-Id: <m12wuGd-000xyOC@fenris>
+Date: Tue, 30 May 2000 17:13:43 -0500 (CDT)
+From: erik
+To: erik
+Subject: test2
+
+this is
+yes
+another
+test...
+
+

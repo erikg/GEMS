@@ -1,0 +1,90 @@
+AC_INIT(README)
+AM_INIT_AUTOMAKE(gems, 0.0)
+
+AC_CANONICAL_HOST
+
+ALL_LINGUAS=""
+
+AM_PROG_LIBTOOL
+AC_PROG_MAKE_SET
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_INSTALL
+AC_ISC_POSIX
+
+AC_C_CONST
+AC_STDC_HEADERS
+
+AC_FUNC_ALLOCA
+
+CFLAGS="$CFLAGS -I\$(top_srcdir)/include"
+
+AM_GNU_GETTEXT
+
+MYSQL=MySQL
+POSTGRESQL=
+
+AM_PATH_GTK(1.1.0,GTK=GTK,GTK=)
+
+GNOME=
+GNOME_INIT_HOOK(GNOME=GNOME,,)
+
+CURSES=
+CURSEMAKE=
+dnl AC_CHECK_CURSES
+dnl AM_CONDITIONAL(HAS_CURSES, test "$has_curses" = true)
+dnl if HAS_CURSES
+dnl CURSES=curses
+dnl CURSEMAKE=face/curses/Makefile
+dnl fi
+
+dnl the DBI's
+AC_SUBST(MYSQL)
+AC_SUBST(POSTGRESQL)
+
+dnl the faces
+AC_SUBST(GTK)
+AC_SUBST(GNOME)
+AC_SUBST(CURSES)
+
+MY_LDFLAGS=
+MY_LDADD=
+AC_SUBST(MY_LDFLAGS)
+AC_SUBST(MY_LDADD)
+
+AC_OUTPUT([
+Makefile po/Makefile.in intl/Makefile common/Makefile db/Makefile face/Makefile
+face/utils/Makefile shell/Makefile include/Makefile
+receptor/Makefile transmitter/Makefile
+db/MySQL/Makefile
+face/GTK/Makefile face/GTK/e/Makefile
+face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile
+])
+
+dnl print out what we learned...
+echo -e \\n\\n
+echo "==============================================================================="
+echo -n "DBMS's: "
+if test "$MYSQL" = "MySQL"; then
+echo -n "MySQL "
+fi
+if test "$POSTGRESQL" = "PostgreSQL"; then
+echo -n "PostgreSQL "
+fi
+echo
+echo -n "Face sets: "
+if test "$GTK" = "GTK"; then
+echo -n "GTK+ "
+fi
+if test "$GNOME" = "GNOME"; then
+echo -n "GNOME "
+fi
+if test "$CURSES" = "curses"; then
+echo -n "curses"
+fi
+echo
+echo
+echo "Installing to: $prefix"
+echo
+echo "==============================================================================="
+

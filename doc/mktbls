@@ -1,0 +1,12 @@
+create table attachments (id int unsigned not null, attachment longtext not null);
+create table body        (id int unsigned primary key not null, body longtext not null);
+create table header      (id int unsigned auto_increment not null primary key, header text not null);
+create table mmbox       (mbox int primary key not null auto_increment, mboxname text not null);
+create table preferences (name text not null, value text not null);
+create table synopsis    (id int unsigned primary key not null, mbox int not null, senddate date not null, sender text not null, subject text not null);
+create table recipt      (id int unsigned not null, recipt text not null, type tinytext not null);
+create table refs  (id int unsigned not null, refs text not null, number int unsigned not null);
+create table replyto	 (id int unsigned not null, replyto tinytext not null);
+insert into mmbox values (0,'inbox');
+create table rules       (sort int(10) unsigned, name text, regex text, mbox text, peice enum('Message','Body','Header','Subject','From','Recipients','Sender'));
+

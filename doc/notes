@@ -1,0 +1,27 @@
+emails start with "^From "    (note the space)
+headers end with an empty line.
+
+*****************************
+James [on his mailserver] wrote:
+
+> If i'm playing round with user's mailboxes, do i need to somehow lock
+> them?
+
+Yes.
+
+When manipulating mail spools, you should generally use both a
+lockfile and fcntl().
+
+To create a lockfile, create a file in the spool directory, link() it
+to <username>.lock, and unlink() the original. This is the only method 
+which is reliable over NFS.
+
+As a shortcut, you can use the `lockfile' program which is supplied
+with procmail.
+
+-- 
+Glynn Clements <glynn@sensei.co.uk>
+******************************
+
+
+

@@ -1,0 +1,172 @@
+Jan 23, 2000:
+	started
+	researched spool format, RFC: 821 822 974 1123 1425 1651 1869
+	Designed tables
+	Built crude spool reader, splits emails correctly
+	Built linked list object, for reading files in without truncating or
+		running the system out of memory
+	Installed mysql shtuff to learn later :)
+	Blew up my mail spool, going to start using a dummy account to test on
+	made a 'message' struct, finally got things being pushed into it right
+	it connects and disconnects from the db correctly
+	spool2sql inserts about half the info
+	showmail correctly shows all info (parsing is correct) :)
+	made a util to flush the tables (cleanup between trial runs)
+	~10000 emails takes 30 seconds processor time on my cyrix 120 to parse
+
+	root@fenris /home/devel/mail# cat *.[ch] | wc -l
+	    586
+
+Jan 24, 2000:
+	added 'stringinate', it now dumps 'header' and 'body' fields in :)
+	fixed a segfault occurring in hefty parses
+	fixed memory oops when dealing with massive emails
+	lots of heavy testing (12,000 emails, 45 megs...)
+
+Jan 25, 2000:
+	celebrated my fiances b-day :)
+	fixed a bug where a few subjects, headers, and a lot of bodies were NOT
+		making it into the db, had to add the escape shtuff
+	more heavy testing
+	
+	712 lines
+Jan 26/27, 2000:
+	explored 'glade' some, experimented with a few looks
+
+Jan 28, 2000:
+	started on the java swing FE
+
+Jan 31, 2000:
+	over the last few days, I played with glade and mysql some.
+	To use a tool like glade, a thorough UI spec should exist... :/
+	MySQL lacks some critical features, like subselects.
+	Postgresql supports 'large objects' as well as subselects, which means
+		it'd be a better choice. Must now convert my utils to postgres
+
+Feb 05, 2000:
+	added another table, tried to adjust the java to handle it
+
+Feb 06, 2000:
+	woke up and sed (my betta) was dead :(
+	redid the tables
+	updated the utils and java to match
+	lots of bugfixes and work in utils to make 'em robust/correct
+	lots of work on tricky date handling in headers
+
+Feb 08, 2000:
+	did some changing to the tables and the utils, now stored 'reference'
+	profiling on the utils, I think malloc() is my bottleneck
+	scrapping the java cli project and stopping the java gui project.
+	restructured directories
+	set up automake/autoconf/libtool shtuff
+	some abuse with lint, I'd like to have everything lint clean...
+
+Feb 10, 2000:
+	still fighting automake/autoconf... 
+	now planning on making dbi's and ui's as .so plugins
+
+Feb 15, 2000:
+	spent the last few days making a 'shell', converting to the .so plugins,
+		and setting up a pref file "~/.bmailrc"
+Feb 19, 2000:
+	still struggling with the library faces :/ GTK loads, GNOME won't
+	got gnome fixed, was a link time oops that didn't produce an error...
+	got the face talking to the dbi, very cool
+	realized the mysql dbi is incomplete, gotta trim up on that
+	trying to figure out how to use glade produced source...
+
+Feb 20-24, 2000:
+	a lot of work on the shell procedure, passing stuff to the faces
+	updated all the faces for the new shell procedure :)
+	bugfixes all over the common stuff and dbi, spool2sql works again
+	lots of glade work for gnome, and lots of gluing the pieces together
+	pulls 1000 emails really fast ...
+	hacked the glade xml file to allow the control I need. I should talk
+		to the glade folks about making a 'workspace' where UI's can
+		be put together without needing a window. :/
+	
+Feb 27:
+	started on the second GNOME ui, GNOME_o. Kinda outlookish, it's ugly
+		but it's internally much simpler than GNOME_e.
+
+Feb 29:
+	been fighting ctree's.
+	lots of small details being plugged in, becoming a fairly capable reader	column sorting
+	'prev/next' buttons and keys
+	up/down controls mapped to body
+
+Mar 1 - Mar 11:
+	way past deadlines. Made up a sheet of todo's.
+	Fought long and hard with an alternative LL implementation, and threw
+		it away. :/ Fixed the current one.
+	Major bughunt went on
+	Lots of memleak fixes. Sucked in a 65 meg spool without leaking :)
+
+Mar 12:
+	DB normalization and message threading :)
+	added the compose window, popup menu for mboxes, couple dialog boxes
+	working at plugging the buttons into the right actions
+
+Mar 13:
+
+Mar 19:
+	got the regex rules working, nifty
+
+Mar 20:
+	added create/delete mbox capabilities, all plugged in.
+Mar 21:
+	added preferences to the db
+	GNOME_o loads preferences
+	GNOME_o saves preferences automagically :)
+Mar 29:
+	been working on the rules
+	started manual today
+
+May 13:
+	back on the project. Between the manual and school, had no time.
+	picked up on the rules, GNOME likes rules now, spool2sql likes 'em, too
+	got a new betta a while back. This one's white, and seems tamer. My
+	  plocastymous (awk) isn't taking shit from him. His working name is
+	  424317, until I figure out a good name :) I got a new fishie, I got
+	  my angel, I got a new amp in my truck, life is good :) If only I had
+	  a job that didn't pay pittance...
+	database normalization takes too long with lots of email in the db
+
+May 15:
+	took my statistics final today... that's it for math. :)
+	the big bottleneck is ll_addnode() still (profiled it)
+	fixed a date oops (had to do with case sensitivity)
+	lint is being problematic. sweet tool, tho
+
+May 23:
+	adjusted tables to mark the emails 'status' (read, unread, marked, ...)
+	mailbox list now has several automatic sub-boxes, per status
+	status is correctly handled by mboxes
+	messages are automatically marked 'read' when read (therefore moved)
+	drafted a hefty TODO list.
+May 24:
+	Changed gtk_widget_show() to gtk_widget_realize() so it starts cleaner
+	mboxs now knows how many unread messages are in a mailbox
+	mboxes with unread messages are displayed in a different color
+
+May 28:
+	found reason for segfault on exit, commented out line in shell.c
+
+May 30:
+	modified spool read so it doesn't lose info
+	cleaned up normalization some... needs more work. Especially efficiency
+	created normalization face
+	tested with 150 megs of spool...
+
+May 31:
+	rebuilt for profiling, running some big spools thru...
+
+Aug27:
+	ahhh, the joy of neglect :) Some minor bug fixes in the face
+	here's a quick todo list
+		* smtp transmitter
+		* local spool receiver
+		* pop3 receiver
+		* mime
+	Everything is now called 'gems'. s/bmail/gems/ everywhere
+

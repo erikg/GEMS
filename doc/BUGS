@@ -1,0 +1,8 @@
+common:
+	* ll is slow and I think it leaks.
+
+face/GNOME/o:
+	* the next/prev buttons/shortcuts leave lines in the mail list ctree
+	* next/prev buttons don't clear entire list, just the one it was on
+
+

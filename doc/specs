@@ -1,0 +1,29 @@
+rules to place in mbox
+compose
+reply
+forward
+check spool/pop3/imap
+file (put mail in folder)
+delete
+print
+view
+edit message
+quit
+save config
+mark read/unread
+signature
+
+pgpsign
+pgpverify
+pgpdecode
+
+read next
+read previous
+
+attach view
+attach save
+attach save as
+attach print
+attach view using
+
+uudecode?

@@ -1,0 +1,40 @@
+mail reader/composer that uses an SQL database to store mail. Several frontends,
+including gtk+, gnome, curses, java, possibly perl cgi or php. Will support
+threading, searching, archiving, accurate parsing, accurate mail contruction,
+smtp, sendmail, maybe pop3 and imap down the road.
+
+Backend will be the SQL database (mysql and postgres will be tested).
+Frontends will be the bulk of the work.
+
+milestones:
+	tables: figure out what tables there will be and their schema
+	utils: small programs to translate between mh and the db (IE, a utility
+		to move a spool into the tables, and a utility to move the
+		tables into a mail spool)
+	java swing FE: simple graphical interface to start working out UI 
+		details.
+	java CLI FE: figure out how to do it without pictures and clicking
+	gnome FE: for me to use.
+	gtk+ FE: backport of gnome.
+	curses FE: for when I telnet in
+	web interface: for losers :)
+
+why? jeff waddell said something about integrating sql support into pine. I've
+been looking for a good mail reader/composer and have been using xfmail (I've 
+already tried pine and mutt, tyvm), and it craps out with like 10,000 emails
+in a folder. It also craps out on mh archives, misinterpretting the 'From' in
+some dumbasses responses. Instead of learning xfmail and fixing it, I figured
+I'd start my own and use sql to handle the ugly stuff :)
+
+date started:  Jan 23, 2000
+      expected timescale
+tables:        Jan 23, 2000
+utils:         Feb 01, 2000
+Java Swing FE: Feb 07, 2000
+Java CLI FE:   Feb 14, 2000
+gnome FE:      Feb 20, 2000
+gtk+ FE:       Feb 22, 2000
+curses FE:     Mar 14, 2000    I don't know curses
+web interface: Mar 20, 2000
+
+

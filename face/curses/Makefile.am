@@ -1,0 +1,2 @@
+SUBDIRS = CURSES_p
+

@@ -1,0 +1,134 @@
+DROP DATABASE root_mail;
+CREATE DATABASE root_mail;
+use root_mail;
+
+CREATE TABLE attachments (
+  id int(10) unsigned DEFAULT '0' NOT NULL,
+  attachment longtext NOT NULL
+);
+
+
+
+CREATE TABLE body (
+  id int(10) unsigned DEFAULT '0' NOT NULL,
+  body longtext NOT NULL,
+  PRIMARY KEY (id)
+);
+
+
+
+CREATE TABLE header (
+  id int(10) unsigned DEFAULT '0' NOT NULL auto_increment,
+  header text NOT NULL,
+  PRIMARY KEY (id)
+);
+
+
+
+CREATE TABLE mmbox (
+  mbox int(11) DEFAULT '0' NOT NULL auto_increment,
+  mboxname text NOT NULL,
+  PRIMARY KEY (mbox)
+);
+
+
+INSERT INTO mmbox VALUES (1,'inbox');
+INSERT INTO mmbox VALUES (2,'sent');
+INSERT INTO mmbox VALUES (3,'trash');
+INSERT INTO mmbox VALUES (4,'drafts');
+INSERT INTO mmbox VALUES (23,'opengl_game_c');
+INSERT INTO mmbox VALUES (6,'LGDC');
+INSERT INTO mmbox VALUES (7,'LGDC-web');
+INSERT INTO mmbox VALUES (8,'SpaceGame');
+INSERT INTO mmbox VALUES (9,'bmud');
+INSERT INTO mmbox VALUES (10,'clanlib-cvs');
+INSERT INTO mmbox VALUES (11,'clanlib-dev');
+INSERT INTO mmbox VALUES (12,'clanlib-users');
+INSERT INTO mmbox VALUES (13,'crystal');
+INSERT INTO mmbox VALUES (14,'gnome-dev');
+INSERT INTO mmbox VALUES (15,'gnome-gui');
+INSERT INTO mmbox VALUES (16,'gnome-list');
+INSERT INTO mmbox VALUES (17,'gtk-app-dev');
+INSERT INTO mmbox VALUES (18,'gtk-dev');
+INSERT INTO mmbox VALUES (19,'gtk-list');
+INSERT INTO mmbox VALUES (20,'jobs');
+INSERT INTO mmbox VALUES (21,'kidsgames');
+INSERT INTO mmbox VALUES (22,'luc');
+INSERT INTO mmbox VALUES (24,'opengl_game_l');
+INSERT INTO mmbox VALUES (25,'pp-dev');
+INSERT INTO mmbox VALUES (26,'pp-users');
+INSERT INTO mmbox VALUES (27,'private');
+INSERT INTO mmbox VALUES (28,'xracer');
+
+CREATE TABLE preferences (
+  name text NOT NULL,
+  value text NOT NULL
+);
+
+
+CREATE TABLE recipt (
+  id int(10) unsigned DEFAULT '0' NOT NULL,
+  recipt text NOT NULL,
+  type tinytext NOT NULL
+);
+
+
+
+CREATE TABLE refs (
+  id int(10) unsigned DEFAULT '0' NOT NULL,
+  refs text,
+  childof int(10) unsigned
+);
+
+
+
+CREATE TABLE replyto (
+  id int(10) unsigned DEFAULT '0' NOT NULL,
+  replyto text NOT NULL
+);
+
+
+
+CREATE TABLE rules (
+  sort int(10) unsigned DEFAULT '0' NOT NULL,
+  name text,
+  regex text,
+  mbox text,
+  peice enum('Message','Body','Header','Subject','From','Recipients','Sender')
+);
+
+
+INSERT INTO rules VALUES (0,'bmud','[Bb][Mm][Uu][Dd]','bmud','Subject');
+INSERT INTO rules VALUES (1,'LGDC','linuxgames@sunsite.auc.dk','LGDC','Recipients');
+INSERT INTO rules VALUES (2,'lgdc-web','lgdc-web','LGDC-web','Recipients');
+INSERT INTO rules VALUES (3,'jobs','Developers.Net Job','jobs','Header');
+INSERT INTO rules VALUES (4,'luc','luc-','luc','Subject');
+INSERT INTO rules VALUES (5,'gnome-dev','gnome-devel-list@gnome','gnome-dev','Header');
+INSERT INTO rules VALUES (6,'gnome-gui','gnome-gui-list','gnome-gui','Header');
+INSERT INTO rules VALUES (7,'gnome-list','gnome-list@','gnome-list','Header');
+INSERT INTO rules VALUES (8,'gtk-app-dev','gtk-app-devel-list','gtk-app-dev','Header');
+INSERT INTO rules VALUES (9,'gtk-dev','gtk-devel-list','gtk-dev','Header');
+INSERT INTO rules VALUES (10,'gtk-list','gtk-list','gtk-list','Header');
+INSERT INTO rules VALUES (11,'xracer','xracer@annexia','xracer','Header');
+INSERT INTO rules VALUES (12,'clanlib-cvs','clanlib_cvs','clanlib-cvs','Header');
+INSERT INTO rules VALUES (13,'clanlib-user','clanlib-user','clanlib-users','Header');
+INSERT INTO rules VALUES (14,'clanlib-devel','clanlib-devel','clanlib-dev','Header');
+INSERT INTO rules VALUES (15,'ogl_gamedev_c','OGL-GAMEDEV-C','opengl_game_c','Header');
+INSERT INTO rules VALUES (16,'ogl_gamedev_l','OGL-GAMEDEV-L','opengl_game_l','Header');
+INSERT INTO rules VALUES (17,'kidsgames','kidsgames','kidsgames','Header');
+INSERT INTO rules VALUES (18,'pp-users','prettypoly-users','pp-users','Header');
+INSERT INTO rules VALUES (19,'pp-dev','prettypoly-dev','pp-dev','Header');
+
+CREATE TABLE synopsis (
+  id int(10) unsigned DEFAULT '0' NOT NULL,
+  mbox int(11) DEFAULT '0' NOT NULL,
+  status set('read','marked') DEFAULT '' NOT NULL,
+  senddate datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+  sender text NOT NULL,
+  subject text NOT NULL,
+  charid text NOT NULL,
+  PRIMARY KEY (id)
+);
+
+
+

@@ -1,0 +1,49 @@
+*** stuff to finish ***
+
+db drivers:
+	testing
+	documentation
+
+faces:
+	GNOME_o
+		interface to receptors
+		interface to transmitters
+		dnd
+		colorcode mboxes
+		testing
+		documentation
+
+common:
+	testing
+	documentation
+		
+
+*** stuff to implement (from scratch) ***
+
+db drivers:
+	postgresql
+	mh
+	mbox (spool)
+
+faces:
+	GNOME_e
+	GTK_o
+	GTK_e
+	curses_p
+	curses_m
+	KDE_e ?
+	KDE_o ?
+
+receptors:
+	SMTP interception
+	POP3
+	imap4
+	spool
+
+transmitters:
+	sendmail (system() call/pipe I think)
+	SMTP
+	
+automatic configuration
+lotsa help files/documentation
+

@@ -1,0 +1,8 @@
+lib_LTLIBRARIES = libgems_face.gtk_e.la
+
+libgems_face_gtk_e_la_SOURCES =  main.c
+ 
+INCLUDES =  @GTK_CFLAGS@ -I$(toplevel_dir)/intl -DLOCALEDIR=\"$(localedir)\" -DPACKAGE_LOCALE_DIR=\"$(localedir)\"
+LDFLAGS  = -rdynamic @GTK_LIBS@
+LDDADD   = @INTLLIBS@
+localedir= $(datadir)/locale

@@ -1,0 +1,7 @@
+common/spoolread.c
+common/stringinate.c
+db/MySQL/db.mysql.c
+face/utils/cleantables.c
+face/utils/showmail.c
+face/utils/spool2sql.c
+face/utils/sql2spool.c

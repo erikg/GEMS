@@ -1,0 +1,40 @@
+attachments	id attachment	
+body		id body 	raw body info
+header		id header	raw header info
+mbox		id mbox		says which mailbox which email is in
+mmbox		mbox		lists the possibly mailboxes
+preferences	name value	system preferences...
+recipt		id recipt type	recipient list
+recvdate	id recvdate	date email was received
+replyto		id replyto	email to reply to
+senddate	id senddate	date email claims it was sent
+sender		id sender	original sender
+subject		id subject	emails subject
+
+
+new tables, feb 06 2000
+
+id and mbox are ints, the rest is text
+
+attachments	id attachment
+body		id body
+header		id header
+id		id idname
+mmbox		mbox mboxname
+preferences	name value
+synopsis	id mbox senddate sender subject charid
+recipt		id recipt type
+refs		id refs number
+replyto		id replyto
+rules           order regex mbox
+
+create table attachments (id int unsigned not null, attachment longtext not null);
+create table body        (id int unsigned primary key not null, body longtext not null);
+create table header      (id int unsigned auto_increment not null primary key, header text not null);
+create table mmbox       (mbox int primary key not null auto_increment, mboxname text not null);
+create table preferences (name text not null, value text not null);
+create table synopsis    (id int unsigned primary key not null, mbox int not null, senddate datetime not null, sender text not null, subject text not null, charid text not null);
+create table recipt      (id int unsigned not null, recipt text not null, type tinytext not null);
+create table refs        (id int unsigned not null, refs text, childof int unsigned);
+create table replyto	 (id int unsigned not null, replyto text not null);
+create table rules       (sort int unsigned not null, regex text, mbox text, peice text);

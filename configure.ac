@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.7 2005/04/02 20:19:55 erik Exp $
+dnl $Id: configure.ac,v 1.8 2005/04/02 20:54:44 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -175,15 +175,16 @@ AC_SUBST(MY_LDFLAGS)
 AC_SUBST(MY_LDADD)
 
 AC_CONFIG_FILES([
-	Makefile po/Makefile.in intl/Makefile common/Makefile db/Makefile face/Makefile
-	face/utils/Makefile shell/Makefile include/Makefile
-	receptor/Makefile transmitter/Makefile
-	db/MySQL/Makefile db/PostgreSQL/Makefile
+	Makefile common/Makefile receptor/Makefile transmitter/Makefile shell/Makefile include/Makefile
+	gems.spec doc/Makefile doc/doxygen.conf
+	po/Makefile.in intl/Makefile 
+	db/Makefile db/MySQL/Makefile db/PostgreSQL/Makefile
+	face/Makefile face/utils/Makefile
 	face/GTK/Makefile face/GTK/e/Makefile
 	face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile
 	face/GNOME2/Makefile face/GNOME2/o/Makefile
 	face/curses/Makefile face/curses/CURSES_p/Makefile
-	doc/Makefile gems.spec doc/doxygen.conf])
+	])
 AC_OUTPUT
 
 dnl print out what we learned...

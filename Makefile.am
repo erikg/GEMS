@@ -1,4 +1,4 @@
-# $Id: Makefile.am,v 1.10 2004/05/21 13:28:40 erik Exp $
+# $Id: Makefile.am,v 1.11 2005/04/02 20:20:27 erik Exp $
 
 if INTL
 intl = intl
@@ -6,7 +6,7 @@ endif
 
 SUBDIRS = $(intl) include common receptor transmitter db face shell doc
 
-EXTRA_DIST=ChangeLog rpm-$(PACKAGE).spec
+EXTRA_DIST=ChangeLog $(PACKAGE).spec
 
 .PHONY : doc
 doc:

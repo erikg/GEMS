@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: cull.c,v 1.1 2003/04/19 13:44:14 erik Exp $
+ * $Id: cull.c,v 1.2 2003/04/19 18:08:13 erik Exp $
  */
 
 #include <stdio.h>
@@ -52,35 +52,9 @@ oops (char *a, char *b)
 int
 face_run (int argc, char **margv)
 {
-    void *list;
-    message *mess;
-    char *spoolname, *mbox;
-
-    /*
-     * if(argc!=2){printf("this face requires the name of a spool\n%s
-     * spool2sql -- <spool>\n\n",argv[0]);}
-     */
-
-    if (rule_init () == GEMS_FALSE)
-    {
-	printf (_("Failed to initialize ruleset\n"));
-	exit (EXIT_FAILURE);
-    }
-    /*
-     * do shit. 
-     */
-    receive_pop3 ("freya", 110, "test", "tester");
-
-    if (rule_close () == GEMS_FALSE)
-    {
-	printf (_("Failed closing ruleset\n"));
-    }
-    /*
-     * close out the spool 
-     */
-    if (close_spool () != GEMS_TRUE)
-	printf (_("Couldn't close the spool\n"));
-
+    printf("culling\n");
+    db_purge_empty();
+    
     printf ("Normalizing\n");
     if (db_normalize () == GEMS_FALSE)
 	printf (_("Failed to normalize the db"));

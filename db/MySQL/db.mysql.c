@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.28 2003/04/18 19:24:20 erik Exp $
+ * $Id: db.mysql.c,v 1.29 2003/04/19 18:08:13 erik Exp $
  */
 
 #include <stdio.h>
@@ -889,4 +889,120 @@ db_syncharhash (void)
 		mysql_query (con, q);
 	    }
       }
+}
+
+void
+db_purge_empty ()
+{
+    MYSQL_RES *res1, *res2;
+    MYSQL_ROW row1, row2;
+    int max, i = 0, j;
+
+    if (mysql_query (con, "select id from body where body is NULL or body=''")
+	!= 0)
+      {
+	  oops ("MySQL::db_purge_empty", "Failed");
+	  return;
+      }
+    res1 = mysql_store_result (con);
+    while ((row1 = mysql_fetch_row (res1)) != NULL)
+      {
+	  ++i;
+	  sprintf (q, "delete synopsis where id=%s", row1[0]);
+	  mysql_query (con, q);
+	  sprintf (q, "delete header where id=%s", row1[0]);
+	  mysql_query (con, q);
+	  sprintf (q, "delete body where id=%s", row1[0]);
+	  mysql_query (con, q);
+      }
+    mysql_free_result (res1);
+    printf ("%d entries removed\n", i);
+    i = 0;
+    printf ("Culling out synopsis where no body exists\n");
+    if (mysql_query (con, "select id from synopsis") != 0)
+      {
+	  oops ("MySQL::db_purge_empty", "Failed");
+	  return;
+      }
+    res1 = mysql_store_result (con);
+    while ((row1 = mysql_fetch_row (res1)) != NULL)
+      {
+	  char q[1024];
+
+	  sprintf (q, "select id from body where id=%s", row1[0]);
+	  mysql_query (con, q);
+	  res2 = mysql_store_result (con);
+	  if (mysql_num_rows (res2) == 0)
+	    {
+		sprintf (q, "delete synopsis where id=%s", row1[0]);
+		mysql_query (con, q);
+		sprintf (q, "delete header where id=%s", row1[0]);
+		mysql_query (con, q);
+		sprintf (q, "delete body where id=%s", row1[0]);
+		mysql_query (con, q);
+		++i;
+	    }
+	  mysql_free_result (res2);
+      }
+    mysql_free_result (res1);
+    printf ("%d entries removed\n", i);
+    i = 0;
+    printf ("Culling out header where no body exists\n");
+    if (mysql_query (con, "select id from body") != 0)
+      {
+	  oops ("MySQL::db_purge_empty", "Failed");
+	  return;
+      }
+    res1 = mysql_store_result (con);
+    while ((row1 = mysql_fetch_row (res1)) != NULL)
+      {
+	  char q[1024];
+
+	  sprintf (q, "select id from body where id=%s", row1[0]);
+	  mysql_query (con, q);
+	  res2 = mysql_store_result (con);
+	  if (mysql_num_rows (res2) == 0)
+	    {
+		sprintf (q, "delete synopsis where id=%s", row1[0]);
+		mysql_query (con, q);
+		sprintf (q, "delete header where id=%s", row1[0]);
+		mysql_query (con, q);
+		sprintf (q, "delete body where id=%s", row1[0]);
+		mysql_query (con, q);
+		++i;
+	    }
+	  mysql_free_result (res2);
+      }
+    mysql_free_result (res1);
+    printf ("%d entries removed\n", i);
+    i = 0;
+    printf ("Culling out body where no synopsis exists\n");
+    if (mysql_query (con, "select id from synopsis") != 0)
+      {
+	  oops ("MySQL::db_purge_empty", "Failed");
+	  return;
+      }
+    res1 = mysql_store_result (con);
+    while ((row1 = mysql_fetch_row (res1)) != NULL)
+      {
+	  char q[1024];
+
+	  sprintf (q, "select id from body where id=%s", row1[0]);
+	  mysql_query (con, q);
+	  res2 = mysql_store_result (con);
+	  if (mysql_num_rows (res2) == 0)
+	    {
+		sprintf (q, "delete synopsis where id=%s", row1[0]);
+		mysql_query (con, q);
+		sprintf (q, "delete header where id=%s", row1[0]);
+		mysql_query (con, q);
+		sprintf (q, "delete body where id=%s", row1[0]);
+		mysql_query (con, q);
+		++i;
+	    }
+	  mysql_free_result (res2);
+      }
+    mysql_free_result (res1);
+    printf ("%d entries removed\n", i);
+    return;
 }

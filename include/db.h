@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.h,v 1.4 2003/04/05 18:36:28 erik Exp $
+ * $Id: db.h,v 1.5 2003/04/19 18:08:13 erik Exp $
  */
 
 #ifndef __DB_H
@@ -89,9 +89,12 @@ extern int db_set_rules (rule **);
 /** set a preference */
 extern int db_pref_set (char *pref, char *val);
 
-/** retreive a preference */
+/** retrieve a preference */
 extern char *db_pref_get (char *pref);
 
 void db_syncharhash(void);
+
+/** remove all entries with null/empty bodies. */
+extern void db_purge_empty();
 
 #endif

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.38 2004/02/01 22:04:21 erik Exp $
+ * $Id: db.mysql.c,v 1.39 2004/05/30 21:01:14 erik Exp $
  */
 
 #include <stdio.h>
@@ -67,7 +67,6 @@ stuff (MYSQL_RES * result, MYSQL_ROW row, int x, int box)
 int
 db_init (char *host, char *db, char *user, char *pass)
 {
-    dlopen ("libmysqlclient.so", RTLD_LAZY);
     con = mysql_init (NULL);
     if (!mysql_real_connect (con, host, user, pass, db, 3306, NULL, 0))
     {

@@ -24,5 +24,4 @@ Null body!\n", 10},
   {"Failed closing ruleset\n", 11},
   {"Failed to normalize the db", 12},
 };
-
 int _msg_tbl_length = 12;

@@ -21,9 +21,9 @@ rule_init ()
 
     rules = (rule *) db_fetch_rules ((int *) &numrules);
     preg = (void *) malloc (sizeof (regex_t) * (numrules + 1));
-    memset (preg, 0, sizeof (preg));
+    memset (preg, 0, sizeof (regex_t) * (numrules + 1));
     for (x = 0; x < numrules; x++)
-	regcomp (&preg[x], rules[x].regex, REG_EXTENDED);
+	regcomp (&preg[x], rules[x].regex, REG_EXTENDED|REG_ICASE|REG_NOSUB);
     return GEMS_TRUE;
 }
 
@@ -84,7 +84,6 @@ rule_close ()
     }
     free (preg);
     free (rules);
-    free (inbox);
     return GEMS_TRUE;
 }
 

@@ -11,11 +11,7 @@
 char *
 mutilate_line (char *line, int length)
 {
-    char *field;
-
-    field = (char *) malloc (sizeof (char) * (strlen (line) - length + 1));
-    strcpy (field, line + length);
-    return field;
+    return strdup (line + length);
 }
 
 message *
@@ -119,6 +115,69 @@ message_build_from_list (void *list)
     sprintf (x->mbox, "inbox");
 
     return x;
+}
+
+message *
+message_build_from_buffer (char *buf)
+{
+    message *m;
+    int x = 0, i;
+
+    m = (message *) malloc (sizeof (message));
+    memset (m, 0, sizeof (message));	/* fill out NULLs */
+    while (buf[x] != 0 && buf[x] != '\n' && buf[x + 1] != '\n')
+	x++;
+    if (buf[x] == 0)
+	return NULL;		/* bad message */
+    buf[x + 1] = 0;
+    m->header = strdup (buf);
+    m->body = strdup (buf + x + 2);
+    for (i = x; i; i--)
+	if (buf[i] == '\n')
+	    buf[i] = 0;
+    while (i < x)
+    {
+	switch (tolower (buf[i]))
+	{
+	case 'c':
+	    if (!strcmp (buf + i, "Cc: "))
+		m->recipt = strdup (buf + i + 4);
+	    break;
+	case 'd':
+	    if (!strcmp (buf + i, "Date: "))
+		m->senddate = strdup (buf + i + 6);
+	    break;
+	case 'f':
+	    if (!strcmp (buf + i, "From: "))
+		m->sender = strdup (buf + i + 6);
+	    break;
+	case 'm':
+	    if (!strcmp (buf + i, "Message-") && (tolower (buf[i + 8]) == 'i')
+		&& (tolower (buf[i + 9]) == 'd')
+		&& strcmp (buf + i + 10, ": "))
+		m->id = strdup (buf + i + 12);
+	    break;
+	case 'r':
+	    if (!strcmp (buf + i, "References: "))
+		m->references = strdup (buf + i + 12);
+	    if (!strcmp (buf + i, "Reply-To: "))
+		m->replyto = strdup (buf + i + 10);
+	    break;
+	case 's':
+	    if (!strcmp (buf + i, "Subject: "))
+		m->subject = strdup (buf + i + 9);
+	    break;
+	case 't':
+	    if (!strcmp (buf + i, "To: "))
+		m->recipt = strdup (buf + i + 4);
+	    break;
+	default:
+	}
+	while (buf[i] != 0)
+	    i++;
+	i++;
+    }
+    return m;
 }
 
 int

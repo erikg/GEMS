@@ -17,6 +17,18 @@ fake_fungets (FILE * fp, char *string)
     return GEMS_TRUE;
 }
 
+FILE *
+spool_file ()
+{
+    return spool;
+}
+
+int
+spool_fd ()
+{
+    return fileno (spool);
+}
+
 int
 open_spool (char *spoolname)
 {
@@ -91,6 +103,11 @@ read_message ()
     return list;
 }
 
+void *
+read_message_quickly ()
+{
+
+}
 
 int
 close_spool ()

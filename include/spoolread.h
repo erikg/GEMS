@@ -10,6 +10,9 @@ extern int open_spool (char *spoolname);
  */
 extern void *read_message ();
 
+FILE *spool_file();
+int spool_fd();
+
 /** close the spool... */
 extern int close_spool ();
 

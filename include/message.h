@@ -37,6 +37,9 @@ typedef struct {
 /** convert a linked list to a message struct */
 extern message *message_build_from_list (void *list);
 
+/** convert a text buffer to a message struct */
+extern message *message_build_from_buffer (char *buf);
+
 /** purge a message from memory */
 extern int message_destroy (message * mess);
 

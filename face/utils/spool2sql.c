@@ -78,9 +78,9 @@ face_run (int argc, char **margv)
     if (close_spool () != GEMS_TRUE)
 	printf (_("Couldn't close the spool\n"));
 
-    printf ("Normalizing\n");
-    if (db_normalize () == GEMS_FALSE)
-	printf (_("Failed to normalize the db"));
+//    printf ("Normalizing\n");
+//    if (db_normalize () == GEMS_FALSE)
+//	printf (_("Failed to normalize the db"));
 
     printf ("\n");
 

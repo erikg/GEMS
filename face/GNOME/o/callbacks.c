@@ -371,7 +371,10 @@ on_ctree1_key_press_event (GtkWidget * widget,
 void
 on_toolbar_compose_clicked (GtkButton * button, gpointer user_data)
 {
-    gtk_widget_show (create_compose ());
+    GtkWidget *w;
+    w=create_compose();
+    gtk_text_set_editable (GTK_TEXT (lookup_widget(w,"text2")), TRUE);
+    gtk_widget_show (w);
 }
 
 

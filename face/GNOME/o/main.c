@@ -38,11 +38,12 @@ update_mboxlist (gpointer nothing)
 
     while (gtk_events_pending ())
 	gtk_main_iteration ();
-
+printf("Reading list.");fflush(stdout);
     /*
      * whoa this is slow. 
      */
     mboxlist = (mboxs **) db_read_mboxlist ();
+printf(".\n");fflush(stdout);
     while (gtk_events_pending ())
 	gtk_main_iteration ();
     tree = GTK_CTREE (lookup_widget (gems, "ctree2"));

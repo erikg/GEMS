@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: snarf.c,v 1.10 2003/04/19 13:44:14 erik Exp $
+ * $Id: snarf.c,v 1.11 2003/10/18 02:52:39 erik Exp $
  */
 
 #include <stdio.h>
@@ -90,14 +90,12 @@ parse (char *buf, unsigned int size)
 	{
 		message *m;
 		m = message_build_from_buffer(msg[++i]);
-		if(m=NULL)
+		if(m==NULL)
 			continue;
 		mbox = rule_check(m);
 		db_insert_msg(mbox,m);	/* this sucks up time */
 		message_destroy(m);
-		printf("\r                                                                               \r");
-		printf("%d/%d  (%.2f%%)", i, msgcount, 100.0*(float)i/(float)msgcount);
-		fflush(stdout);
+		printf("\r%d/%d  (%.2f%%)           ", i, msgcount, 100.0*(float)i/(float)msgcount); fflush(stdout);
 	}
 	printf("\n");
     return 0;

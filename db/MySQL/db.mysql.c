@@ -392,7 +392,9 @@ db_read_mboxlist (void)
 	mboxlist[y]->hasunread = 0;
     }
 /* XXX causes crash in linux? */
+#ifndef linux
     mysql_free_result (result);
+#endif
     if (mysql_query
 	(con,
 	 "select mbox,count(*) from synopsis where status!='read' group by mbox")

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.37 2003/11/11 15:21:06 erik Exp $
+ * $Id: db.mysql.c,v 1.38 2004/02/01 22:04:21 erik Exp $
  */
 
 #include <stdio.h>
@@ -74,6 +74,32 @@ db_init (char *host, char *db, char *user, char *pass)
 	printf ("WHOA! %s\n", mysql_error (con));
 	return GEMS_FALSE;
     }
+    return GEMS_TRUE;
+}
+
+int
+db_init_firstrun ()
+{
+    mysql_query (con,
+	"CREATE TABLE attachments ( id int(10) unsigned NOT NULL default '0', attachment longtext NOT NULL) TYPE=MyISAM");
+    mysql_query (con,
+	"CREATE TABLE body ( id int(10) unsigned NOT NULL default '0', body longtext NOT NULL, compressed enum('true','false') NOT NULL default 'false', PRIMARY KEY  (id)) TYPE=MyISAM");
+    mysql_query (con,
+	"CREATE TABLE header ( id int(10) unsigned NOT NULL auto_increment, header text NOT NULL, compressed enum('true','false') NOT NULL default 'false', PRIMARY KEY  (id)) TYPE=MyISAM");
+    mysql_query (con,
+	"CREATE TABLE mmbox ( mbox int(11) NOT NULL auto_increment, mboxname text NOT NULL, query text, PRIMARY KEY  (mbox)) TYPE=MyISAM");
+    mysql_query (con,
+	"CREATE TABLE preferences ( name text NOT NULL, value text NOT NULL) TYPE=MyISAM");
+    mysql_query (con,
+	"CREATE TABLE recipt ( id int(10) unsigned NOT NULL default '0', recipt text NOT NULL, type tinytext NOT NULL) TYPE=MyISAM");
+    mysql_query (con,
+	"CREATE TABLE refs ( id int(10) unsigned NOT NULL default '0', refs text, childof int(10) unsigned default NULL) TYPE=MyISAM");
+    mysql_query (con,
+	"CREATE TABLE replyto ( id int(10) unsigned NOT NULL default '0', replyto text NOT NULL) TYPE=MyISAM");
+    mysql_query (con,
+	"CREATE TABLE rules ( sort int(10) unsigned NOT NULL default '0', name text, regex text, mbox text, peice enum('Message','Body','Header','Subject','From','Recipients','Sender') default NULL) TYPE=MyISAM");
+    mysql_query (con,
+	"CREATE TABLE synopsis ( id int(10) unsigned NOT NULL default '0', mbox int(11) NOT NULL default '0', status set('read','marked') NOT NULL default '', senddate datetime NOT NULL default '0000-00-00 00:00:00', sender text NOT NULL, subject text NOT NULL, charid text NOT NULL, PRIMARY KEY  (id)) TYPE=MyISAM");
     return GEMS_TRUE;
 }
 

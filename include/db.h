@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.h,v 1.8 2004/02/01 18:23:06 erik Exp $
+ * $Id: db.h,v 1.9 2004/02/01 19:46:21 erik Exp $
  */
 
 #ifndef __DB_H
@@ -44,6 +44,9 @@
 
 /** initialize the db connection (done in shell) */
 int db_init (char *host, char *db, char *user, char *pass);
+
+/** initialize the db connection and generate the tables. */
+int db_init_firstrun (char *host, char *db, char *user, char *pass);
 
 /** add a message to the db */
 int db_insert_msg (char *mbox, message *);

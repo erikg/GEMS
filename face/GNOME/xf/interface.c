@@ -3,7 +3,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#  include <config.h>
+#include <config.h>
 #endif
 
 #include <sys/types.h>
@@ -17,1788 +17,1880 @@
 #include "interface.h"
 #include "support.h"
 
-static GnomeUIInfo file1_menu_uiinfo[] =
-{
-  GNOMEUIINFO_MENU_NEW_ITEM (N_("_New File"), NULL, on_new_file1_activate, NULL),
-  GNOMEUIINFO_MENU_OPEN_ITEM (on_open1_activate, NULL),
-  GNOMEUIINFO_MENU_SAVE_ITEM (on_save1_activate, NULL),
-  GNOMEUIINFO_MENU_SAVE_AS_ITEM (on_save_as1_activate, NULL),
-  GNOMEUIINFO_SEPARATOR,
-  GNOMEUIINFO_MENU_EXIT_ITEM (on_exit1_activate, NULL),
-  GNOMEUIINFO_END
+static GnomeUIInfo file1_menu_uiinfo[] = {
+    GNOMEUIINFO_MENU_NEW_ITEM (N_("_New File"), NULL, on_new_file1_activate,
+			       NULL),
+    GNOMEUIINFO_MENU_OPEN_ITEM (on_open1_activate, NULL),
+    GNOMEUIINFO_MENU_SAVE_ITEM (on_save1_activate, NULL),
+    GNOMEUIINFO_MENU_SAVE_AS_ITEM (on_save_as1_activate, NULL),
+    GNOMEUIINFO_SEPARATOR,
+    GNOMEUIINFO_MENU_EXIT_ITEM (on_exit1_activate, NULL),
+    GNOMEUIINFO_END
 };
 
-static GnomeUIInfo edit1_menu_uiinfo[] =
-{
-  GNOMEUIINFO_MENU_CUT_ITEM (on_cut1_activate, NULL),
-  GNOMEUIINFO_MENU_COPY_ITEM (on_copy1_activate, NULL),
-  GNOMEUIINFO_MENU_PASTE_ITEM (on_paste1_activate, NULL),
-  GNOMEUIINFO_MENU_CLEAR_ITEM (on_clear1_activate, NULL),
-  GNOMEUIINFO_SEPARATOR,
-  GNOMEUIINFO_MENU_PROPERTIES_ITEM (on_properties1_activate, NULL),
-  GNOMEUIINFO_END
+static GnomeUIInfo edit1_menu_uiinfo[] = {
+    GNOMEUIINFO_MENU_CUT_ITEM (on_cut1_activate, NULL),
+    GNOMEUIINFO_MENU_COPY_ITEM (on_copy1_activate, NULL),
+    GNOMEUIINFO_MENU_PASTE_ITEM (on_paste1_activate, NULL),
+    GNOMEUIINFO_MENU_CLEAR_ITEM (on_clear1_activate, NULL),
+    GNOMEUIINFO_SEPARATOR,
+    GNOMEUIINFO_MENU_PROPERTIES_ITEM (on_properties1_activate, NULL),
+    GNOMEUIINFO_END
 };
 
-static GnomeUIInfo view1_menu_uiinfo[] =
-{
-  GNOMEUIINFO_END
+static GnomeUIInfo view1_menu_uiinfo[] = {
+    GNOMEUIINFO_END
 };
 
-static GnomeUIInfo settings1_menu_uiinfo[] =
-{
-  GNOMEUIINFO_MENU_PREFERENCES_ITEM (on_preferences1_activate, NULL),
-  GNOMEUIINFO_END
+static GnomeUIInfo settings1_menu_uiinfo[] = {
+    GNOMEUIINFO_MENU_PREFERENCES_ITEM (on_preferences1_activate, NULL),
+    GNOMEUIINFO_END
 };
 
-static GnomeUIInfo help1_menu_uiinfo[] =
-{
-  GNOMEUIINFO_HELP ("gems"),
-  GNOMEUIINFO_MENU_ABOUT_ITEM (on_about1_activate, NULL),
-  GNOMEUIINFO_END
+static GnomeUIInfo help1_menu_uiinfo[] = {
+    GNOMEUIINFO_HELP ("gems"),
+    GNOMEUIINFO_MENU_ABOUT_ITEM (on_about1_activate, NULL),
+    GNOMEUIINFO_END
 };
 
-static GnomeUIInfo menubar1_uiinfo[] =
-{
-  GNOMEUIINFO_MENU_FILE_TREE (file1_menu_uiinfo),
-  GNOMEUIINFO_MENU_EDIT_TREE (edit1_menu_uiinfo),
-  GNOMEUIINFO_MENU_VIEW_TREE (view1_menu_uiinfo),
-  GNOMEUIINFO_MENU_SETTINGS_TREE (settings1_menu_uiinfo),
-  GNOMEUIINFO_MENU_HELP_TREE (help1_menu_uiinfo),
-  GNOMEUIINFO_END
+static GnomeUIInfo menubar1_uiinfo[] = {
+    GNOMEUIINFO_MENU_FILE_TREE (file1_menu_uiinfo),
+    GNOMEUIINFO_MENU_EDIT_TREE (edit1_menu_uiinfo),
+    GNOMEUIINFO_MENU_VIEW_TREE (view1_menu_uiinfo),
+    GNOMEUIINFO_MENU_SETTINGS_TREE (settings1_menu_uiinfo),
+    GNOMEUIINFO_MENU_HELP_TREE (help1_menu_uiinfo),
+    GNOMEUIINFO_END
 };
 
-GtkWidget*
+GtkWidget *
 create_gems (void)
 {
-  GtkWidget *gems;
-  GtkWidget *dock1;
-  GtkWidget *toolbar1;
-  GtkWidget *tmp_toolbar_icon;
-  GtkWidget *toolbar_quit;
-  GtkWidget *toolbar_edit;
-  GtkWidget *toolbar_compose;
-  GtkWidget *toolbar_view;
-  GtkWidget *toolbar_print;
-  GtkWidget *toolbar_reply;
-  GtkWidget *toolbar_forward;
-  GtkWidget *toolbar_file;
-  GtkWidget *toolbar_trash;
-  GtkWidget *toolbar_check;
-  GtkWidget *toolbar_send;
-  GtkWidget *toolbar_save;
-  GtkWidget *toolbar_stop;
-  GtkWidget *toolbar_help;
-  GtkWidget *hpaned1;
-  GtkWidget *scrolledwindow1;
-  GtkWidget *main_mboxlist;
-  GtkWidget *label_mboxlist_mbox;
-  GtkWidget *label_mboxlist_read;
-  GtkWidget *label_mboxlist_unread;
-  GtkWidget *scrolledwindow2;
-  GtkWidget *main_mbox;
-  GtkWidget *label_mbox_status;
-  GtkWidget *label_mbox_date;
-  GtkWidget *label_mbox_size;
-  GtkWidget *label_mbox_sender;
-  GtkWidget *label_mbox_subject;
-  GtkWidget *appbar1;
+    GtkWidget *gems;
+    GtkWidget *dock1;
+    GtkWidget *toolbar1;
+    GtkWidget *tmp_toolbar_icon;
+    GtkWidget *toolbar_quit;
+    GtkWidget *toolbar_edit;
+    GtkWidget *toolbar_compose;
+    GtkWidget *toolbar_view;
+    GtkWidget *toolbar_print;
+    GtkWidget *toolbar_reply;
+    GtkWidget *toolbar_forward;
+    GtkWidget *toolbar_file;
+    GtkWidget *toolbar_trash;
+    GtkWidget *toolbar_check;
+    GtkWidget *toolbar_send;
+    GtkWidget *toolbar_save;
+    GtkWidget *toolbar_stop;
+    GtkWidget *toolbar_help;
+    GtkWidget *hpaned1;
+    GtkWidget *scrolledwindow1;
+    GtkWidget *main_mboxlist;
+    GtkWidget *label_mboxlist_mbox;
+    GtkWidget *label_mboxlist_read;
+    GtkWidget *label_mboxlist_unread;
+    GtkWidget *scrolledwindow2;
+    GtkWidget *main_mbox;
+    GtkWidget *label_mbox_status;
+    GtkWidget *label_mbox_date;
+    GtkWidget *label_mbox_size;
+    GtkWidget *label_mbox_sender;
+    GtkWidget *label_mbox_subject;
+    GtkWidget *appbar1;
 
-  gems = gnome_app_new ("Gems", _("Gems"));
-  gtk_widget_set_name (gems, "gems");
-  gtk_object_set_data (GTK_OBJECT (gems), "gems", gems);
+    gems = gnome_app_new ("Gems", _("Gems"));
+    gtk_widget_set_name (gems, "gems");
+    gtk_object_set_data (GTK_OBJECT (gems), "gems", gems);
 
-  dock1 = GNOME_APP (gems)->dock;
-  gtk_widget_set_name (dock1, "dock1");
-  gtk_widget_ref (dock1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "dock1", dock1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (dock1);
+    dock1 = GNOME_APP (gems)->dock;
+    gtk_widget_set_name (dock1, "dock1");
+    gtk_widget_ref (dock1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "dock1", dock1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (dock1);
 
-  gnome_app_create_menus (GNOME_APP (gems), menubar1_uiinfo);
+    gnome_app_create_menus (GNOME_APP (gems), menubar1_uiinfo);
 
-  gtk_widget_set_name (menubar1_uiinfo[0].widget, "file1");
-  gtk_widget_ref (menubar1_uiinfo[0].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "file1",
-                            menubar1_uiinfo[0].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (menubar1_uiinfo[0].widget, "file1");
+    gtk_widget_ref (menubar1_uiinfo[0].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "file1",
+			      menubar1_uiinfo[0].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (file1_menu_uiinfo[0].widget, "new_file1");
-  gtk_widget_ref (file1_menu_uiinfo[0].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "new_file1",
-                            file1_menu_uiinfo[0].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (file1_menu_uiinfo[0].widget, "new_file1");
+    gtk_widget_ref (file1_menu_uiinfo[0].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "new_file1",
+			      file1_menu_uiinfo[0].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (file1_menu_uiinfo[1].widget, "open1");
-  gtk_widget_ref (file1_menu_uiinfo[1].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "open1",
-                            file1_menu_uiinfo[1].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (file1_menu_uiinfo[1].widget, "open1");
+    gtk_widget_ref (file1_menu_uiinfo[1].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "open1",
+			      file1_menu_uiinfo[1].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (file1_menu_uiinfo[2].widget, "save1");
-  gtk_widget_ref (file1_menu_uiinfo[2].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "save1",
-                            file1_menu_uiinfo[2].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (file1_menu_uiinfo[2].widget, "save1");
+    gtk_widget_ref (file1_menu_uiinfo[2].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "save1",
+			      file1_menu_uiinfo[2].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (file1_menu_uiinfo[3].widget, "save_as1");
-  gtk_widget_ref (file1_menu_uiinfo[3].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "save_as1",
-                            file1_menu_uiinfo[3].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (file1_menu_uiinfo[3].widget, "save_as1");
+    gtk_widget_ref (file1_menu_uiinfo[3].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "save_as1",
+			      file1_menu_uiinfo[3].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (file1_menu_uiinfo[4].widget, "separator1");
-  gtk_widget_ref (file1_menu_uiinfo[4].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "separator1",
-                            file1_menu_uiinfo[4].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (file1_menu_uiinfo[4].widget, "separator1");
+    gtk_widget_ref (file1_menu_uiinfo[4].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "separator1",
+			      file1_menu_uiinfo[4].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (file1_menu_uiinfo[5].widget, "exit1");
-  gtk_widget_ref (file1_menu_uiinfo[5].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "exit1",
-                            file1_menu_uiinfo[5].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (file1_menu_uiinfo[5].widget, "exit1");
+    gtk_widget_ref (file1_menu_uiinfo[5].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "exit1",
+			      file1_menu_uiinfo[5].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (menubar1_uiinfo[1].widget, "edit1");
-  gtk_widget_ref (menubar1_uiinfo[1].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "edit1",
-                            menubar1_uiinfo[1].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (menubar1_uiinfo[1].widget, "edit1");
+    gtk_widget_ref (menubar1_uiinfo[1].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "edit1",
+			      menubar1_uiinfo[1].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (edit1_menu_uiinfo[0].widget, "cut1");
-  gtk_widget_ref (edit1_menu_uiinfo[0].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "cut1",
-                            edit1_menu_uiinfo[0].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (edit1_menu_uiinfo[0].widget, "cut1");
+    gtk_widget_ref (edit1_menu_uiinfo[0].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "cut1",
+			      edit1_menu_uiinfo[0].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (edit1_menu_uiinfo[1].widget, "copy1");
-  gtk_widget_ref (edit1_menu_uiinfo[1].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "copy1",
-                            edit1_menu_uiinfo[1].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (edit1_menu_uiinfo[1].widget, "copy1");
+    gtk_widget_ref (edit1_menu_uiinfo[1].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "copy1",
+			      edit1_menu_uiinfo[1].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (edit1_menu_uiinfo[2].widget, "paste1");
-  gtk_widget_ref (edit1_menu_uiinfo[2].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "paste1",
-                            edit1_menu_uiinfo[2].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (edit1_menu_uiinfo[2].widget, "paste1");
+    gtk_widget_ref (edit1_menu_uiinfo[2].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "paste1",
+			      edit1_menu_uiinfo[2].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (edit1_menu_uiinfo[3].widget, "clear1");
-  gtk_widget_ref (edit1_menu_uiinfo[3].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "clear1",
-                            edit1_menu_uiinfo[3].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (edit1_menu_uiinfo[3].widget, "clear1");
+    gtk_widget_ref (edit1_menu_uiinfo[3].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "clear1",
+			      edit1_menu_uiinfo[3].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (edit1_menu_uiinfo[4].widget, "separator2");
-  gtk_widget_ref (edit1_menu_uiinfo[4].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "separator2",
-                            edit1_menu_uiinfo[4].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (edit1_menu_uiinfo[4].widget, "separator2");
+    gtk_widget_ref (edit1_menu_uiinfo[4].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "separator2",
+			      edit1_menu_uiinfo[4].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (edit1_menu_uiinfo[5].widget, "properties1");
-  gtk_widget_ref (edit1_menu_uiinfo[5].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "properties1",
-                            edit1_menu_uiinfo[5].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (edit1_menu_uiinfo[5].widget, "properties1");
+    gtk_widget_ref (edit1_menu_uiinfo[5].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "properties1",
+			      edit1_menu_uiinfo[5].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (menubar1_uiinfo[2].widget, "view1");
-  gtk_widget_ref (menubar1_uiinfo[2].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "view1",
-                            menubar1_uiinfo[2].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (menubar1_uiinfo[2].widget, "view1");
+    gtk_widget_ref (menubar1_uiinfo[2].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "view1",
+			      menubar1_uiinfo[2].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (menubar1_uiinfo[3].widget, "settings1");
-  gtk_widget_ref (menubar1_uiinfo[3].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "settings1",
-                            menubar1_uiinfo[3].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (menubar1_uiinfo[3].widget, "settings1");
+    gtk_widget_ref (menubar1_uiinfo[3].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "settings1",
+			      menubar1_uiinfo[3].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (settings1_menu_uiinfo[0].widget, "preferences1");
-  gtk_widget_ref (settings1_menu_uiinfo[0].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "preferences1",
-                            settings1_menu_uiinfo[0].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (settings1_menu_uiinfo[0].widget, "preferences1");
+    gtk_widget_ref (settings1_menu_uiinfo[0].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "preferences1",
+			      settings1_menu_uiinfo[0].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (menubar1_uiinfo[4].widget, "help1");
-  gtk_widget_ref (menubar1_uiinfo[4].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "help1",
-                            menubar1_uiinfo[4].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (menubar1_uiinfo[4].widget, "help1");
+    gtk_widget_ref (menubar1_uiinfo[4].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "help1",
+			      menubar1_uiinfo[4].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (help1_menu_uiinfo[1].widget, "about1");
-  gtk_widget_ref (help1_menu_uiinfo[1].widget);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "about1",
-                            help1_menu_uiinfo[1].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (help1_menu_uiinfo[1].widget, "about1");
+    gtk_widget_ref (help1_menu_uiinfo[1].widget);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "about1",
+			      help1_menu_uiinfo[1].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  toolbar1 = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_ICONS);
-  gtk_widget_set_name (toolbar1, "toolbar1");
-  gtk_widget_ref (toolbar1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar1", toolbar1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar1);
-  gnome_app_add_toolbar (GNOME_APP (gems), GTK_TOOLBAR (toolbar1), "toolbar1",
-                                GNOME_DOCK_ITEM_BEH_EXCLUSIVE,
-                                GNOME_DOCK_TOP, 1, 0, 0);
-  gtk_toolbar_set_space_size (GTK_TOOLBAR (toolbar1), 15);
-  gtk_toolbar_set_space_style (GTK_TOOLBAR (toolbar1), GTK_TOOLBAR_SPACE_LINE);
-  gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar1), GTK_RELIEF_NONE);
+    toolbar1 =
+	gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_ICONS);
+    gtk_widget_set_name (toolbar1, "toolbar1");
+    gtk_widget_ref (toolbar1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar1", toolbar1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar1);
+    gnome_app_add_toolbar (GNOME_APP (gems), GTK_TOOLBAR (toolbar1),
+			   "toolbar1", GNOME_DOCK_ITEM_BEH_EXCLUSIVE,
+			   GNOME_DOCK_TOP, 1, 0, 0);
+    gtk_toolbar_set_space_size (GTK_TOOLBAR (toolbar1), 15);
+    gtk_toolbar_set_space_style (GTK_TOOLBAR (toolbar1),
+				 GTK_TOOLBAR_SPACE_LINE);
+    gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar1), GTK_RELIEF_NONE);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_EXIT);
-  toolbar_quit = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Quit"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_quit, "toolbar_quit");
-  gtk_widget_ref (toolbar_quit);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_quit", toolbar_quit,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_quit);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_EXIT);
+    toolbar_quit =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Quit"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (toolbar_quit, "toolbar_quit");
+    gtk_widget_ref (toolbar_quit);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_quit", toolbar_quit,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_quit);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_OPEN);
-  toolbar_edit = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Edit"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_edit, "toolbar_edit");
-  gtk_widget_ref (toolbar_edit);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_edit", toolbar_edit,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_edit);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_OPEN);
+    toolbar_edit =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Edit"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (toolbar_edit, "toolbar_edit");
+    gtk_widget_ref (toolbar_edit);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_edit", toolbar_edit,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_edit);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_NEW);
-  toolbar_compose = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Compose"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_compose, "toolbar_compose");
-  gtk_widget_ref (toolbar_compose);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_compose", toolbar_compose,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_compose);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_NEW);
+    toolbar_compose =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Compose"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (toolbar_compose, "toolbar_compose");
+    gtk_widget_ref (toolbar_compose);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_compose",
+			      toolbar_compose,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_compose);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_BOOK_OPEN);
-  toolbar_view = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("View"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_view, "toolbar_view");
-  gtk_widget_ref (toolbar_view);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_view", toolbar_view,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_view);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_BOOK_OPEN);
+    toolbar_view =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("View"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (toolbar_view, "toolbar_view");
+    gtk_widget_ref (toolbar_view);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_view", toolbar_view,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_view);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_PRINT);
-  toolbar_print = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Print"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_print, "toolbar_print");
-  gtk_widget_ref (toolbar_print);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_print", toolbar_print,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_print);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_PRINT);
+    toolbar_print =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Print"), NULL, NULL, tmp_toolbar_icon,
+				    NULL, NULL);
+    gtk_widget_set_name (toolbar_print, "toolbar_print");
+    gtk_widget_ref (toolbar_print);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_print",
+			      toolbar_print,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_print);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_MAIL_RPL);
-  toolbar_reply = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Reply"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_reply, "toolbar_reply");
-  gtk_widget_ref (toolbar_reply);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_reply", toolbar_reply,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_reply);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_MAIL_RPL);
+    toolbar_reply =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Reply"), NULL, NULL, tmp_toolbar_icon,
+				    NULL, NULL);
+    gtk_widget_set_name (toolbar_reply, "toolbar_reply");
+    gtk_widget_ref (toolbar_reply);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_reply",
+			      toolbar_reply,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_reply);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_MAIL_FWD);
-  toolbar_forward = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Forward"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_forward, "toolbar_forward");
-  gtk_widget_ref (toolbar_forward);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_forward", toolbar_forward,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_forward);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_MAIL_FWD);
+    toolbar_forward =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Forward"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (toolbar_forward, "toolbar_forward");
+    gtk_widget_ref (toolbar_forward);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_forward",
+			      toolbar_forward,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_forward);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_JUMP_TO);
-  toolbar_file = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Move to another folder"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_file, "toolbar_file");
-  gtk_widget_ref (toolbar_file);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_file", toolbar_file,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_file);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_JUMP_TO);
+    toolbar_file =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Move to another folder"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (toolbar_file, "toolbar_file");
+    gtk_widget_ref (toolbar_file);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_file", toolbar_file,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_file);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_TRASH);
-  toolbar_trash = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Trash"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_trash, "toolbar_trash");
-  gtk_widget_ref (toolbar_trash);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_trash", toolbar_trash,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_trash);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_TRASH);
+    toolbar_trash =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Trash"), NULL, NULL, tmp_toolbar_icon,
+				    NULL, NULL);
+    gtk_widget_set_name (toolbar_trash, "toolbar_trash");
+    gtk_widget_ref (toolbar_trash);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_trash",
+			      toolbar_trash,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_trash);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_MAIL_RCV);
-  toolbar_check = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Check"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_check, "toolbar_check");
-  gtk_widget_ref (toolbar_check);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_check", toolbar_check,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_check);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_MAIL_RCV);
+    toolbar_check =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Check"), NULL, NULL, tmp_toolbar_icon,
+				    NULL, NULL);
+    gtk_widget_set_name (toolbar_check, "toolbar_check");
+    gtk_widget_ref (toolbar_check);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_check",
+			      toolbar_check,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_check);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_MAIL_SND);
-  toolbar_send = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Send"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_send, "toolbar_send");
-  gtk_widget_ref (toolbar_send);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_send", toolbar_send,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_send);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_MAIL_SND);
+    toolbar_send =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Send"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (toolbar_send, "toolbar_send");
+    gtk_widget_ref (toolbar_send);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_send", toolbar_send,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_send);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_SAVE);
-  toolbar_save = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Save"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_save, "toolbar_save");
-  gtk_widget_ref (toolbar_save);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_save", toolbar_save,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_save);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_SAVE);
+    toolbar_save =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Save"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (toolbar_save, "toolbar_save");
+    gtk_widget_ref (toolbar_save);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_save", toolbar_save,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_save);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_STOP);
-  toolbar_stop = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Stop"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_stop, "toolbar_stop");
-  gtk_widget_ref (toolbar_stop);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_stop", toolbar_stop,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_stop);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_STOP);
+    toolbar_stop =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Stop"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (toolbar_stop, "toolbar_stop");
+    gtk_widget_ref (toolbar_stop);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_stop", toolbar_stop,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_stop);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_HELP);
-  toolbar_help = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Help"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (toolbar_help, "toolbar_help");
-  gtk_widget_ref (toolbar_help);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_help", toolbar_help,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar_help);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (gems, GNOME_STOCK_PIXMAP_HELP);
+    toolbar_help =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Help"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (toolbar_help, "toolbar_help");
+    gtk_widget_ref (toolbar_help);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar_help", toolbar_help,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar_help);
 
-  hpaned1 = gtk_hpaned_new ();
-  gtk_widget_set_name (hpaned1, "hpaned1");
-  gtk_widget_ref (hpaned1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "hpaned1", hpaned1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (hpaned1);
-  gnome_app_set_contents (GNOME_APP (gems), hpaned1);
-  gtk_paned_set_position (GTK_PANED (hpaned1), 0);
+    hpaned1 = gtk_hpaned_new ();
+    gtk_widget_set_name (hpaned1, "hpaned1");
+    gtk_widget_ref (hpaned1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "hpaned1", hpaned1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (hpaned1);
+    gnome_app_set_contents (GNOME_APP (gems), hpaned1);
+    gtk_paned_set_position (GTK_PANED (hpaned1), 0);
 
-  scrolledwindow1 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_name (scrolledwindow1, "scrolledwindow1");
-  gtk_widget_ref (scrolledwindow1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "scrolledwindow1", scrolledwindow1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow1);
-  gtk_paned_pack1 (GTK_PANED (hpaned1), scrolledwindow1, FALSE, TRUE);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow1), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    scrolledwindow1 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_set_name (scrolledwindow1, "scrolledwindow1");
+    gtk_widget_ref (scrolledwindow1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "scrolledwindow1",
+			      scrolledwindow1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (scrolledwindow1);
+    gtk_paned_pack1 (GTK_PANED (hpaned1), scrolledwindow1, FALSE, TRUE);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow1),
+				    GTK_POLICY_AUTOMATIC,
+				    GTK_POLICY_AUTOMATIC);
 
-  main_mboxlist = gtk_ctree_new (3, 0);
-  gtk_widget_set_name (main_mboxlist, "main_mboxlist");
-  gtk_widget_ref (main_mboxlist);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "main_mboxlist", main_mboxlist,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (main_mboxlist);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow1), main_mboxlist);
-  gtk_clist_set_column_width (GTK_CLIST (main_mboxlist), 0, 72);
-  gtk_clist_set_column_width (GTK_CLIST (main_mboxlist), 1, 15);
-  gtk_clist_set_column_width (GTK_CLIST (main_mboxlist), 2, 9);
-  gtk_clist_column_titles_hide (GTK_CLIST (main_mboxlist));
+    main_mboxlist = gtk_ctree_new (3, 0);
+    gtk_widget_set_name (main_mboxlist, "main_mboxlist");
+    gtk_widget_ref (main_mboxlist);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "main_mboxlist",
+			      main_mboxlist,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (main_mboxlist);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow1), main_mboxlist);
+    gtk_clist_set_column_width (GTK_CLIST (main_mboxlist), 0, 72);
+    gtk_clist_set_column_width (GTK_CLIST (main_mboxlist), 1, 15);
+    gtk_clist_set_column_width (GTK_CLIST (main_mboxlist), 2, 9);
+    gtk_clist_column_titles_hide (GTK_CLIST (main_mboxlist));
 
-  label_mboxlist_mbox = gtk_label_new (_("mbox"));
-  gtk_widget_set_name (label_mboxlist_mbox, "label_mboxlist_mbox");
-  gtk_widget_ref (label_mboxlist_mbox);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label_mboxlist_mbox", label_mboxlist_mbox,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label_mboxlist_mbox);
-  gtk_clist_set_column_widget (GTK_CLIST (main_mboxlist), 0, label_mboxlist_mbox);
+    label_mboxlist_mbox = gtk_label_new (_("mbox"));
+    gtk_widget_set_name (label_mboxlist_mbox, "label_mboxlist_mbox");
+    gtk_widget_ref (label_mboxlist_mbox);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label_mboxlist_mbox",
+			      label_mboxlist_mbox,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label_mboxlist_mbox);
+    gtk_clist_set_column_widget (GTK_CLIST (main_mboxlist), 0,
+				 label_mboxlist_mbox);
 
-  label_mboxlist_read = gtk_label_new (_("0"));
-  gtk_widget_set_name (label_mboxlist_read, "label_mboxlist_read");
-  gtk_widget_ref (label_mboxlist_read);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label_mboxlist_read", label_mboxlist_read,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label_mboxlist_read);
-  gtk_clist_set_column_widget (GTK_CLIST (main_mboxlist), 1, label_mboxlist_read);
+    label_mboxlist_read = gtk_label_new (_("0"));
+    gtk_widget_set_name (label_mboxlist_read, "label_mboxlist_read");
+    gtk_widget_ref (label_mboxlist_read);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label_mboxlist_read",
+			      label_mboxlist_read,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label_mboxlist_read);
+    gtk_clist_set_column_widget (GTK_CLIST (main_mboxlist), 1,
+				 label_mboxlist_read);
 
-  label_mboxlist_unread = gtk_label_new (_("0"));
-  gtk_widget_set_name (label_mboxlist_unread, "label_mboxlist_unread");
-  gtk_widget_ref (label_mboxlist_unread);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label_mboxlist_unread", label_mboxlist_unread,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label_mboxlist_unread);
-  gtk_clist_set_column_widget (GTK_CLIST (main_mboxlist), 2, label_mboxlist_unread);
+    label_mboxlist_unread = gtk_label_new (_("0"));
+    gtk_widget_set_name (label_mboxlist_unread, "label_mboxlist_unread");
+    gtk_widget_ref (label_mboxlist_unread);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label_mboxlist_unread",
+			      label_mboxlist_unread,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label_mboxlist_unread);
+    gtk_clist_set_column_widget (GTK_CLIST (main_mboxlist), 2,
+				 label_mboxlist_unread);
 
-  scrolledwindow2 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_name (scrolledwindow2, "scrolledwindow2");
-  gtk_widget_ref (scrolledwindow2);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "scrolledwindow2", scrolledwindow2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow2);
-  gtk_paned_pack2 (GTK_PANED (hpaned1), scrolledwindow2, TRUE, TRUE);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow2), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    scrolledwindow2 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_set_name (scrolledwindow2, "scrolledwindow2");
+    gtk_widget_ref (scrolledwindow2);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "scrolledwindow2",
+			      scrolledwindow2,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (scrolledwindow2);
+    gtk_paned_pack2 (GTK_PANED (hpaned1), scrolledwindow2, TRUE, TRUE);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow2),
+				    GTK_POLICY_AUTOMATIC,
+				    GTK_POLICY_AUTOMATIC);
 
-  main_mbox = gtk_ctree_new (5, 0);
-  gtk_widget_set_name (main_mbox, "main_mbox");
-  gtk_widget_ref (main_mbox);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "main_mbox", main_mbox,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (main_mbox);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow2), main_mbox);
-  gtk_clist_set_column_width (GTK_CLIST (main_mbox), 0, 80);
-  gtk_clist_set_column_width (GTK_CLIST (main_mbox), 1, 80);
-  gtk_clist_set_column_width (GTK_CLIST (main_mbox), 2, 80);
-  gtk_clist_set_column_width (GTK_CLIST (main_mbox), 3, 80);
-  gtk_clist_set_column_width (GTK_CLIST (main_mbox), 4, 80);
-  gtk_clist_column_titles_hide (GTK_CLIST (main_mbox));
+    main_mbox = gtk_ctree_new (5, 0);
+    gtk_widget_set_name (main_mbox, "main_mbox");
+    gtk_widget_ref (main_mbox);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "main_mbox", main_mbox,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (main_mbox);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow2), main_mbox);
+    gtk_clist_set_column_width (GTK_CLIST (main_mbox), 0, 80);
+    gtk_clist_set_column_width (GTK_CLIST (main_mbox), 1, 80);
+    gtk_clist_set_column_width (GTK_CLIST (main_mbox), 2, 80);
+    gtk_clist_set_column_width (GTK_CLIST (main_mbox), 3, 80);
+    gtk_clist_set_column_width (GTK_CLIST (main_mbox), 4, 80);
+    gtk_clist_column_titles_hide (GTK_CLIST (main_mbox));
 
-  label_mbox_status = gtk_label_new (_("Status\t"));
-  gtk_widget_set_name (label_mbox_status, "label_mbox_status");
-  gtk_widget_ref (label_mbox_status);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label_mbox_status", label_mbox_status,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label_mbox_status);
-  gtk_clist_set_column_widget (GTK_CLIST (main_mbox), 0, label_mbox_status);
+    label_mbox_status = gtk_label_new (_("Status\t"));
+    gtk_widget_set_name (label_mbox_status, "label_mbox_status");
+    gtk_widget_ref (label_mbox_status);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label_mbox_status",
+			      label_mbox_status,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label_mbox_status);
+    gtk_clist_set_column_widget (GTK_CLIST (main_mbox), 0, label_mbox_status);
 
-  label_mbox_date = gtk_label_new (_("Date"));
-  gtk_widget_set_name (label_mbox_date, "label_mbox_date");
-  gtk_widget_ref (label_mbox_date);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label_mbox_date", label_mbox_date,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label_mbox_date);
-  gtk_clist_set_column_widget (GTK_CLIST (main_mbox), 1, label_mbox_date);
+    label_mbox_date = gtk_label_new (_("Date"));
+    gtk_widget_set_name (label_mbox_date, "label_mbox_date");
+    gtk_widget_ref (label_mbox_date);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label_mbox_date",
+			      label_mbox_date,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label_mbox_date);
+    gtk_clist_set_column_widget (GTK_CLIST (main_mbox), 1, label_mbox_date);
 
-  label_mbox_size = gtk_label_new (_("Size"));
-  gtk_widget_set_name (label_mbox_size, "label_mbox_size");
-  gtk_widget_ref (label_mbox_size);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label_mbox_size", label_mbox_size,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label_mbox_size);
-  gtk_clist_set_column_widget (GTK_CLIST (main_mbox), 2, label_mbox_size);
+    label_mbox_size = gtk_label_new (_("Size"));
+    gtk_widget_set_name (label_mbox_size, "label_mbox_size");
+    gtk_widget_ref (label_mbox_size);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label_mbox_size",
+			      label_mbox_size,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label_mbox_size);
+    gtk_clist_set_column_widget (GTK_CLIST (main_mbox), 2, label_mbox_size);
 
-  label_mbox_sender = gtk_label_new (_("Sender"));
-  gtk_widget_set_name (label_mbox_sender, "label_mbox_sender");
-  gtk_widget_ref (label_mbox_sender);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label_mbox_sender", label_mbox_sender,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label_mbox_sender);
-  gtk_clist_set_column_widget (GTK_CLIST (main_mbox), 3, label_mbox_sender);
+    label_mbox_sender = gtk_label_new (_("Sender"));
+    gtk_widget_set_name (label_mbox_sender, "label_mbox_sender");
+    gtk_widget_ref (label_mbox_sender);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label_mbox_sender",
+			      label_mbox_sender,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label_mbox_sender);
+    gtk_clist_set_column_widget (GTK_CLIST (main_mbox), 3, label_mbox_sender);
 
-  label_mbox_subject = gtk_label_new (_("Subject\t"));
-  gtk_widget_set_name (label_mbox_subject, "label_mbox_subject");
-  gtk_widget_ref (label_mbox_subject);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label_mbox_subject", label_mbox_subject,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label_mbox_subject);
-  gtk_clist_set_column_widget (GTK_CLIST (main_mbox), 4, label_mbox_subject);
+    label_mbox_subject = gtk_label_new (_("Subject\t"));
+    gtk_widget_set_name (label_mbox_subject, "label_mbox_subject");
+    gtk_widget_ref (label_mbox_subject);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label_mbox_subject",
+			      label_mbox_subject,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label_mbox_subject);
+    gtk_clist_set_column_widget (GTK_CLIST (main_mbox), 4,
+				 label_mbox_subject);
 
-  appbar1 = gnome_appbar_new (TRUE, TRUE, GNOME_PREFERENCES_NEVER);
-  gtk_widget_set_name (appbar1, "appbar1");
-  gtk_widget_ref (appbar1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "appbar1", appbar1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (appbar1);
-  gnome_app_set_statusbar (GNOME_APP (gems), appbar1);
+    appbar1 = gnome_appbar_new (TRUE, TRUE, GNOME_PREFERENCES_NEVER);
+    gtk_widget_set_name (appbar1, "appbar1");
+    gtk_widget_ref (appbar1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "appbar1", appbar1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (appbar1);
+    gnome_app_set_statusbar (GNOME_APP (gems), appbar1);
 
-  gnome_app_install_menu_hints (GNOME_APP (gems), menubar1_uiinfo);
+    gnome_app_install_menu_hints (GNOME_APP (gems), menubar1_uiinfo);
 
-  return gems;
+    return gems;
 }
 
-static GnomeUIInfo compose_menu_uiinfo[] =
-{
-  {
-    GNOME_APP_UI_ITEM, N_("File"),
-    NULL,
-    on_compose_menu_file_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  {
-    GNOME_APP_UI_ITEM, N_("Edit"),
-    NULL,
-    on_compose_menu_message_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  {
-    GNOME_APP_UI_ITEM, N_("Attachment"),
-    NULL,
-    on_compose_menu_attachment_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  {
-    GNOME_APP_UI_ITEM, N_("PGP"),
-    NULL,
-    on_compose_menu_pgp_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  {
-    GNOME_APP_UI_ITEM, N_("Language"),
-    NULL,
-    on_compose_menu_language_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  {
-    GNOME_APP_UI_ITEM, N_("Encoding"),
-    NULL,
-    on_compose_menu_encoding_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  {
-    GNOME_APP_UI_ITEM, N_("Feelings"),
-    NULL,
-    on_compose_menu_feelings_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  GNOMEUIINFO_END
+static GnomeUIInfo compose_menu_uiinfo[] = {
+    {
+     GNOME_APP_UI_ITEM, N_("File"),
+     NULL,
+     on_compose_menu_file_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    {
+     GNOME_APP_UI_ITEM, N_("Edit"),
+     NULL,
+     on_compose_menu_message_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    {
+     GNOME_APP_UI_ITEM, N_("Attachment"),
+     NULL,
+     on_compose_menu_attachment_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    {
+     GNOME_APP_UI_ITEM, N_("PGP"),
+     NULL,
+     on_compose_menu_pgp_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    {
+     GNOME_APP_UI_ITEM, N_("Language"),
+     NULL,
+     on_compose_menu_language_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    {
+     GNOME_APP_UI_ITEM, N_("Encoding"),
+     NULL,
+     on_compose_menu_encoding_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    {
+     GNOME_APP_UI_ITEM, N_("Feelings"),
+     NULL,
+     on_compose_menu_feelings_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    GNOMEUIINFO_END
 };
 
-GtkWidget*
+GtkWidget *
 create_composer (void)
 {
-  GtkWidget *composer;
-  GtkWidget *vbox1;
-  GtkWidget *handlebox2;
-  GtkWidget *compose_menu;
-  GtkWidget *handlebox1;
-  GtkWidget *toolbar2;
-  GtkWidget *tmp_toolbar_icon;
-  GtkWidget *compose_toolbar_quit;
-  GtkWidget *compose_toolbar_send;
-  GtkWidget *compose_toolbar_insertfile;
-  GtkWidget *compose_toolbar_include_original;
-  GtkWidget *compose_toolbar_addsignature;
-  GtkWidget *compose_toolbar_external_editor;
-  GtkWidget *compose_toolbar_spellcheck;
-  GtkWidget *compose_toolbar_attach;
-  GtkWidget *compose_toolbar_stop;
-  GtkWidget *compose_toolbar_help;
-  GtkWidget *table1;
-  GtkWidget *hbuttonbox1;
-  GtkWidget *compose_addressbook;
-  GtkWidget *compose_delete;
-  GtkWidget *table2;
-  GtkWidget *compose_subject;
-  GtkWidget *compose_to;
-  GtkWidget *compose_recipt_type;
-  GtkWidget *compose_recipt_type_menu;
-  GtkWidget *glade_menuitem;
-  GtkWidget *compose_subject_label;
-  GtkWidget *compose_sender;
-  GtkWidget *compose_sender_entry;
-  GtkWidget *compose_from;
-  GtkWidget *scrolledwindow3;
-  GtkWidget *compose_reciptlist;
-  GtkWidget *compose_type;
-  GtkWidget *compose_recipt;
-  GtkWidget *hbox1;
-  GSList *hbox1_group = NULL;
-  GtkWidget *compose_confirmdeliver;
-  GtkWidget *compose_confirmread;
-  GtkWidget *compose_autosign;
-  GtkWidget *confirm_pgpsign;
-  GtkWidget *optionmenu1;
-  GtkWidget *optionmenu1_menu;
-  GtkWidget *scrolledwindow4;
-  GtkWidget *compose_body;
-  GtkWidget *scrolledwindow5;
-  GtkWidget *compose_attachments;
-  GtkWidget *compose_mime;
-  GtkWidget *compose_encoding;
-  GtkWidget *compose_charset;
-  GtkWidget *compose_file;
-  GtkWidget *compose_size;
-  GtkWidget *compose_name;
+    GtkWidget *composer;
+    GtkWidget *vbox1;
+    GtkWidget *handlebox2;
+    GtkWidget *compose_menu;
+    GtkWidget *handlebox1;
+    GtkWidget *toolbar2;
+    GtkWidget *tmp_toolbar_icon;
+    GtkWidget *compose_toolbar_quit;
+    GtkWidget *compose_toolbar_send;
+    GtkWidget *compose_toolbar_insertfile;
+    GtkWidget *compose_toolbar_include_original;
+    GtkWidget *compose_toolbar_addsignature;
+    GtkWidget *compose_toolbar_external_editor;
+    GtkWidget *compose_toolbar_spellcheck;
+    GtkWidget *compose_toolbar_attach;
+    GtkWidget *compose_toolbar_stop;
+    GtkWidget *compose_toolbar_help;
+    GtkWidget *table1;
+    GtkWidget *hbuttonbox1;
+    GtkWidget *compose_addressbook;
+    GtkWidget *compose_delete;
+    GtkWidget *table2;
+    GtkWidget *compose_subject;
+    GtkWidget *compose_to;
+    GtkWidget *compose_recipt_type;
+    GtkWidget *compose_recipt_type_menu;
+    GtkWidget *glade_menuitem;
+    GtkWidget *compose_subject_label;
+    GtkWidget *compose_sender;
+    GtkWidget *compose_sender_entry;
+    GtkWidget *compose_from;
+    GtkWidget *scrolledwindow3;
+    GtkWidget *compose_reciptlist;
+    GtkWidget *compose_type;
+    GtkWidget *compose_recipt;
+    GtkWidget *hbox1;
+    GSList *hbox1_group = NULL;
+    GtkWidget *compose_confirmdeliver;
+    GtkWidget *compose_confirmread;
+    GtkWidget *compose_autosign;
+    GtkWidget *confirm_pgpsign;
+    GtkWidget *optionmenu1;
+    GtkWidget *optionmenu1_menu;
+    GtkWidget *scrolledwindow4;
+    GtkWidget *compose_body;
+    GtkWidget *scrolledwindow5;
+    GtkWidget *compose_attachments;
+    GtkWidget *compose_mime;
+    GtkWidget *compose_encoding;
+    GtkWidget *compose_charset;
+    GtkWidget *compose_file;
+    GtkWidget *compose_size;
+    GtkWidget *compose_name;
 
-  composer = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_widget_set_name (composer, "composer");
-  gtk_object_set_data (GTK_OBJECT (composer), "composer", composer);
-  gtk_window_set_title (GTK_WINDOW (composer), _("*New Mail*"));
+    composer = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_widget_set_name (composer, "composer");
+    gtk_object_set_data (GTK_OBJECT (composer), "composer", composer);
+    gtk_window_set_title (GTK_WINDOW (composer), _("*New Mail*"));
 
-  vbox1 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox1, "vbox1");
-  gtk_widget_ref (vbox1);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "vbox1", vbox1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (vbox1);
-  gtk_container_add (GTK_CONTAINER (composer), vbox1);
+    vbox1 = gtk_vbox_new (FALSE, 0);
+    gtk_widget_set_name (vbox1, "vbox1");
+    gtk_widget_ref (vbox1);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "vbox1", vbox1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (vbox1);
+    gtk_container_add (GTK_CONTAINER (composer), vbox1);
 
-  handlebox2 = gtk_handle_box_new ();
-  gtk_widget_set_name (handlebox2, "handlebox2");
-  gtk_widget_ref (handlebox2);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "handlebox2", handlebox2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (handlebox2);
-  gtk_box_pack_start (GTK_BOX (vbox1), handlebox2, FALSE, FALSE, 0);
+    handlebox2 = gtk_handle_box_new ();
+    gtk_widget_set_name (handlebox2, "handlebox2");
+    gtk_widget_ref (handlebox2);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "handlebox2", handlebox2,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (handlebox2);
+    gtk_box_pack_start (GTK_BOX (vbox1), handlebox2, FALSE, FALSE, 0);
 
-  compose_menu = gtk_menu_bar_new ();
-  gtk_widget_set_name (compose_menu, "compose_menu");
-  gtk_widget_ref (compose_menu);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu", compose_menu,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_menu);
-  gtk_container_add (GTK_CONTAINER (handlebox2), compose_menu);
-  gnome_app_fill_menu (GTK_MENU_SHELL (compose_menu), compose_menu_uiinfo,
-                       NULL, FALSE, 0);
+    compose_menu = gtk_menu_bar_new ();
+    gtk_widget_set_name (compose_menu, "compose_menu");
+    gtk_widget_ref (compose_menu);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu",
+			      compose_menu,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_menu);
+    gtk_container_add (GTK_CONTAINER (handlebox2), compose_menu);
+    gnome_app_fill_menu (GTK_MENU_SHELL (compose_menu), compose_menu_uiinfo,
+			 NULL, FALSE, 0);
 
-  gtk_widget_set_name (compose_menu_uiinfo[0].widget, "compose_menu_file");
-  gtk_widget_ref (compose_menu_uiinfo[0].widget);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_file",
-                            compose_menu_uiinfo[0].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (compose_menu_uiinfo[0].widget, "compose_menu_file");
+    gtk_widget_ref (compose_menu_uiinfo[0].widget);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_file",
+			      compose_menu_uiinfo[0].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (compose_menu_uiinfo[1].widget, "compose_menu_edit");
-  gtk_widget_ref (compose_menu_uiinfo[1].widget);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_edit",
-                            compose_menu_uiinfo[1].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (compose_menu_uiinfo[1].widget, "compose_menu_edit");
+    gtk_widget_ref (compose_menu_uiinfo[1].widget);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_edit",
+			      compose_menu_uiinfo[1].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (compose_menu_uiinfo[2].widget, "compose_menu_attachment");
-  gtk_widget_ref (compose_menu_uiinfo[2].widget);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_attachment",
-                            compose_menu_uiinfo[2].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (compose_menu_uiinfo[2].widget,
+			 "compose_menu_attachment");
+    gtk_widget_ref (compose_menu_uiinfo[2].widget);
+    gtk_object_set_data_full (GTK_OBJECT (composer),
+			      "compose_menu_attachment",
+			      compose_menu_uiinfo[2].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (compose_menu_uiinfo[3].widget, "compose_menu_pgp");
-  gtk_widget_ref (compose_menu_uiinfo[3].widget);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_pgp",
-                            compose_menu_uiinfo[3].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (compose_menu_uiinfo[3].widget, "compose_menu_pgp");
+    gtk_widget_ref (compose_menu_uiinfo[3].widget);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_pgp",
+			      compose_menu_uiinfo[3].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (compose_menu_uiinfo[4].widget, "compose_menu_language");
-  gtk_widget_ref (compose_menu_uiinfo[4].widget);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_language",
-                            compose_menu_uiinfo[4].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (compose_menu_uiinfo[4].widget,
+			 "compose_menu_language");
+    gtk_widget_ref (compose_menu_uiinfo[4].widget);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_language",
+			      compose_menu_uiinfo[4].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (compose_menu_uiinfo[5].widget, "compose_menu_encoding");
-  gtk_widget_ref (compose_menu_uiinfo[5].widget);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_encoding",
-                            compose_menu_uiinfo[5].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (compose_menu_uiinfo[5].widget,
+			 "compose_menu_encoding");
+    gtk_widget_ref (compose_menu_uiinfo[5].widget);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_encoding",
+			      compose_menu_uiinfo[5].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (compose_menu_uiinfo[6].widget, "compose_menu_feelings");
-  gtk_widget_ref (compose_menu_uiinfo[6].widget);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_feelings",
-                            compose_menu_uiinfo[6].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (compose_menu_uiinfo[6].widget,
+			 "compose_menu_feelings");
+    gtk_widget_ref (compose_menu_uiinfo[6].widget);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_menu_feelings",
+			      compose_menu_uiinfo[6].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  handlebox1 = gtk_handle_box_new ();
-  gtk_widget_set_name (handlebox1, "handlebox1");
-  gtk_widget_ref (handlebox1);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "handlebox1", handlebox1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (handlebox1);
-  gtk_box_pack_start (GTK_BOX (vbox1), handlebox1, FALSE, FALSE, 0);
+    handlebox1 = gtk_handle_box_new ();
+    gtk_widget_set_name (handlebox1, "handlebox1");
+    gtk_widget_ref (handlebox1);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "handlebox1", handlebox1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (handlebox1);
+    gtk_box_pack_start (GTK_BOX (vbox1), handlebox1, FALSE, FALSE, 0);
 
-  toolbar2 = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_ICONS);
-  gtk_widget_set_name (toolbar2, "toolbar2");
-  gtk_widget_ref (toolbar2);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "toolbar2", toolbar2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar2);
-  gtk_container_add (GTK_CONTAINER (handlebox1), toolbar2);
-  gtk_toolbar_set_space_size (GTK_TOOLBAR (toolbar2), 15);
-  gtk_toolbar_set_space_style (GTK_TOOLBAR (toolbar2), GTK_TOOLBAR_SPACE_LINE);
-  gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar2), GTK_RELIEF_NONE);
+    toolbar2 =
+	gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_ICONS);
+    gtk_widget_set_name (toolbar2, "toolbar2");
+    gtk_widget_ref (toolbar2);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "toolbar2", toolbar2,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar2);
+    gtk_container_add (GTK_CONTAINER (handlebox1), toolbar2);
+    gtk_toolbar_set_space_size (GTK_TOOLBAR (toolbar2), 15);
+    gtk_toolbar_set_space_style (GTK_TOOLBAR (toolbar2),
+				 GTK_TOOLBAR_SPACE_LINE);
+    gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar2), GTK_RELIEF_NONE);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_CLOSE);
-  compose_toolbar_quit = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Abort"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (compose_toolbar_quit, "compose_toolbar_quit");
-  gtk_widget_ref (compose_toolbar_quit);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_quit", compose_toolbar_quit,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_toolbar_quit);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_CLOSE);
+    compose_toolbar_quit =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Abort"), NULL, NULL, tmp_toolbar_icon,
+				    NULL, NULL);
+    gtk_widget_set_name (compose_toolbar_quit, "compose_toolbar_quit");
+    gtk_widget_ref (compose_toolbar_quit);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_quit",
+			      compose_toolbar_quit,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_toolbar_quit);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_MAIL_SND);
-  compose_toolbar_send = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Send"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (compose_toolbar_send, "compose_toolbar_send");
-  gtk_widget_ref (compose_toolbar_send);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_send", compose_toolbar_send,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_toolbar_send);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_MAIL_SND);
+    compose_toolbar_send =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Send"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (compose_toolbar_send, "compose_toolbar_send");
+    gtk_widget_ref (compose_toolbar_send);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_send",
+			      compose_toolbar_send,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_toolbar_send);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar2));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar2));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_ADD);
-  compose_toolbar_insertfile = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Insert File"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (compose_toolbar_insertfile, "compose_toolbar_insertfile");
-  gtk_widget_ref (compose_toolbar_insertfile);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_insertfile", compose_toolbar_insertfile,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_toolbar_insertfile);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_ADD);
+    compose_toolbar_insertfile =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Insert File"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (compose_toolbar_insertfile,
+			 "compose_toolbar_insertfile");
+    gtk_widget_ref (compose_toolbar_insertfile);
+    gtk_object_set_data_full (GTK_OBJECT (composer),
+			      "compose_toolbar_insertfile",
+			      compose_toolbar_insertfile,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_toolbar_insertfile);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_OPEN);
-  compose_toolbar_include_original = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Include Original"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (compose_toolbar_include_original, "compose_toolbar_include_original");
-  gtk_widget_ref (compose_toolbar_include_original);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_include_original", compose_toolbar_include_original,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_toolbar_include_original);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_OPEN);
+    compose_toolbar_include_original =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Include Original"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (compose_toolbar_include_original,
+			 "compose_toolbar_include_original");
+    gtk_widget_ref (compose_toolbar_include_original);
+    gtk_object_set_data_full (GTK_OBJECT (composer),
+			      "compose_toolbar_include_original",
+			      compose_toolbar_include_original,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_toolbar_include_original);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_PROPERTIES);
-  compose_toolbar_addsignature = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Add Signature"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (compose_toolbar_addsignature, "compose_toolbar_addsignature");
-  gtk_widget_ref (compose_toolbar_addsignature);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_addsignature", compose_toolbar_addsignature,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_toolbar_addsignature);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_PROPERTIES);
+    compose_toolbar_addsignature =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Add Signature"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (compose_toolbar_addsignature,
+			 "compose_toolbar_addsignature");
+    gtk_widget_ref (compose_toolbar_addsignature);
+    gtk_object_set_data_full (GTK_OBJECT (composer),
+			      "compose_toolbar_addsignature",
+			      compose_toolbar_addsignature,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_toolbar_addsignature);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_BOOK_GREEN);
-  compose_toolbar_external_editor = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("External Editor"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (compose_toolbar_external_editor, "compose_toolbar_external_editor");
-  gtk_widget_ref (compose_toolbar_external_editor);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_external_editor", compose_toolbar_external_editor,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_toolbar_external_editor);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_BOOK_GREEN);
+    compose_toolbar_external_editor =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("External Editor"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (compose_toolbar_external_editor,
+			 "compose_toolbar_external_editor");
+    gtk_widget_ref (compose_toolbar_external_editor);
+    gtk_object_set_data_full (GTK_OBJECT (composer),
+			      "compose_toolbar_external_editor",
+			      compose_toolbar_external_editor,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_toolbar_external_editor);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar2));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar2));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_SPELLCHECK);
-  compose_toolbar_spellcheck = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Spell Check"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (compose_toolbar_spellcheck, "compose_toolbar_spellcheck");
-  gtk_widget_ref (compose_toolbar_spellcheck);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_spellcheck", compose_toolbar_spellcheck,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_toolbar_spellcheck);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_SPELLCHECK);
+    compose_toolbar_spellcheck =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Spell Check"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (compose_toolbar_spellcheck,
+			 "compose_toolbar_spellcheck");
+    gtk_widget_ref (compose_toolbar_spellcheck);
+    gtk_object_set_data_full (GTK_OBJECT (composer),
+			      "compose_toolbar_spellcheck",
+			      compose_toolbar_spellcheck,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_toolbar_spellcheck);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar2));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar2));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_ATTACH);
-  compose_toolbar_attach = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Attach"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (compose_toolbar_attach, "compose_toolbar_attach");
-  gtk_widget_ref (compose_toolbar_attach);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_attach", compose_toolbar_attach,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_toolbar_attach);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_ATTACH);
+    compose_toolbar_attach =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Attach"), NULL, NULL, tmp_toolbar_icon,
+				    NULL, NULL);
+    gtk_widget_set_name (compose_toolbar_attach, "compose_toolbar_attach");
+    gtk_widget_ref (compose_toolbar_attach);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_attach",
+			      compose_toolbar_attach,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_toolbar_attach);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar2));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar2));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_STOP);
-  compose_toolbar_stop = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Stop"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (compose_toolbar_stop, "compose_toolbar_stop");
-  gtk_widget_ref (compose_toolbar_stop);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_stop", compose_toolbar_stop,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_toolbar_stop);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_STOP);
+    compose_toolbar_stop =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Stop"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (compose_toolbar_stop, "compose_toolbar_stop");
+    gtk_widget_ref (compose_toolbar_stop);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_stop",
+			      compose_toolbar_stop,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_toolbar_stop);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_HELP);
-  compose_toolbar_help = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Help"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (compose_toolbar_help, "compose_toolbar_help");
-  gtk_widget_ref (compose_toolbar_help);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_help", compose_toolbar_help,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_toolbar_help);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (composer, GNOME_STOCK_PIXMAP_HELP);
+    compose_toolbar_help =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar2),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Help"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (compose_toolbar_help, "compose_toolbar_help");
+    gtk_widget_ref (compose_toolbar_help);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_toolbar_help",
+			      compose_toolbar_help,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_toolbar_help);
 
-  table1 = gtk_table_new (2, 2, FALSE);
-  gtk_widget_set_name (table1, "table1");
-  gtk_widget_ref (table1);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "table1", table1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (table1);
-  gtk_box_pack_start (GTK_BOX (vbox1), table1, FALSE, TRUE, 0);
+    table1 = gtk_table_new (2, 2, FALSE);
+    gtk_widget_set_name (table1, "table1");
+    gtk_widget_ref (table1);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "table1", table1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (table1);
+    gtk_box_pack_start (GTK_BOX (vbox1), table1, FALSE, TRUE, 0);
 
-  hbuttonbox1 = gtk_hbutton_box_new ();
-  gtk_widget_set_name (hbuttonbox1, "hbuttonbox1");
-  gtk_widget_ref (hbuttonbox1);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "hbuttonbox1", hbuttonbox1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (hbuttonbox1);
-  gtk_table_attach (GTK_TABLE (table1), hbuttonbox1, 1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+    hbuttonbox1 = gtk_hbutton_box_new ();
+    gtk_widget_set_name (hbuttonbox1, "hbuttonbox1");
+    gtk_widget_ref (hbuttonbox1);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "hbuttonbox1",
+			      hbuttonbox1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (hbuttonbox1);
+    gtk_table_attach (GTK_TABLE (table1), hbuttonbox1, 1, 2, 1, 2,
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 
-  compose_addressbook = gtk_button_new_with_label (_("Address"));
-  gtk_widget_set_name (compose_addressbook, "compose_addressbook");
-  gtk_widget_ref (compose_addressbook);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_addressbook", compose_addressbook,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_addressbook);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox1), compose_addressbook);
-  GTK_WIDGET_SET_FLAGS (compose_addressbook, GTK_CAN_DEFAULT);
+    compose_addressbook = gtk_button_new_with_label (_("Address"));
+    gtk_widget_set_name (compose_addressbook, "compose_addressbook");
+    gtk_widget_ref (compose_addressbook);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_addressbook",
+			      compose_addressbook,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_addressbook);
+    gtk_container_add (GTK_CONTAINER (hbuttonbox1), compose_addressbook);
+    GTK_WIDGET_SET_FLAGS (compose_addressbook, GTK_CAN_DEFAULT);
 
-  compose_delete = gtk_button_new_with_label (_("delete"));
-  gtk_widget_set_name (compose_delete, "compose_delete");
-  gtk_widget_ref (compose_delete);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_delete", compose_delete,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_delete);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox1), compose_delete);
-  GTK_WIDGET_SET_FLAGS (compose_delete, GTK_CAN_DEFAULT);
+    compose_delete = gtk_button_new_with_label (_("delete"));
+    gtk_widget_set_name (compose_delete, "compose_delete");
+    gtk_widget_ref (compose_delete);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_delete",
+			      compose_delete,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_delete);
+    gtk_container_add (GTK_CONTAINER (hbuttonbox1), compose_delete);
+    GTK_WIDGET_SET_FLAGS (compose_delete, GTK_CAN_DEFAULT);
 
-  table2 = gtk_table_new (3, 2, FALSE);
-  gtk_widget_set_name (table2, "table2");
-  gtk_widget_ref (table2);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "table2", table2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (table2);
-  gtk_table_attach (GTK_TABLE (table1), table2, 0, 1, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+    table2 = gtk_table_new (3, 2, FALSE);
+    gtk_widget_set_name (table2, "table2");
+    gtk_widget_ref (table2);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "table2", table2,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (table2);
+    gtk_table_attach (GTK_TABLE (table1), table2, 0, 1, 0, 1,
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 
-  compose_subject = gtk_entry_new ();
-  gtk_widget_set_name (compose_subject, "compose_subject");
-  gtk_widget_ref (compose_subject);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_subject", compose_subject,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_subject);
-  gtk_table_attach (GTK_TABLE (table2), compose_subject, 1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
+    compose_subject = gtk_entry_new ();
+    gtk_widget_set_name (compose_subject, "compose_subject");
+    gtk_widget_ref (compose_subject);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_subject",
+			      compose_subject,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_subject);
+    gtk_table_attach (GTK_TABLE (table2), compose_subject, 1, 2, 1, 2,
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+		      (GtkAttachOptions) (0), 0, 0);
 
-  compose_to = gtk_entry_new ();
-  gtk_widget_set_name (compose_to, "compose_to");
-  gtk_widget_ref (compose_to);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_to", compose_to,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_to);
-  gtk_table_attach (GTK_TABLE (table2), compose_to, 1, 2, 2, 3,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
+    compose_to = gtk_entry_new ();
+    gtk_widget_set_name (compose_to, "compose_to");
+    gtk_widget_ref (compose_to);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_to", compose_to,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_to);
+    gtk_table_attach (GTK_TABLE (table2), compose_to, 1, 2, 2, 3,
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+		      (GtkAttachOptions) (0), 0, 0);
 
-  compose_recipt_type = gtk_option_menu_new ();
-  gtk_widget_set_name (compose_recipt_type, "compose_recipt_type");
-  gtk_widget_ref (compose_recipt_type);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_recipt_type", compose_recipt_type,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_recipt_type);
-  gtk_table_attach (GTK_TABLE (table2), compose_recipt_type, 0, 1, 2, 3,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  compose_recipt_type_menu = gtk_menu_new ();
-  glade_menuitem = gtk_menu_item_new_with_label (_("To"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (compose_recipt_type_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("CC"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (compose_recipt_type_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("BCC"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (compose_recipt_type_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("NN"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (compose_recipt_type_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("FCC"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (compose_recipt_type_menu), glade_menuitem);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (compose_recipt_type), compose_recipt_type_menu);
+    compose_recipt_type = gtk_option_menu_new ();
+    gtk_widget_set_name (compose_recipt_type, "compose_recipt_type");
+    gtk_widget_ref (compose_recipt_type);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_recipt_type",
+			      compose_recipt_type,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_recipt_type);
+    gtk_table_attach (GTK_TABLE (table2), compose_recipt_type, 0, 1, 2, 3,
+		      (GtkAttachOptions) (0), (GtkAttachOptions) (0), 0, 0);
+    compose_recipt_type_menu = gtk_menu_new ();
+    glade_menuitem = gtk_menu_item_new_with_label (_("To"));
+    gtk_widget_show (glade_menuitem);
+    gtk_menu_append (GTK_MENU (compose_recipt_type_menu), glade_menuitem);
+    glade_menuitem = gtk_menu_item_new_with_label (_("CC"));
+    gtk_widget_show (glade_menuitem);
+    gtk_menu_append (GTK_MENU (compose_recipt_type_menu), glade_menuitem);
+    glade_menuitem = gtk_menu_item_new_with_label (_("BCC"));
+    gtk_widget_show (glade_menuitem);
+    gtk_menu_append (GTK_MENU (compose_recipt_type_menu), glade_menuitem);
+    glade_menuitem = gtk_menu_item_new_with_label (_("NN"));
+    gtk_widget_show (glade_menuitem);
+    gtk_menu_append (GTK_MENU (compose_recipt_type_menu), glade_menuitem);
+    glade_menuitem = gtk_menu_item_new_with_label (_("FCC"));
+    gtk_widget_show (glade_menuitem);
+    gtk_menu_append (GTK_MENU (compose_recipt_type_menu), glade_menuitem);
+    gtk_option_menu_set_menu (GTK_OPTION_MENU (compose_recipt_type),
+			      compose_recipt_type_menu);
 
-  compose_subject_label = gtk_label_new (_("Subject"));
-  gtk_widget_set_name (compose_subject_label, "compose_subject_label");
-  gtk_widget_ref (compose_subject_label);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_subject_label", compose_subject_label,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_subject_label);
-  gtk_table_attach (GTK_TABLE (table2), compose_subject_label, 0, 1, 1, 2,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
+    compose_subject_label = gtk_label_new (_("Subject"));
+    gtk_widget_set_name (compose_subject_label, "compose_subject_label");
+    gtk_widget_ref (compose_subject_label);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_subject_label",
+			      compose_subject_label,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_subject_label);
+    gtk_table_attach (GTK_TABLE (table2), compose_subject_label, 0, 1, 1, 2,
+		      (GtkAttachOptions) (0), (GtkAttachOptions) (0), 0, 0);
 
-  compose_sender = gtk_combo_new ();
-  gtk_widget_set_name (compose_sender, "compose_sender");
-  gtk_widget_ref (compose_sender);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_sender", compose_sender,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_sender);
-  gtk_table_attach (GTK_TABLE (table2), compose_sender, 1, 2, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
+    compose_sender = gtk_combo_new ();
+    gtk_widget_set_name (compose_sender, "compose_sender");
+    gtk_widget_ref (compose_sender);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_sender",
+			      compose_sender,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_sender);
+    gtk_table_attach (GTK_TABLE (table2), compose_sender, 1, 2, 0, 1,
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+		      (GtkAttachOptions) (0), 0, 0);
 
-  compose_sender_entry = GTK_COMBO (compose_sender)->entry;
-  gtk_widget_set_name (compose_sender_entry, "compose_sender_entry");
-  gtk_widget_ref (compose_sender_entry);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_sender_entry", compose_sender_entry,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_sender_entry);
+    compose_sender_entry = GTK_COMBO (compose_sender)->entry;
+    gtk_widget_set_name (compose_sender_entry, "compose_sender_entry");
+    gtk_widget_ref (compose_sender_entry);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_sender_entry",
+			      compose_sender_entry,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_sender_entry);
 
-  compose_from = gtk_label_new (_("From"));
-  gtk_widget_set_name (compose_from, "compose_from");
-  gtk_widget_ref (compose_from);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_from", compose_from,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_from);
-  gtk_table_attach (GTK_TABLE (table2), compose_from, 0, 1, 0, 1,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
+    compose_from = gtk_label_new (_("From"));
+    gtk_widget_set_name (compose_from, "compose_from");
+    gtk_widget_ref (compose_from);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_from",
+			      compose_from,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_from);
+    gtk_table_attach (GTK_TABLE (table2), compose_from, 0, 1, 0, 1,
+		      (GtkAttachOptions) (0), (GtkAttachOptions) (0), 0, 0);
 
-  scrolledwindow3 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_name (scrolledwindow3, "scrolledwindow3");
-  gtk_widget_ref (scrolledwindow3);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "scrolledwindow3", scrolledwindow3,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow3);
-  gtk_table_attach (GTK_TABLE (table1), scrolledwindow3, 1, 2, 0, 1,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow3), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    scrolledwindow3 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_set_name (scrolledwindow3, "scrolledwindow3");
+    gtk_widget_ref (scrolledwindow3);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "scrolledwindow3",
+			      scrolledwindow3,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (scrolledwindow3);
+    gtk_table_attach (GTK_TABLE (table1), scrolledwindow3, 1, 2, 0, 1,
+		      (GtkAttachOptions) (GTK_FILL),
+		      (GtkAttachOptions) (GTK_FILL), 0, 0);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow3),
+				    GTK_POLICY_AUTOMATIC,
+				    GTK_POLICY_AUTOMATIC);
 
-  compose_reciptlist = gtk_clist_new (2);
-  gtk_widget_set_name (compose_reciptlist, "compose_reciptlist");
-  gtk_widget_ref (compose_reciptlist);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_reciptlist", compose_reciptlist,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_reciptlist);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow3), compose_reciptlist);
-  gtk_clist_set_column_width (GTK_CLIST (compose_reciptlist), 0, 80);
-  gtk_clist_set_column_width (GTK_CLIST (compose_reciptlist), 1, 80);
-  gtk_clist_column_titles_hide (GTK_CLIST (compose_reciptlist));
+    compose_reciptlist = gtk_clist_new (2);
+    gtk_widget_set_name (compose_reciptlist, "compose_reciptlist");
+    gtk_widget_ref (compose_reciptlist);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_reciptlist",
+			      compose_reciptlist,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_reciptlist);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow3), compose_reciptlist);
+    gtk_clist_set_column_width (GTK_CLIST (compose_reciptlist), 0, 80);
+    gtk_clist_set_column_width (GTK_CLIST (compose_reciptlist), 1, 80);
+    gtk_clist_column_titles_hide (GTK_CLIST (compose_reciptlist));
 
-  compose_type = gtk_label_new (_("Type"));
-  gtk_widget_set_name (compose_type, "compose_type");
-  gtk_widget_ref (compose_type);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_type", compose_type,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_type);
-  gtk_clist_set_column_widget (GTK_CLIST (compose_reciptlist), 0, compose_type);
+    compose_type = gtk_label_new (_("Type"));
+    gtk_widget_set_name (compose_type, "compose_type");
+    gtk_widget_ref (compose_type);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_type",
+			      compose_type,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_type);
+    gtk_clist_set_column_widget (GTK_CLIST (compose_reciptlist), 0,
+				 compose_type);
 
-  compose_recipt = gtk_label_new (_("Recipient"));
-  gtk_widget_set_name (compose_recipt, "compose_recipt");
-  gtk_widget_ref (compose_recipt);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_recipt", compose_recipt,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_recipt);
-  gtk_clist_set_column_widget (GTK_CLIST (compose_reciptlist), 1, compose_recipt);
+    compose_recipt = gtk_label_new (_("Recipient"));
+    gtk_widget_set_name (compose_recipt, "compose_recipt");
+    gtk_widget_ref (compose_recipt);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_recipt",
+			      compose_recipt,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_recipt);
+    gtk_clist_set_column_widget (GTK_CLIST (compose_reciptlist), 1,
+				 compose_recipt);
 
-  hbox1 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox1, "hbox1");
-  gtk_widget_ref (hbox1);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "hbox1", hbox1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (hbox1);
-  gtk_table_attach (GTK_TABLE (table1), hbox1, 0, 1, 1, 2,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
+    hbox1 = gtk_hbox_new (FALSE, 0);
+    gtk_widget_set_name (hbox1, "hbox1");
+    gtk_widget_ref (hbox1);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "hbox1", hbox1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (hbox1);
+    gtk_table_attach (GTK_TABLE (table1), hbox1, 0, 1, 1, 2,
+		      (GtkAttachOptions) (GTK_FILL),
+		      (GtkAttachOptions) (GTK_FILL), 0, 0);
 
-  compose_confirmdeliver = gtk_radio_button_new_with_label (hbox1_group, _("Confirm\nDelivery"));
-  hbox1_group = gtk_radio_button_group (GTK_RADIO_BUTTON (compose_confirmdeliver));
-  gtk_widget_set_name (compose_confirmdeliver, "compose_confirmdeliver");
-  gtk_widget_ref (compose_confirmdeliver);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_confirmdeliver", compose_confirmdeliver,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_confirmdeliver);
-  gtk_box_pack_start (GTK_BOX (hbox1), compose_confirmdeliver, FALSE, FALSE, 0);
+    compose_confirmdeliver =
+	gtk_radio_button_new_with_label (hbox1_group, _("Confirm\nDelivery"));
+    hbox1_group =
+	gtk_radio_button_group (GTK_RADIO_BUTTON (compose_confirmdeliver));
+    gtk_widget_set_name (compose_confirmdeliver, "compose_confirmdeliver");
+    gtk_widget_ref (compose_confirmdeliver);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_confirmdeliver",
+			      compose_confirmdeliver,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_confirmdeliver);
+    gtk_box_pack_start (GTK_BOX (hbox1), compose_confirmdeliver, FALSE, FALSE,
+			0);
 
-  compose_confirmread = gtk_radio_button_new_with_label (hbox1_group, _("Confirm\nReading"));
-  hbox1_group = gtk_radio_button_group (GTK_RADIO_BUTTON (compose_confirmread));
-  gtk_widget_set_name (compose_confirmread, "compose_confirmread");
-  gtk_widget_ref (compose_confirmread);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_confirmread", compose_confirmread,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_confirmread);
-  gtk_box_pack_start (GTK_BOX (hbox1), compose_confirmread, FALSE, FALSE, 0);
+    compose_confirmread =
+	gtk_radio_button_new_with_label (hbox1_group, _("Confirm\nReading"));
+    hbox1_group =
+	gtk_radio_button_group (GTK_RADIO_BUTTON (compose_confirmread));
+    gtk_widget_set_name (compose_confirmread, "compose_confirmread");
+    gtk_widget_ref (compose_confirmread);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_confirmread",
+			      compose_confirmread,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_confirmread);
+    gtk_box_pack_start (GTK_BOX (hbox1), compose_confirmread, FALSE, FALSE,
+			0);
 
-  compose_autosign = gtk_radio_button_new_with_label (hbox1_group, _("Auto\nSign"));
-  hbox1_group = gtk_radio_button_group (GTK_RADIO_BUTTON (compose_autosign));
-  gtk_widget_set_name (compose_autosign, "compose_autosign");
-  gtk_widget_ref (compose_autosign);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_autosign", compose_autosign,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_autosign);
-  gtk_box_pack_start (GTK_BOX (hbox1), compose_autosign, FALSE, FALSE, 0);
+    compose_autosign =
+	gtk_radio_button_new_with_label (hbox1_group, _("Auto\nSign"));
+    hbox1_group =
+	gtk_radio_button_group (GTK_RADIO_BUTTON (compose_autosign));
+    gtk_widget_set_name (compose_autosign, "compose_autosign");
+    gtk_widget_ref (compose_autosign);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_autosign",
+			      compose_autosign,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_autosign);
+    gtk_box_pack_start (GTK_BOX (hbox1), compose_autosign, FALSE, FALSE, 0);
 
-  confirm_pgpsign = gtk_radio_button_new_with_label (hbox1_group, _("PGP\nSign"));
-  hbox1_group = gtk_radio_button_group (GTK_RADIO_BUTTON (confirm_pgpsign));
-  gtk_widget_set_name (confirm_pgpsign, "confirm_pgpsign");
-  gtk_widget_ref (confirm_pgpsign);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "confirm_pgpsign", confirm_pgpsign,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (confirm_pgpsign);
-  gtk_box_pack_start (GTK_BOX (hbox1), confirm_pgpsign, FALSE, FALSE, 0);
+    confirm_pgpsign =
+	gtk_radio_button_new_with_label (hbox1_group, _("PGP\nSign"));
+    hbox1_group = gtk_radio_button_group (GTK_RADIO_BUTTON (confirm_pgpsign));
+    gtk_widget_set_name (confirm_pgpsign, "confirm_pgpsign");
+    gtk_widget_ref (confirm_pgpsign);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "confirm_pgpsign",
+			      confirm_pgpsign,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (confirm_pgpsign);
+    gtk_box_pack_start (GTK_BOX (hbox1), confirm_pgpsign, FALSE, FALSE, 0);
 
-  optionmenu1 = gtk_option_menu_new ();
-  gtk_widget_set_name (optionmenu1, "optionmenu1");
-  gtk_widget_ref (optionmenu1);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "optionmenu1", optionmenu1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (optionmenu1);
-  gtk_box_pack_start (GTK_BOX (hbox1), optionmenu1, FALSE, FALSE, 0);
-  optionmenu1_menu = gtk_menu_new ();
-  glade_menuitem = gtk_menu_item_new_with_label (_("Very High"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("High"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("Normal"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("Low"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1), optionmenu1_menu);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu1), 2);
+    optionmenu1 = gtk_option_menu_new ();
+    gtk_widget_set_name (optionmenu1, "optionmenu1");
+    gtk_widget_ref (optionmenu1);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "optionmenu1",
+			      optionmenu1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (optionmenu1);
+    gtk_box_pack_start (GTK_BOX (hbox1), optionmenu1, FALSE, FALSE, 0);
+    optionmenu1_menu = gtk_menu_new ();
+    glade_menuitem = gtk_menu_item_new_with_label (_("Very High"));
+    gtk_widget_show (glade_menuitem);
+    gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
+    glade_menuitem = gtk_menu_item_new_with_label (_("High"));
+    gtk_widget_show (glade_menuitem);
+    gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
+    glade_menuitem = gtk_menu_item_new_with_label (_("Normal"));
+    gtk_widget_show (glade_menuitem);
+    gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
+    glade_menuitem = gtk_menu_item_new_with_label (_("Low"));
+    gtk_widget_show (glade_menuitem);
+    gtk_menu_append (GTK_MENU (optionmenu1_menu), glade_menuitem);
+    gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1),
+			      optionmenu1_menu);
+    gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu1), 2);
 
-  scrolledwindow4 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_name (scrolledwindow4, "scrolledwindow4");
-  gtk_widget_ref (scrolledwindow4);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "scrolledwindow4", scrolledwindow4,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow4);
-  gtk_box_pack_start (GTK_BOX (vbox1), scrolledwindow4, TRUE, TRUE, 0);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow4), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    scrolledwindow4 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_set_name (scrolledwindow4, "scrolledwindow4");
+    gtk_widget_ref (scrolledwindow4);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "scrolledwindow4",
+			      scrolledwindow4,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (scrolledwindow4);
+    gtk_box_pack_start (GTK_BOX (vbox1), scrolledwindow4, TRUE, TRUE, 0);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow4),
+				    GTK_POLICY_AUTOMATIC,
+				    GTK_POLICY_AUTOMATIC);
 
-  compose_body = gtk_text_new (NULL, NULL);
-  gtk_widget_set_name (compose_body, "compose_body");
-  gtk_widget_ref (compose_body);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_body", compose_body,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_body);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow4), compose_body);
-  gtk_text_set_editable (GTK_TEXT (compose_body), TRUE);
+    compose_body = gtk_text_new (NULL, NULL);
+    gtk_widget_set_name (compose_body, "compose_body");
+    gtk_widget_ref (compose_body);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_body",
+			      compose_body,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_body);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow4), compose_body);
+    gtk_text_set_editable (GTK_TEXT (compose_body), TRUE);
 
-  scrolledwindow5 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_name (scrolledwindow5, "scrolledwindow5");
-  gtk_widget_ref (scrolledwindow5);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "scrolledwindow5", scrolledwindow5,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow5);
-  gtk_box_pack_start (GTK_BOX (vbox1), scrolledwindow5, FALSE, TRUE, 0);
+    scrolledwindow5 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_set_name (scrolledwindow5, "scrolledwindow5");
+    gtk_widget_ref (scrolledwindow5);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "scrolledwindow5",
+			      scrolledwindow5,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (scrolledwindow5);
+    gtk_box_pack_start (GTK_BOX (vbox1), scrolledwindow5, FALSE, TRUE, 0);
 
-  compose_attachments = gtk_clist_new (6);
-  gtk_widget_set_name (compose_attachments, "compose_attachments");
-  gtk_widget_ref (compose_attachments);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_attachments", compose_attachments,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_attachments);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow5), compose_attachments);
-  gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 0, 80);
-  gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 1, 80);
-  gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 2, 80);
-  gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 3, 80);
-  gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 4, 80);
-  gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 5, 80);
-  gtk_clist_column_titles_hide (GTK_CLIST (compose_attachments));
+    compose_attachments = gtk_clist_new (6);
+    gtk_widget_set_name (compose_attachments, "compose_attachments");
+    gtk_widget_ref (compose_attachments);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_attachments",
+			      compose_attachments,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_attachments);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow5), compose_attachments);
+    gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 0, 80);
+    gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 1, 80);
+    gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 2, 80);
+    gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 3, 80);
+    gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 4, 80);
+    gtk_clist_set_column_width (GTK_CLIST (compose_attachments), 5, 80);
+    gtk_clist_column_titles_hide (GTK_CLIST (compose_attachments));
 
-  compose_mime = gtk_label_new (_("Mime"));
-  gtk_widget_set_name (compose_mime, "compose_mime");
-  gtk_widget_ref (compose_mime);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_mime", compose_mime,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_mime);
-  gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 0, compose_mime);
+    compose_mime = gtk_label_new (_("Mime"));
+    gtk_widget_set_name (compose_mime, "compose_mime");
+    gtk_widget_ref (compose_mime);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_mime",
+			      compose_mime,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_mime);
+    gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 0,
+				 compose_mime);
 
-  compose_encoding = gtk_label_new (_("Encoding"));
-  gtk_widget_set_name (compose_encoding, "compose_encoding");
-  gtk_widget_ref (compose_encoding);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_encoding", compose_encoding,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_encoding);
-  gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 1, compose_encoding);
+    compose_encoding = gtk_label_new (_("Encoding"));
+    gtk_widget_set_name (compose_encoding, "compose_encoding");
+    gtk_widget_ref (compose_encoding);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_encoding",
+			      compose_encoding,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_encoding);
+    gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 1,
+				 compose_encoding);
 
-  compose_charset = gtk_label_new (_("Charset"));
-  gtk_widget_set_name (compose_charset, "compose_charset");
-  gtk_widget_ref (compose_charset);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_charset", compose_charset,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_charset);
-  gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 2, compose_charset);
+    compose_charset = gtk_label_new (_("Charset"));
+    gtk_widget_set_name (compose_charset, "compose_charset");
+    gtk_widget_ref (compose_charset);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_charset",
+			      compose_charset,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_charset);
+    gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 2,
+				 compose_charset);
 
-  compose_file = gtk_label_new (_("File"));
-  gtk_widget_set_name (compose_file, "compose_file");
-  gtk_widget_ref (compose_file);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_file", compose_file,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_file);
-  gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 3, compose_file);
+    compose_file = gtk_label_new (_("File"));
+    gtk_widget_set_name (compose_file, "compose_file");
+    gtk_widget_ref (compose_file);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_file",
+			      compose_file,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_file);
+    gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 3,
+				 compose_file);
 
-  compose_size = gtk_label_new (_("Size"));
-  gtk_widget_set_name (compose_size, "compose_size");
-  gtk_widget_ref (compose_size);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_size", compose_size,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_size);
-  gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 4, compose_size);
+    compose_size = gtk_label_new (_("Size"));
+    gtk_widget_set_name (compose_size, "compose_size");
+    gtk_widget_ref (compose_size);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_size",
+			      compose_size,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_size);
+    gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 4,
+				 compose_size);
 
-  compose_name = gtk_label_new (_("Name"));
-  gtk_widget_set_name (compose_name, "compose_name");
-  gtk_widget_ref (compose_name);
-  gtk_object_set_data_full (GTK_OBJECT (composer), "compose_name", compose_name,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (compose_name);
-  gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 5, compose_name);
+    compose_name = gtk_label_new (_("Name"));
+    gtk_widget_set_name (compose_name, "compose_name");
+    gtk_widget_ref (compose_name);
+    gtk_object_set_data_full (GTK_OBJECT (composer), "compose_name",
+			      compose_name,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (compose_name);
+    gtk_clist_set_column_widget (GTK_CLIST (compose_attachments), 5,
+				 compose_name);
 
-  return composer;
+    return composer;
 }
 
-static GnomeUIInfo reader_menu_uiinfo[] =
-{
-  {
-    GNOME_APP_UI_ITEM, N_("File"),
-    NULL,
-    on_reader_menu_file_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  {
-    GNOME_APP_UI_ITEM, N_("Message"),
-    NULL,
-    on_reader_menu_message_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  {
-    GNOME_APP_UI_ITEM, N_("Attachment"),
-    NULL,
-    on_reader_menu_attachment_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  {
-    GNOME_APP_UI_ITEM, N_("PGP"),
-    NULL,
-    on_reader_menu_pgp_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  {
-    GNOME_APP_UI_ITEM, N_("Language"),
-    NULL,
-    on_reader_menu_language_activate, NULL, NULL,
-    GNOME_APP_PIXMAP_NONE, NULL,
-    0, 0, NULL
-  },
-  GNOMEUIINFO_END
+static GnomeUIInfo reader_menu_uiinfo[] = {
+    {
+     GNOME_APP_UI_ITEM, N_("File"),
+     NULL,
+     on_reader_menu_file_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    {
+     GNOME_APP_UI_ITEM, N_("Message"),
+     NULL,
+     on_reader_menu_message_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    {
+     GNOME_APP_UI_ITEM, N_("Attachment"),
+     NULL,
+     on_reader_menu_attachment_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    {
+     GNOME_APP_UI_ITEM, N_("PGP"),
+     NULL,
+     on_reader_menu_pgp_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    {
+     GNOME_APP_UI_ITEM, N_("Language"),
+     NULL,
+     on_reader_menu_language_activate, NULL, NULL,
+     GNOME_APP_PIXMAP_NONE, NULL,
+     0, 0, NULL},
+    GNOMEUIINFO_END
 };
 
-GtkWidget*
+GtkWidget *
 create_reader (void)
 {
-  GtkWidget *reader;
-  GtkWidget *vbox2;
-  GtkWidget *handlebox3;
-  GtkWidget *reader_menu;
-  GtkWidget *handlebox4;
-  GtkWidget *toolbar3;
-  GtkWidget *tmp_toolbar_icon;
-  GtkWidget *reader_toolbar_quit;
-  GtkWidget *reader_toolbar_first;
-  GtkWidget *reader_toolbar_previous;
-  GtkWidget *reader_toolbar_next;
-  GtkWidget *button11;
-  GtkWidget *reader_toolbar_reply;
-  GtkWidget *reader_toolbar_forward;
-  GtkWidget *reader_toolbar_file;
-  GtkWidget *reader_toolbar_trash;
-  GtkWidget *reader_toolbar_view;
-  GtkWidget *reader_toolbar_print;
-  GtkWidget *reader_toolbar_stop;
-  GtkWidget *reader_toolbar_help;
-  GtkWidget *hbox2;
-  GtkWidget *table4;
-  GtkWidget *label8;
-  GtkWidget *label9;
-  GtkWidget *label10;
-  GtkWidget *label11;
-  GtkWidget *reader_from;
-  GtkWidget *reader_subject;
-  GtkWidget *reader_sender;
-  GtkWidget *reader_date;
-  GtkWidget *scrolledwindow8;
-  GtkWidget *reader_reciptlist;
-  GtkWidget *label6;
-  GtkWidget *label7;
-  GtkWidget *scrolledwindow6;
-  GtkWidget *reader_body;
-  GtkWidget *scrolledwindow7;
-  GtkWidget *reader_attachments;
-  GtkWidget *label1;
-  GtkWidget *label2;
-  GtkWidget *label3;
-  GtkWidget *label4;
-  GtkWidget *label5;
+    GtkWidget *reader;
+    GtkWidget *vbox2;
+    GtkWidget *handlebox3;
+    GtkWidget *reader_menu;
+    GtkWidget *handlebox4;
+    GtkWidget *toolbar3;
+    GtkWidget *tmp_toolbar_icon;
+    GtkWidget *reader_toolbar_quit;
+    GtkWidget *reader_toolbar_first;
+    GtkWidget *reader_toolbar_previous;
+    GtkWidget *reader_toolbar_next;
+    GtkWidget *button11;
+    GtkWidget *reader_toolbar_reply;
+    GtkWidget *reader_toolbar_forward;
+    GtkWidget *reader_toolbar_file;
+    GtkWidget *reader_toolbar_trash;
+    GtkWidget *reader_toolbar_view;
+    GtkWidget *reader_toolbar_print;
+    GtkWidget *reader_toolbar_stop;
+    GtkWidget *reader_toolbar_help;
+    GtkWidget *hbox2;
+    GtkWidget *table4;
+    GtkWidget *label8;
+    GtkWidget *label9;
+    GtkWidget *label10;
+    GtkWidget *label11;
+    GtkWidget *reader_from;
+    GtkWidget *reader_subject;
+    GtkWidget *reader_sender;
+    GtkWidget *reader_date;
+    GtkWidget *scrolledwindow8;
+    GtkWidget *reader_reciptlist;
+    GtkWidget *label6;
+    GtkWidget *label7;
+    GtkWidget *scrolledwindow6;
+    GtkWidget *reader_body;
+    GtkWidget *scrolledwindow7;
+    GtkWidget *reader_attachments;
+    GtkWidget *label1;
+    GtkWidget *label2;
+    GtkWidget *label3;
+    GtkWidget *label4;
+    GtkWidget *label5;
 
-  reader = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_widget_set_name (reader, "reader");
-  gtk_object_set_data (GTK_OBJECT (reader), "reader", reader);
-  gtk_window_set_title (GTK_WINDOW (reader), _("READER"));
+    reader = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_widget_set_name (reader, "reader");
+    gtk_object_set_data (GTK_OBJECT (reader), "reader", reader);
+    gtk_window_set_title (GTK_WINDOW (reader), _("READER"));
 
-  vbox2 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_set_name (vbox2, "vbox2");
-  gtk_widget_ref (vbox2);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "vbox2", vbox2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (vbox2);
-  gtk_container_add (GTK_CONTAINER (reader), vbox2);
+    vbox2 = gtk_vbox_new (FALSE, 0);
+    gtk_widget_set_name (vbox2, "vbox2");
+    gtk_widget_ref (vbox2);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "vbox2", vbox2,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (vbox2);
+    gtk_container_add (GTK_CONTAINER (reader), vbox2);
 
-  handlebox3 = gtk_handle_box_new ();
-  gtk_widget_set_name (handlebox3, "handlebox3");
-  gtk_widget_ref (handlebox3);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "handlebox3", handlebox3,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (handlebox3);
-  gtk_box_pack_start (GTK_BOX (vbox2), handlebox3, FALSE, FALSE, 0);
+    handlebox3 = gtk_handle_box_new ();
+    gtk_widget_set_name (handlebox3, "handlebox3");
+    gtk_widget_ref (handlebox3);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "handlebox3", handlebox3,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (handlebox3);
+    gtk_box_pack_start (GTK_BOX (vbox2), handlebox3, FALSE, FALSE, 0);
 
-  reader_menu = gtk_menu_bar_new ();
-  gtk_widget_set_name (reader_menu, "reader_menu");
-  gtk_widget_ref (reader_menu);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu", reader_menu,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_menu);
-  gtk_container_add (GTK_CONTAINER (handlebox3), reader_menu);
-  gnome_app_fill_menu (GTK_MENU_SHELL (reader_menu), reader_menu_uiinfo,
-                       NULL, FALSE, 0);
+    reader_menu = gtk_menu_bar_new ();
+    gtk_widget_set_name (reader_menu, "reader_menu");
+    gtk_widget_ref (reader_menu);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu", reader_menu,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_menu);
+    gtk_container_add (GTK_CONTAINER (handlebox3), reader_menu);
+    gnome_app_fill_menu (GTK_MENU_SHELL (reader_menu), reader_menu_uiinfo,
+			 NULL, FALSE, 0);
 
-  gtk_widget_set_name (reader_menu_uiinfo[0].widget, "reader_menu_file");
-  gtk_widget_ref (reader_menu_uiinfo[0].widget);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu_file",
-                            reader_menu_uiinfo[0].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (reader_menu_uiinfo[0].widget, "reader_menu_file");
+    gtk_widget_ref (reader_menu_uiinfo[0].widget);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu_file",
+			      reader_menu_uiinfo[0].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (reader_menu_uiinfo[1].widget, "reader_menu_message");
-  gtk_widget_ref (reader_menu_uiinfo[1].widget);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu_message",
-                            reader_menu_uiinfo[1].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (reader_menu_uiinfo[1].widget, "reader_menu_message");
+    gtk_widget_ref (reader_menu_uiinfo[1].widget);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu_message",
+			      reader_menu_uiinfo[1].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (reader_menu_uiinfo[2].widget, "reader_menu_attachment");
-  gtk_widget_ref (reader_menu_uiinfo[2].widget);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu_attachment",
-                            reader_menu_uiinfo[2].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (reader_menu_uiinfo[2].widget,
+			 "reader_menu_attachment");
+    gtk_widget_ref (reader_menu_uiinfo[2].widget);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu_attachment",
+			      reader_menu_uiinfo[2].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (reader_menu_uiinfo[3].widget, "reader_menu_pgp");
-  gtk_widget_ref (reader_menu_uiinfo[3].widget);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu_pgp",
-                            reader_menu_uiinfo[3].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (reader_menu_uiinfo[3].widget, "reader_menu_pgp");
+    gtk_widget_ref (reader_menu_uiinfo[3].widget);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu_pgp",
+			      reader_menu_uiinfo[3].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  gtk_widget_set_name (reader_menu_uiinfo[4].widget, "reader_menu_language");
-  gtk_widget_ref (reader_menu_uiinfo[4].widget);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu_language",
-                            reader_menu_uiinfo[4].widget,
-                            (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_set_name (reader_menu_uiinfo[4].widget,
+			 "reader_menu_language");
+    gtk_widget_ref (reader_menu_uiinfo[4].widget);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_menu_language",
+			      reader_menu_uiinfo[4].widget,
+			      (GtkDestroyNotify) gtk_widget_unref);
 
-  handlebox4 = gtk_handle_box_new ();
-  gtk_widget_set_name (handlebox4, "handlebox4");
-  gtk_widget_ref (handlebox4);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "handlebox4", handlebox4,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (handlebox4);
-  gtk_box_pack_start (GTK_BOX (vbox2), handlebox4, FALSE, FALSE, 0);
+    handlebox4 = gtk_handle_box_new ();
+    gtk_widget_set_name (handlebox4, "handlebox4");
+    gtk_widget_ref (handlebox4);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "handlebox4", handlebox4,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (handlebox4);
+    gtk_box_pack_start (GTK_BOX (vbox2), handlebox4, FALSE, FALSE, 0);
 
-  toolbar3 = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_ICONS);
-  gtk_widget_set_name (toolbar3, "toolbar3");
-  gtk_widget_ref (toolbar3);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "toolbar3", toolbar3,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar3);
-  gtk_container_add (GTK_CONTAINER (handlebox4), toolbar3);
-  gtk_toolbar_set_space_size (GTK_TOOLBAR (toolbar3), 15);
-  gtk_toolbar_set_space_style (GTK_TOOLBAR (toolbar3), GTK_TOOLBAR_SPACE_LINE);
-  gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar3), GTK_RELIEF_NONE);
+    toolbar3 =
+	gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_ICONS);
+    gtk_widget_set_name (toolbar3, "toolbar3");
+    gtk_widget_ref (toolbar3);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "toolbar3", toolbar3,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar3);
+    gtk_container_add (GTK_CONTAINER (handlebox4), toolbar3);
+    gtk_toolbar_set_space_size (GTK_TOOLBAR (toolbar3), 15);
+    gtk_toolbar_set_space_style (GTK_TOOLBAR (toolbar3),
+				 GTK_TOOLBAR_SPACE_LINE);
+    gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar3), GTK_RELIEF_NONE);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_CLOSE);
-  reader_toolbar_quit = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("button1"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_quit, "reader_toolbar_quit");
-  gtk_widget_ref (reader_toolbar_quit);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_quit", reader_toolbar_quit,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_quit);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_CLOSE);
+    reader_toolbar_quit =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("button1"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_quit, "reader_toolbar_quit");
+    gtk_widget_ref (reader_toolbar_quit);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_quit",
+			      reader_toolbar_quit,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_quit);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar3));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar3));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_FIRST);
-  reader_toolbar_first = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("First"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_first, "reader_toolbar_first");
-  gtk_widget_ref (reader_toolbar_first);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_first", reader_toolbar_first,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_first);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_FIRST);
+    reader_toolbar_first =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("First"), NULL, NULL, tmp_toolbar_icon,
+				    NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_first, "reader_toolbar_first");
+    gtk_widget_ref (reader_toolbar_first);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_first",
+			      reader_toolbar_first,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_first);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_BACK);
-  reader_toolbar_previous = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Previous"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_previous, "reader_toolbar_previous");
-  gtk_widget_ref (reader_toolbar_previous);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_previous", reader_toolbar_previous,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_previous);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_BACK);
+    reader_toolbar_previous =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Previous"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_previous, "reader_toolbar_previous");
+    gtk_widget_ref (reader_toolbar_previous);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_previous",
+			      reader_toolbar_previous,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_previous);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_FORWARD);
-  reader_toolbar_next = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Next"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_next, "reader_toolbar_next");
-  gtk_widget_ref (reader_toolbar_next);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_next", reader_toolbar_next,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_next);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_FORWARD);
+    reader_toolbar_next =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Next"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_next, "reader_toolbar_next");
+    gtk_widget_ref (reader_toolbar_next);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_next",
+			      reader_toolbar_next,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_next);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_LAST);
-  button11 = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("button11"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (button11, "button11");
-  gtk_widget_ref (button11);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "button11", button11,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (button11);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_LAST);
+    button11 =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("button11"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (button11, "button11");
+    gtk_widget_ref (button11);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "button11", button11,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (button11);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar3));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar3));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_MAIL_RPL);
-  reader_toolbar_reply = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Reply"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_reply, "reader_toolbar_reply");
-  gtk_widget_ref (reader_toolbar_reply);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_reply", reader_toolbar_reply,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_reply);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_MAIL_RPL);
+    reader_toolbar_reply =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Reply"), NULL, NULL, tmp_toolbar_icon,
+				    NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_reply, "reader_toolbar_reply");
+    gtk_widget_ref (reader_toolbar_reply);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_reply",
+			      reader_toolbar_reply,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_reply);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_MAIL_FWD);
-  reader_toolbar_forward = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Forward"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_forward, "reader_toolbar_forward");
-  gtk_widget_ref (reader_toolbar_forward);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_forward", reader_toolbar_forward,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_forward);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_MAIL_FWD);
+    reader_toolbar_forward =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Forward"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_forward, "reader_toolbar_forward");
+    gtk_widget_ref (reader_toolbar_forward);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_forward",
+			      reader_toolbar_forward,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_forward);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar3));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar3));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_BOOK_BLUE);
-  reader_toolbar_file = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("File"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_file, "reader_toolbar_file");
-  gtk_widget_ref (reader_toolbar_file);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_file", reader_toolbar_file,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_file);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_BOOK_BLUE);
+    reader_toolbar_file =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("File"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_file, "reader_toolbar_file");
+    gtk_widget_ref (reader_toolbar_file);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_file",
+			      reader_toolbar_file,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_file);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_TRASH);
-  reader_toolbar_trash = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Trash"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_trash, "reader_toolbar_trash");
-  gtk_widget_ref (reader_toolbar_trash);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_trash", reader_toolbar_trash,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_trash);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_TRASH);
+    reader_toolbar_trash =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Trash"), NULL, NULL, tmp_toolbar_icon,
+				    NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_trash, "reader_toolbar_trash");
+    gtk_widget_ref (reader_toolbar_trash);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_trash",
+			      reader_toolbar_trash,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_trash);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar3));
+    gtk_toolbar_append_space (GTK_TOOLBAR (toolbar3));
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_JUMP_TO);
-  reader_toolbar_view = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("External Viewer"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_view, "reader_toolbar_view");
-  gtk_widget_ref (reader_toolbar_view);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_view", reader_toolbar_view,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_view);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_JUMP_TO);
+    reader_toolbar_view =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("External Viewer"), NULL, NULL,
+				    tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_view, "reader_toolbar_view");
+    gtk_widget_ref (reader_toolbar_view);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_view",
+			      reader_toolbar_view,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_view);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_PRINT);
-  reader_toolbar_print = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Print"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_print, "reader_toolbar_print");
-  gtk_widget_ref (reader_toolbar_print);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_print", reader_toolbar_print,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_print);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_PRINT);
+    reader_toolbar_print =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL,
+				    _("Print"), NULL, NULL, tmp_toolbar_icon,
+				    NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_print, "reader_toolbar_print");
+    gtk_widget_ref (reader_toolbar_print);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_print",
+			      reader_toolbar_print,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_print);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_STOP);
-  reader_toolbar_stop = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Stop"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_stop, "reader_toolbar_stop");
-  gtk_widget_ref (reader_toolbar_stop);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_stop", reader_toolbar_stop,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_stop);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_STOP);
+    reader_toolbar_stop =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Stop"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_stop, "reader_toolbar_stop");
+    gtk_widget_ref (reader_toolbar_stop);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_stop",
+			      reader_toolbar_stop,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_stop);
 
-  tmp_toolbar_icon = gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_HELP);
-  reader_toolbar_help = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Help"),
-                                NULL, NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_widget_set_name (reader_toolbar_help, "reader_toolbar_help");
-  gtk_widget_ref (reader_toolbar_help);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_help", reader_toolbar_help,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_toolbar_help);
+    tmp_toolbar_icon =
+	gnome_stock_pixmap_widget (reader, GNOME_STOCK_PIXMAP_HELP);
+    reader_toolbar_help =
+	gtk_toolbar_append_element (GTK_TOOLBAR (toolbar3),
+				    GTK_TOOLBAR_CHILD_BUTTON, NULL, _("Help"),
+				    NULL, NULL, tmp_toolbar_icon, NULL, NULL);
+    gtk_widget_set_name (reader_toolbar_help, "reader_toolbar_help");
+    gtk_widget_ref (reader_toolbar_help);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_toolbar_help",
+			      reader_toolbar_help,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_toolbar_help);
 
-  hbox2 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_name (hbox2, "hbox2");
-  gtk_widget_ref (hbox2);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "hbox2", hbox2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (hbox2);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
+    hbox2 = gtk_hbox_new (FALSE, 0);
+    gtk_widget_set_name (hbox2, "hbox2");
+    gtk_widget_ref (hbox2);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "hbox2", hbox2,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (hbox2);
+    gtk_box_pack_start (GTK_BOX (vbox2), hbox2, FALSE, FALSE, 0);
 
-  table4 = gtk_table_new (4, 2, FALSE);
-  gtk_widget_set_name (table4, "table4");
-  gtk_widget_ref (table4);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "table4", table4,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (table4);
-  gtk_box_pack_start (GTK_BOX (hbox2), table4, TRUE, TRUE, 0);
+    table4 = gtk_table_new (4, 2, FALSE);
+    gtk_widget_set_name (table4, "table4");
+    gtk_widget_ref (table4);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "table4", table4,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (table4);
+    gtk_box_pack_start (GTK_BOX (hbox2), table4, TRUE, TRUE, 0);
 
-  label8 = gtk_label_new (_("From"));
-  gtk_widget_set_name (label8, "label8");
-  gtk_widget_ref (label8);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label8", label8,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label8);
-  gtk_table_attach (GTK_TABLE (table4), label8, 0, 1, 0, 1,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
+    label8 = gtk_label_new (_("From"));
+    gtk_widget_set_name (label8, "label8");
+    gtk_widget_ref (label8);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label8", label8,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label8);
+    gtk_table_attach (GTK_TABLE (table4), label8, 0, 1, 0, 1,
+		      (GtkAttachOptions) (0), (GtkAttachOptions) (0), 0, 0);
 
-  label9 = gtk_label_new (_("Subject"));
-  gtk_widget_set_name (label9, "label9");
-  gtk_widget_ref (label9);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label9", label9,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label9);
-  gtk_table_attach (GTK_TABLE (table4), label9, 0, 1, 1, 2,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_padding (GTK_MISC (label9), 3, 0);
+    label9 = gtk_label_new (_("Subject"));
+    gtk_widget_set_name (label9, "label9");
+    gtk_widget_ref (label9);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label9", label9,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label9);
+    gtk_table_attach (GTK_TABLE (table4), label9, 0, 1, 1, 2,
+		      (GtkAttachOptions) (0), (GtkAttachOptions) (0), 0, 0);
+    gtk_misc_set_padding (GTK_MISC (label9), 3, 0);
 
-  label10 = gtk_label_new (_("Sender"));
-  gtk_widget_set_name (label10, "label10");
-  gtk_widget_ref (label10);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label10", label10,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label10);
-  gtk_table_attach (GTK_TABLE (table4), label10, 0, 1, 2, 3,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
+    label10 = gtk_label_new (_("Sender"));
+    gtk_widget_set_name (label10, "label10");
+    gtk_widget_ref (label10);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label10", label10,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label10);
+    gtk_table_attach (GTK_TABLE (table4), label10, 0, 1, 2, 3,
+		      (GtkAttachOptions) (0), (GtkAttachOptions) (0), 0, 0);
 
-  label11 = gtk_label_new (_("Date"));
-  gtk_widget_set_name (label11, "label11");
-  gtk_widget_ref (label11);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label11", label11,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label11);
-  gtk_table_attach (GTK_TABLE (table4), label11, 0, 1, 3, 4,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
+    label11 = gtk_label_new (_("Date"));
+    gtk_widget_set_name (label11, "label11");
+    gtk_widget_ref (label11);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label11", label11,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label11);
+    gtk_table_attach (GTK_TABLE (table4), label11, 0, 1, 3, 4,
+		      (GtkAttachOptions) (0), (GtkAttachOptions) (0), 0, 0);
 
-  reader_from = gtk_entry_new ();
-  gtk_widget_set_name (reader_from, "reader_from");
-  gtk_widget_ref (reader_from);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_from", reader_from,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_from);
-  gtk_table_attach (GTK_TABLE (table4), reader_from, 1, 2, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_entry_set_editable (GTK_ENTRY (reader_from), FALSE);
+    reader_from = gtk_entry_new ();
+    gtk_widget_set_name (reader_from, "reader_from");
+    gtk_widget_ref (reader_from);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_from", reader_from,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_from);
+    gtk_table_attach (GTK_TABLE (table4), reader_from, 1, 2, 0, 1,
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+		      (GtkAttachOptions) (0), 0, 0);
+    gtk_entry_set_editable (GTK_ENTRY (reader_from), FALSE);
 
-  reader_subject = gtk_entry_new ();
-  gtk_widget_set_name (reader_subject, "reader_subject");
-  gtk_widget_ref (reader_subject);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_subject", reader_subject,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_subject);
-  gtk_table_attach (GTK_TABLE (table4), reader_subject, 1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_entry_set_editable (GTK_ENTRY (reader_subject), FALSE);
+    reader_subject = gtk_entry_new ();
+    gtk_widget_set_name (reader_subject, "reader_subject");
+    gtk_widget_ref (reader_subject);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_subject",
+			      reader_subject,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_subject);
+    gtk_table_attach (GTK_TABLE (table4), reader_subject, 1, 2, 1, 2,
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+		      (GtkAttachOptions) (0), 0, 0);
+    gtk_entry_set_editable (GTK_ENTRY (reader_subject), FALSE);
 
-  reader_sender = gtk_entry_new ();
-  gtk_widget_set_name (reader_sender, "reader_sender");
-  gtk_widget_ref (reader_sender);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_sender", reader_sender,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_sender);
-  gtk_table_attach (GTK_TABLE (table4), reader_sender, 1, 2, 2, 3,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_entry_set_editable (GTK_ENTRY (reader_sender), FALSE);
+    reader_sender = gtk_entry_new ();
+    gtk_widget_set_name (reader_sender, "reader_sender");
+    gtk_widget_ref (reader_sender);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_sender",
+			      reader_sender,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_sender);
+    gtk_table_attach (GTK_TABLE (table4), reader_sender, 1, 2, 2, 3,
+		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+		      (GtkAttachOptions) (0), 0, 0);
+    gtk_entry_set_editable (GTK_ENTRY (reader_sender), FALSE);
 
-  reader_date = gtk_label_new (_("Date"));
-  gtk_widget_set_name (reader_date, "reader_date");
-  gtk_widget_ref (reader_date);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_date", reader_date,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_date);
-  gtk_table_attach (GTK_TABLE (table4), reader_date, 1, 2, 3, 4,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
+    reader_date = gtk_label_new (_("Date"));
+    gtk_widget_set_name (reader_date, "reader_date");
+    gtk_widget_ref (reader_date);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_date", reader_date,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_date);
+    gtk_table_attach (GTK_TABLE (table4), reader_date, 1, 2, 3, 4,
+		      (GtkAttachOptions) (0), (GtkAttachOptions) (0), 0, 0);
 
-  scrolledwindow8 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_name (scrolledwindow8, "scrolledwindow8");
-  gtk_widget_ref (scrolledwindow8);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "scrolledwindow8", scrolledwindow8,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow8);
-  gtk_box_pack_start (GTK_BOX (hbox2), scrolledwindow8, TRUE, TRUE, 0);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow8), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    scrolledwindow8 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_set_name (scrolledwindow8, "scrolledwindow8");
+    gtk_widget_ref (scrolledwindow8);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "scrolledwindow8",
+			      scrolledwindow8,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (scrolledwindow8);
+    gtk_box_pack_start (GTK_BOX (hbox2), scrolledwindow8, TRUE, TRUE, 0);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow8),
+				    GTK_POLICY_AUTOMATIC,
+				    GTK_POLICY_AUTOMATIC);
 
-  reader_reciptlist = gtk_clist_new (2);
-  gtk_widget_set_name (reader_reciptlist, "reader_reciptlist");
-  gtk_widget_ref (reader_reciptlist);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_reciptlist", reader_reciptlist,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_reciptlist);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow8), reader_reciptlist);
-  gtk_clist_set_column_width (GTK_CLIST (reader_reciptlist), 0, 80);
-  gtk_clist_set_column_width (GTK_CLIST (reader_reciptlist), 1, 80);
-  gtk_clist_column_titles_hide (GTK_CLIST (reader_reciptlist));
+    reader_reciptlist = gtk_clist_new (2);
+    gtk_widget_set_name (reader_reciptlist, "reader_reciptlist");
+    gtk_widget_ref (reader_reciptlist);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_reciptlist",
+			      reader_reciptlist,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_reciptlist);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow8), reader_reciptlist);
+    gtk_clist_set_column_width (GTK_CLIST (reader_reciptlist), 0, 80);
+    gtk_clist_set_column_width (GTK_CLIST (reader_reciptlist), 1, 80);
+    gtk_clist_column_titles_hide (GTK_CLIST (reader_reciptlist));
 
-  label6 = gtk_label_new (_("label6"));
-  gtk_widget_set_name (label6, "label6");
-  gtk_widget_ref (label6);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label6", label6,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label6);
-  gtk_clist_set_column_widget (GTK_CLIST (reader_reciptlist), 0, label6);
+    label6 = gtk_label_new (_("label6"));
+    gtk_widget_set_name (label6, "label6");
+    gtk_widget_ref (label6);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label6", label6,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label6);
+    gtk_clist_set_column_widget (GTK_CLIST (reader_reciptlist), 0, label6);
 
-  label7 = gtk_label_new (_("label7"));
-  gtk_widget_set_name (label7, "label7");
-  gtk_widget_ref (label7);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label7", label7,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label7);
-  gtk_clist_set_column_widget (GTK_CLIST (reader_reciptlist), 1, label7);
+    label7 = gtk_label_new (_("label7"));
+    gtk_widget_set_name (label7, "label7");
+    gtk_widget_ref (label7);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label7", label7,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label7);
+    gtk_clist_set_column_widget (GTK_CLIST (reader_reciptlist), 1, label7);
 
-  scrolledwindow6 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_name (scrolledwindow6, "scrolledwindow6");
-  gtk_widget_ref (scrolledwindow6);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "scrolledwindow6", scrolledwindow6,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow6);
-  gtk_box_pack_start (GTK_BOX (vbox2), scrolledwindow6, TRUE, TRUE, 0);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow6), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+    scrolledwindow6 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_set_name (scrolledwindow6, "scrolledwindow6");
+    gtk_widget_ref (scrolledwindow6);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "scrolledwindow6",
+			      scrolledwindow6,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (scrolledwindow6);
+    gtk_box_pack_start (GTK_BOX (vbox2), scrolledwindow6, TRUE, TRUE, 0);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow6),
+				    GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
 
-  reader_body = gtk_text_new (NULL, NULL);
-  gtk_widget_set_name (reader_body, "reader_body");
-  gtk_widget_ref (reader_body);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_body", reader_body,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_body);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow6), reader_body);
+    reader_body = gtk_text_new (NULL, NULL);
+    gtk_widget_set_name (reader_body, "reader_body");
+    gtk_widget_ref (reader_body);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_body", reader_body,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_body);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow6), reader_body);
 
-  scrolledwindow7 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_name (scrolledwindow7, "scrolledwindow7");
-  gtk_widget_ref (scrolledwindow7);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "scrolledwindow7", scrolledwindow7,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow7);
-  gtk_box_pack_start (GTK_BOX (vbox2), scrolledwindow7, FALSE, FALSE, 0);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow7), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    scrolledwindow7 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_set_name (scrolledwindow7, "scrolledwindow7");
+    gtk_widget_ref (scrolledwindow7);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "scrolledwindow7",
+			      scrolledwindow7,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (scrolledwindow7);
+    gtk_box_pack_start (GTK_BOX (vbox2), scrolledwindow7, FALSE, FALSE, 0);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow7),
+				    GTK_POLICY_AUTOMATIC,
+				    GTK_POLICY_AUTOMATIC);
 
-  reader_attachments = gtk_clist_new (5);
-  gtk_widget_set_name (reader_attachments, "reader_attachments");
-  gtk_widget_ref (reader_attachments);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "reader_attachments", reader_attachments,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (reader_attachments);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow7), reader_attachments);
-  gtk_clist_set_column_width (GTK_CLIST (reader_attachments), 0, 80);
-  gtk_clist_set_column_width (GTK_CLIST (reader_attachments), 1, 80);
-  gtk_clist_set_column_width (GTK_CLIST (reader_attachments), 2, 80);
-  gtk_clist_set_column_width (GTK_CLIST (reader_attachments), 3, 80);
-  gtk_clist_set_column_width (GTK_CLIST (reader_attachments), 4, 80);
-  gtk_clist_column_titles_hide (GTK_CLIST (reader_attachments));
+    reader_attachments = gtk_clist_new (5);
+    gtk_widget_set_name (reader_attachments, "reader_attachments");
+    gtk_widget_ref (reader_attachments);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "reader_attachments",
+			      reader_attachments,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (reader_attachments);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow7), reader_attachments);
+    gtk_clist_set_column_width (GTK_CLIST (reader_attachments), 0, 80);
+    gtk_clist_set_column_width (GTK_CLIST (reader_attachments), 1, 80);
+    gtk_clist_set_column_width (GTK_CLIST (reader_attachments), 2, 80);
+    gtk_clist_set_column_width (GTK_CLIST (reader_attachments), 3, 80);
+    gtk_clist_set_column_width (GTK_CLIST (reader_attachments), 4, 80);
+    gtk_clist_column_titles_hide (GTK_CLIST (reader_attachments));
 
-  label1 = gtk_label_new (_("label1"));
-  gtk_widget_set_name (label1, "label1");
-  gtk_widget_ref (label1);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label1", label1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label1);
-  gtk_clist_set_column_widget (GTK_CLIST (reader_attachments), 0, label1);
+    label1 = gtk_label_new (_("label1"));
+    gtk_widget_set_name (label1, "label1");
+    gtk_widget_ref (label1);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label1", label1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label1);
+    gtk_clist_set_column_widget (GTK_CLIST (reader_attachments), 0, label1);
 
-  label2 = gtk_label_new (_("label2"));
-  gtk_widget_set_name (label2, "label2");
-  gtk_widget_ref (label2);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label2", label2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label2);
-  gtk_clist_set_column_widget (GTK_CLIST (reader_attachments), 1, label2);
+    label2 = gtk_label_new (_("label2"));
+    gtk_widget_set_name (label2, "label2");
+    gtk_widget_ref (label2);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label2", label2,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label2);
+    gtk_clist_set_column_widget (GTK_CLIST (reader_attachments), 1, label2);
 
-  label3 = gtk_label_new (_("label3"));
-  gtk_widget_set_name (label3, "label3");
-  gtk_widget_ref (label3);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label3", label3,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label3);
-  gtk_clist_set_column_widget (GTK_CLIST (reader_attachments), 2, label3);
+    label3 = gtk_label_new (_("label3"));
+    gtk_widget_set_name (label3, "label3");
+    gtk_widget_ref (label3);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label3", label3,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label3);
+    gtk_clist_set_column_widget (GTK_CLIST (reader_attachments), 2, label3);
 
-  label4 = gtk_label_new (_("label4"));
-  gtk_widget_set_name (label4, "label4");
-  gtk_widget_ref (label4);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label4", label4,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label4);
-  gtk_clist_set_column_widget (GTK_CLIST (reader_attachments), 3, label4);
+    label4 = gtk_label_new (_("label4"));
+    gtk_widget_set_name (label4, "label4");
+    gtk_widget_ref (label4);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label4", label4,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label4);
+    gtk_clist_set_column_widget (GTK_CLIST (reader_attachments), 3, label4);
 
-  label5 = gtk_label_new (_("label5"));
-  gtk_widget_set_name (label5, "label5");
-  gtk_widget_ref (label5);
-  gtk_object_set_data_full (GTK_OBJECT (reader), "label5", label5,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label5);
-  gtk_clist_set_column_widget (GTK_CLIST (reader_attachments), 4, label5);
+    label5 = gtk_label_new (_("label5"));
+    gtk_widget_set_name (label5, "label5");
+    gtk_widget_ref (label5);
+    gtk_object_set_data_full (GTK_OBJECT (reader), "label5", label5,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label5);
+    gtk_clist_set_column_widget (GTK_CLIST (reader_attachments), 4, label5);
 
-  return reader;
+    return reader;
 }
-

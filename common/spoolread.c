@@ -21,26 +21,29 @@ int
 open_spool (char *spoolname)
 {
     if (spoolname == NULL)
-	if ((spoolname = getenv ("MAIL")) == NULL) {
+	if ((spoolname = getenv ("MAIL")) == NULL)
+	{
 	    oops ("Spoolread", "Couldn't get mail spool name");
 	    return (EXIT_FAILURE);
 	}
-
     printf ("Opening %s\n", spoolname);
 
-    if ((spool = fopen (spoolname, "r")) == NULL) {
+    if ((spool = fopen (spoolname, "r")) == NULL)
+    {
 	oops ("Spoolread\nUnable to open mail spool", spoolname);
 	return (EXIT_FAILURE);
     }
     line = (char *) malloc (1024);
-    if (line == NULL) {
+    if (line == NULL)
+    {
 	oops ("Spoolread", "Failed malloc");
 	if (fclose (spool) != 0)
 	    exit (EXIT_FAILURE);
 	return GEMS_FALSE;
     }
     out = (char *) malloc (65535);
-    if (out == NULL) {
+    if (out == NULL)
+    {
 	oops ("Spoolread", "failed malloc");
 	exit (EXIT_FAILURE);
     }
@@ -58,19 +61,21 @@ read_message ()
 	return NULL;
     out[0] = (char) 0;
 
-    while (fgets (line, 1024, spool) != 0) {
-	if (!strncmp (line, "From ", 5)) {	/* could this be better? */
-	    if (inmessage == 1) {
+    while (fgets (line, 1024, spool) != 0)
+    {
+	if (!strncmp (line, "From ", 5))
+	{			/* could this be better? */
+	    if (inmessage == 1)
+	    {
 		fake_fungets (spool, line);
 		if (ll_rewind (list) == GEMS_FALSE)
 		    oops ("Spoolread", "Failed rewind");
 		return list;
-	    }
-	    else {
+	    } else
+	    {
 		inmessage = 1;
 	    }
-	}
-	else if (inmessage == 1)
+	} else if (inmessage == 1)
 	    if (ll_addnode (list, line) == GEMS_FALSE)
 		oops ("Spoolread", "Failed addnode");
     }
@@ -78,11 +83,11 @@ read_message ()
     if (ll_rewind (list) == GEMS_FALSE)
 	oops ("Spoolread", "Failed rewind");
 
-    if (ll_empty (list) == GEMS_TRUE) {
+    if (ll_empty (list) == GEMS_TRUE)
+    {
 	ll_clearlist (list);
 	return NULL;
     }
-
     return list;
 }
 

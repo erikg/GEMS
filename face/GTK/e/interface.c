@@ -3,7 +3,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#  include <config.h>
+#include <config.h>
 #endif
 
 #include <sys/types.h>
@@ -18,199 +18,200 @@
 #include "interface.h"
 #include "support.h"
 
-GtkWidget*
+GtkWidget *
 create_gems (void)
 {
-  GtkWidget *gems;
-  GtkWidget *vbox1;
-  GtkWidget *menubar1;
-  guint tmp_key;
-  GtkWidget *file1;
-  GtkWidget *file1_menu;
-  GtkAccelGroup *file1_menu_accels;
-  GtkWidget *edit1;
-  GtkWidget *help1;
-  GtkWidget *help1_menu;
-  GtkAccelGroup *help1_menu_accels;
-  GtkWidget *toolbar1;
-  GtkWidget *button10;
-  GtkWidget *hpaned1;
-  GtkWidget *scrolledwindow1;
-  GtkWidget *viewport1;
-  GtkWidget *tree1;
-  GtkWidget *scrolledwindow2;
-  GtkWidget *ctree1;
-  GtkWidget *label1;
-  GtkWidget *label2;
-  GtkWidget *label3;
-  GtkWidget *statusbar1;
-  GtkAccelGroup *accel_group;
+    GtkWidget *gems;
+    GtkWidget *vbox1;
+    GtkWidget *menubar1;
+    guint tmp_key;
+    GtkWidget *file1;
+    GtkWidget *file1_menu;
+    GtkAccelGroup *file1_menu_accels;
+    GtkWidget *edit1;
+    GtkWidget *help1;
+    GtkWidget *help1_menu;
+    GtkAccelGroup *help1_menu_accels;
+    GtkWidget *toolbar1;
+    GtkWidget *button10;
+    GtkWidget *hpaned1;
+    GtkWidget *scrolledwindow1;
+    GtkWidget *viewport1;
+    GtkWidget *tree1;
+    GtkWidget *scrolledwindow2;
+    GtkWidget *ctree1;
+    GtkWidget *label1;
+    GtkWidget *label2;
+    GtkWidget *label3;
+    GtkWidget *statusbar1;
+    GtkAccelGroup *accel_group;
 
-  accel_group = gtk_accel_group_new ();
+    accel_group = gtk_accel_group_new ();
 
-  gems = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_object_set_data (GTK_OBJECT (gems), "gems", gems);
-  gtk_window_set_title (GTK_WINDOW (gems), _("gems"));
+    gems = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_object_set_data (GTK_OBJECT (gems), "gems", gems);
+    gtk_window_set_title (GTK_WINDOW (gems), _("gems"));
 
-  vbox1 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_ref (vbox1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "vbox1", vbox1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (vbox1);
-  gtk_container_add (GTK_CONTAINER (gems), vbox1);
+    vbox1 = gtk_vbox_new (FALSE, 0);
+    gtk_widget_ref (vbox1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "vbox1", vbox1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (vbox1);
+    gtk_container_add (GTK_CONTAINER (gems), vbox1);
 
-  menubar1 = gtk_menu_bar_new ();
-  gtk_widget_ref (menubar1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "menubar1", menubar1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (menubar1);
-  gtk_box_pack_start (GTK_BOX (vbox1), menubar1, FALSE, FALSE, 0);
+    menubar1 = gtk_menu_bar_new ();
+    gtk_widget_ref (menubar1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "menubar1", menubar1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (menubar1);
+    gtk_box_pack_start (GTK_BOX (vbox1), menubar1, FALSE, FALSE, 0);
 
-  file1 = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (file1)->child),
-                                   _("_File"));
-  gtk_widget_add_accelerator (file1, "activate_item", accel_group,
-                              tmp_key, GDK_MOD1_MASK, 0);
-  gtk_widget_ref (file1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "file1", file1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (file1);
-  gtk_container_add (GTK_CONTAINER (menubar1), file1);
+    file1 = gtk_menu_item_new_with_label ("");
+    tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (file1)->child),
+				     _("_File"));
+    gtk_widget_add_accelerator (file1, "activate_item", accel_group,
+				tmp_key, GDK_MOD1_MASK, 0);
+    gtk_widget_ref (file1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "file1", file1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (file1);
+    gtk_container_add (GTK_CONTAINER (menubar1), file1);
 
-  file1_menu = gtk_menu_new ();
-  gtk_widget_ref (file1_menu);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "file1_menu", file1_menu,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (file1), file1_menu);
-  file1_menu_accels = gtk_menu_ensure_uline_accel_group (GTK_MENU (file1_menu));
+    file1_menu = gtk_menu_new ();
+    gtk_widget_ref (file1_menu);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "file1_menu", file1_menu,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_menu_item_set_submenu (GTK_MENU_ITEM (file1), file1_menu);
+    file1_menu_accels =
+	gtk_menu_ensure_uline_accel_group (GTK_MENU (file1_menu));
 
-  edit1 = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (edit1)->child),
-                                   _("_Edit"));
-  gtk_widget_add_accelerator (edit1, "activate_item", accel_group,
-                              tmp_key, GDK_MOD1_MASK, 0);
-  gtk_widget_ref (edit1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "edit1", edit1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (edit1);
-  gtk_container_add (GTK_CONTAINER (menubar1), edit1);
+    edit1 = gtk_menu_item_new_with_label ("");
+    tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (edit1)->child),
+				     _("_Edit"));
+    gtk_widget_add_accelerator (edit1, "activate_item", accel_group,
+				tmp_key, GDK_MOD1_MASK, 0);
+    gtk_widget_ref (edit1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "edit1", edit1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (edit1);
+    gtk_container_add (GTK_CONTAINER (menubar1), edit1);
 
-  help1 = gtk_menu_item_new_with_label ("");
-  tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (help1)->child),
-                                   _("_Help"));
-  gtk_widget_add_accelerator (help1, "activate_item", accel_group,
-                              tmp_key, GDK_MOD1_MASK, 0);
-  gtk_widget_ref (help1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "help1", help1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (help1);
-  gtk_container_add (GTK_CONTAINER (menubar1), help1);
+    help1 = gtk_menu_item_new_with_label ("");
+    tmp_key = gtk_label_parse_uline (GTK_LABEL (GTK_BIN (help1)->child),
+				     _("_Help"));
+    gtk_widget_add_accelerator (help1, "activate_item", accel_group,
+				tmp_key, GDK_MOD1_MASK, 0);
+    gtk_widget_ref (help1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "help1", help1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (help1);
+    gtk_container_add (GTK_CONTAINER (menubar1), help1);
 
-  help1_menu = gtk_menu_new ();
-  gtk_widget_ref (help1_menu);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "help1_menu", help1_menu,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (help1), help1_menu);
-  help1_menu_accels = gtk_menu_ensure_uline_accel_group (GTK_MENU (help1_menu));
+    help1_menu = gtk_menu_new ();
+    gtk_widget_ref (help1_menu);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "help1_menu", help1_menu,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_menu_item_set_submenu (GTK_MENU_ITEM (help1), help1_menu);
+    help1_menu_accels =
+	gtk_menu_ensure_uline_accel_group (GTK_MENU (help1_menu));
 
-  toolbar1 = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_BOTH);
-  gtk_widget_ref (toolbar1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar1", toolbar1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (toolbar1);
-  gtk_box_pack_start (GTK_BOX (vbox1), toolbar1, FALSE, FALSE, 0);
+    toolbar1 = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_BOTH);
+    gtk_widget_ref (toolbar1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "toolbar1", toolbar1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (toolbar1);
+    gtk_box_pack_start (GTK_BOX (vbox1), toolbar1, FALSE, FALSE, 0);
 
-  button10 = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("button10"),
-                                NULL, NULL,
-                                NULL, NULL, NULL);
-  gtk_widget_ref (button10);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "button10", button10,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (button10);
+    button10 = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
+					   GTK_TOOLBAR_CHILD_BUTTON,
+					   NULL,
+					   _("button10"),
+					   NULL, NULL, NULL, NULL, NULL);
+    gtk_widget_ref (button10);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "button10", button10,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (button10);
 
-  hpaned1 = gtk_hpaned_new ();
-  gtk_widget_ref (hpaned1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "hpaned1", hpaned1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (hpaned1);
-  gtk_box_pack_start (GTK_BOX (vbox1), hpaned1, TRUE, TRUE, 0);
+    hpaned1 = gtk_hpaned_new ();
+    gtk_widget_ref (hpaned1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "hpaned1", hpaned1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (hpaned1);
+    gtk_box_pack_start (GTK_BOX (vbox1), hpaned1, TRUE, TRUE, 0);
 
-  scrolledwindow1 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_ref (scrolledwindow1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "scrolledwindow1", scrolledwindow1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow1);
-  gtk_container_add (GTK_CONTAINER (hpaned1), scrolledwindow1);
+    scrolledwindow1 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_ref (scrolledwindow1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "scrolledwindow1",
+			      scrolledwindow1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (scrolledwindow1);
+    gtk_container_add (GTK_CONTAINER (hpaned1), scrolledwindow1);
 
-  viewport1 = gtk_viewport_new (NULL, NULL);
-  gtk_widget_ref (viewport1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "viewport1", viewport1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (viewport1);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow1), viewport1);
+    viewport1 = gtk_viewport_new (NULL, NULL);
+    gtk_widget_ref (viewport1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "viewport1", viewport1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (viewport1);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow1), viewport1);
 
-  tree1 = gtk_tree_new ();
-  gtk_widget_ref (tree1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "tree1", tree1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (tree1);
-  gtk_container_add (GTK_CONTAINER (viewport1), tree1);
+    tree1 = gtk_tree_new ();
+    gtk_widget_ref (tree1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "tree1", tree1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (tree1);
+    gtk_container_add (GTK_CONTAINER (viewport1), tree1);
 
-  scrolledwindow2 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_ref (scrolledwindow2);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "scrolledwindow2", scrolledwindow2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow2);
-  gtk_container_add (GTK_CONTAINER (hpaned1), scrolledwindow2);
+    scrolledwindow2 = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_ref (scrolledwindow2);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "scrolledwindow2",
+			      scrolledwindow2,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (scrolledwindow2);
+    gtk_container_add (GTK_CONTAINER (hpaned1), scrolledwindow2);
 
-  ctree1 = gtk_ctree_new (3, 0);
-  gtk_widget_ref (ctree1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "ctree1", ctree1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ctree1);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow2), ctree1);
-  gtk_clist_set_column_width (GTK_CLIST (ctree1), 0, 80);
-  gtk_clist_set_column_width (GTK_CLIST (ctree1), 1, 80);
-  gtk_clist_set_column_width (GTK_CLIST (ctree1), 2, 80);
-  gtk_clist_column_titles_show (GTK_CLIST (ctree1));
+    ctree1 = gtk_ctree_new (3, 0);
+    gtk_widget_ref (ctree1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "ctree1", ctree1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (ctree1);
+    gtk_container_add (GTK_CONTAINER (scrolledwindow2), ctree1);
+    gtk_clist_set_column_width (GTK_CLIST (ctree1), 0, 80);
+    gtk_clist_set_column_width (GTK_CLIST (ctree1), 1, 80);
+    gtk_clist_set_column_width (GTK_CLIST (ctree1), 2, 80);
+    gtk_clist_column_titles_show (GTK_CLIST (ctree1));
 
-  label1 = gtk_label_new (_("Sender"));
-  gtk_widget_ref (label1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label1", label1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label1);
-  gtk_clist_set_column_widget (GTK_CLIST (ctree1), 0, label1);
+    label1 = gtk_label_new (_("Sender"));
+    gtk_widget_ref (label1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label1", label1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label1);
+    gtk_clist_set_column_widget (GTK_CLIST (ctree1), 0, label1);
 
-  label2 = gtk_label_new (_("Date"));
-  gtk_widget_ref (label2);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label2", label2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label2);
-  gtk_clist_set_column_widget (GTK_CLIST (ctree1), 1, label2);
+    label2 = gtk_label_new (_("Date"));
+    gtk_widget_ref (label2);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label2", label2,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label2);
+    gtk_clist_set_column_widget (GTK_CLIST (ctree1), 1, label2);
 
-  label3 = gtk_label_new (_("Subject\t"));
-  gtk_widget_ref (label3);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "label3", label3,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label3);
-  gtk_clist_set_column_widget (GTK_CLIST (ctree1), 2, label3);
+    label3 = gtk_label_new (_("Subject\t"));
+    gtk_widget_ref (label3);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "label3", label3,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (label3);
+    gtk_clist_set_column_widget (GTK_CLIST (ctree1), 2, label3);
 
-  statusbar1 = gtk_statusbar_new ();
-  gtk_widget_ref (statusbar1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "statusbar1", statusbar1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (statusbar1);
-  gtk_box_pack_start (GTK_BOX (vbox1), statusbar1, FALSE, FALSE, 0);
+    statusbar1 = gtk_statusbar_new ();
+    gtk_widget_ref (statusbar1);
+    gtk_object_set_data_full (GTK_OBJECT (gems), "statusbar1", statusbar1,
+			      (GtkDestroyNotify) gtk_widget_unref);
+    gtk_widget_show (statusbar1);
+    gtk_box_pack_start (GTK_BOX (vbox1), statusbar1, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (edit1), "activate",
-                      GTK_SIGNAL_FUNC (on_edit1_activate),
-                      NULL);
+    gtk_signal_connect (GTK_OBJECT (edit1), "activate",
+			GTK_SIGNAL_FUNC (on_edit1_activate), NULL);
 
-  gtk_window_add_accel_group (GTK_WINDOW (gems), accel_group);
+    gtk_window_add_accel_group (GTK_WINDOW (gems), accel_group);
 
-  return gems;
+    return gems;
 }
-

@@ -11,19 +11,18 @@
 int
 face_uses_X ()
 {
-  return GEMS_FALSE;
+    return GEMS_FALSE;
 }
 
 void
 oops (char *a, char *b)
 {
-  printf ("%s: %s\n", a, b);
+    printf ("%s: %s\n", a, b);
 }
 
 int
 face_run (int argc, char **margv)
 {
-  printf ("\n");
-  return GEMS_TRUE;
+    printf ("\n");
+    return GEMS_TRUE;
 }
-

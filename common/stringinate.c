@@ -9,53 +9,59 @@
 char *
 stringinate (void *list)
 {
-  char *x;
-  char *line;
-  int l = 0;
-  x = NULL;
-  line = (char *) malloc (1024);
+    char *x;
+    char *line;
+    int l = 0;
 
-  if (ll_rewind (list) == GEMS_FALSE)
-    {
-      oops ("Stringinate", "failed to rewind");
-      exit (EXIT_FAILURE);
-    }
-  do
-    {
-      char *blah;
-      blah = ll_showline (list);
-      l += (strlen (blah) + 1);
-/*      free (blah);	*/
-    }
-  while (ll_next (list) == GEMS_TRUE);
-  l++;
+    x = NULL;
+    line = (char *) malloc (1024);
 
-  x = (char *) malloc (sizeof (char) * (l + 1));
-  if (x == NULL)
+    if (ll_rewind (list) == GEMS_FALSE)
     {
-      oops ("Stringinate", "Failed to allocate");
-      exit (EXIT_FAILURE);
+	oops ("Stringinate", "failed to rewind");
+	exit (EXIT_FAILURE);
     }
-  else
-    memset (x, (size_t) 0, (size_t) l);
-
-  if (ll_rewind (list) == GEMS_FALSE)
-    oops ("Stringinate", "failed rewind");
-  do
+    do
     {
-      char *blah;
-      blah = ll_showline (list);
-      if (blah == NULL)
+	char *blah;
+
+	blah = ll_showline (list);
+	l += (strlen (blah) + 1);
+	/*
+	 * free (blah); 
+	 */
+    }
+    while (ll_next (list) == GEMS_TRUE);
+    l++;
+
+    x = (char *) malloc (sizeof (char) * (l + 1));
+    if (x == NULL)
+    {
+	oops ("Stringinate", "Failed to allocate");
+	exit (EXIT_FAILURE);
+    } else
+	memset (x, (size_t) 0, (size_t) l);
+
+    if (ll_rewind (list) == GEMS_FALSE)
+	oops ("Stringinate", "failed rewind");
+    do
+    {
+	char *blah;
+
+	blah = ll_showline (list);
+	if (blah == NULL)
 	{
-	  oops ("Stringinate", "bad ll_showline()");
-	  exit (EXIT_FAILURE);
+	    oops ("Stringinate", "bad ll_showline()");
+	    exit (EXIT_FAILURE);
 	}
-      strcat (x, blah);
-/*      free (blah);	*/
+	strcat (x, blah);
+	/*
+	 * free (blah); 
+	 */
     }
-  while (ll_next (list) == GEMS_TRUE);
+    while (ll_next (list) == GEMS_TRUE);
 
-  free (line);
+    free (line);
 
-  return x;
+    return x;
 }

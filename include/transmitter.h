@@ -6,7 +6,7 @@
 #define TRANSMIT_SMTP		1
 #define TRANSMIT_SENDMAIL	2
 
-	/** send an email */
-int transmit_message(message *m, int agent);
+/** send an email */
+int transmit_message (message * m, int agent);
 
 #endif

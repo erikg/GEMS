@@ -2,5 +2,4 @@
 
 
 void
-on_edit1_activate                      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
+ on_edit1_activate (GtkMenuItem * menuitem, gpointer user_data);

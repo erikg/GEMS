@@ -18,9 +18,11 @@ _pop3_last_message (int s)
     if (s == -1)
 	return -1;
     write (s, "LAST\r\n", 6);
-printf("Sent 'last' to %d\n",s);fflush(stdout);
+    printf ("Sent 'last' to %d\n", s);
+    fflush (stdout);
     read (s, buf, 1024);
-printf("Got \"%s\"\n",buf);fflush(stdout);
+    printf ("Got \"%s\"\n", buf);
+    fflush (stdout);
     if (strncmp (buf, "+OK ", 4))
 	return -1;
     return atoi (buf + 4);
@@ -81,41 +83,45 @@ receive_pop3 (char *hostname, int port, char *username, char *password)
     s = socket_open (hostname, port);
     if (_pop3_user (s, username) == GEMS_FALSE)
 	return -1;
-printf("User accepted\n");fflush(stdout);
+    printf ("User accepted\n");
+    fflush (stdout);
     if (_pop3_passwd (s, password) == GEMS_FALSE)
 	return -1;
-printf("Password accepted, I am logged in.\n");fflush(stdout);
+    printf ("Password accepted, I am logged in.\n");
+    fflush (stdout);
     last = _pop3_last_message (s);
-printf("Last message: %d\n", last);fflush(stdout);
+    printf ("Last message: %d\n", last);
+    fflush (stdout);
     max = _pop3_stat (s);
-printf("Max message: %d\n", max);fflush(stdout);
+    printf ("Max message: %d\n", max);
+    fflush (stdout);
 
     for (x = last; x <= max; x++)
-      {
-	  char *buf;
-	int i=0;
+    {
+	char *buf;
+	int i = 0;
 
-	  buf = (char *) malloc (BUFSIZ);
-	  list = ll_newlist ();
-	while(read(s,buf+(i*BUFSIZ),BUFSIZ)==BUFSIZ)
+	buf = (char *) malloc (BUFSIZ);
+	list = ll_newlist ();
+	while (read (s, buf + (i * BUFSIZ), BUFSIZ) == BUFSIZ)
 	{
-		buf = realloc(buf, (i+1)*BUFSIZ);	
-		i++;
+	    buf = realloc (buf, (i + 1) * BUFSIZ);
+	    i++;
 	}
-	printf("Message: %s\n",buf);
+	printf ("Message: %s\n", buf);
 #if 0
-//              while(getline != ".")
-//                      list_add(l, getline)
+	// while (getline != ".")
+	// list_add (l, getline)
 
-    free (buf);
-//	  mess = message_build (list);
-//	  mbox = rule_check (mess);
-//	  db_insert_msg (mbox, mess);
-//	  message_destroy (mess);
+	free (buf);
+	// mess = message_build (list);
+	// mbox = rule_check (mess);
+	// db_insert_msg (mbox, mess);
+	// message_destroy (mess);
 #endif
-	  ll_clearlist (list);
+	ll_clearlist (list);
 
-      }
+    }
     close (s);
     return GEMS_TRUE;
 }

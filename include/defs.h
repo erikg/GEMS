@@ -3,8 +3,8 @@
 
 #ifndef GEMS_TRUE
 #define GEMS_TRUE 1
-#endif /*GEMS_TRUE*/
+#endif				/* GEMS_TRUE */
 #ifndef GEMS_FALSE
 #define GEMS_FALSE 0
-#endif /*GEMS_FALSE*/
+#endif				/* GEMS_FALSE */
 #endif

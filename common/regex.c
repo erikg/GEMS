@@ -7,20 +7,20 @@
 int
 regex (char *r, char *s)
 {
-  void *preg;
-  regmatch_t *pmatch;
-  int val;
+    void *preg;
+    regmatch_t *pmatch;
+    int val;
 
-  preg = (void *) malloc (1000 * sizeof (void *));
-  pmatch = (regmatch_t *) malloc (1000 * sizeof (regmatch_t));
+    preg = (void *) malloc (1000 * sizeof (void *));
+    pmatch = (regmatch_t *) malloc (1000 * sizeof (regmatch_t));
 
-  regcomp (preg, r, 0);
+    regcomp (preg, r, 0);
 
-  if (regexec (preg, s, strlen (s), pmatch, 0) == 0)
-    val = GEMS_TRUE;
-  else
-    val = GEMS_FALSE;
+    if (regexec (preg, s, strlen (s), pmatch, 0) == 0)
+	val = GEMS_TRUE;
+    else
+	val = GEMS_FALSE;
 
-  regfree (preg);
-  return val;
+    regfree (preg);
+    return val;
 }

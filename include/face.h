@@ -1,3 +1,4 @@
+
 	/** returns GEMS_TRUE if requires X */
 extern int face_uses_X ();
 

@@ -5,18 +5,16 @@
 #include "parms.h"
 #endif
 
-typedef struct
-{
-  char *libdir;
-  char *dbiname;
-  char *dbihost;
-  char *dbiuser;
-  char *dbipasswd;
-  char *dbidb;
+typedef struct {
+    char *libdir;
+    char *dbiname;
+    char *dbihost;
+    char *dbiuser;
+    char *dbipasswd;
+    char *dbidb;
 
-  char *facename;
-}
-prefs;
+    char *facename;
+} prefs;
 
 extern prefs *load_prefs (parms *);
 extern void save_prefs (prefs *);

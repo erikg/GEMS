@@ -70,7 +70,6 @@ parse_date (char *in)
 	a[0] = 0;
 	return a;
     }
-
     if (isalpha (in[0]))
 	in += 5;
 
@@ -103,14 +102,13 @@ db_insert_msg (char *mboxname, message * m)
 	oops ("failed to retreive mbox", NULL);
 	exit (0);
     }
-
     result = mysql_store_result (con);
     row = mysql_fetch_row (result);
     mbox = atoi (row[0]);
     mysql_free_result (result);
 
     /*
-     * check if it's a redundant entry 
+     * check if it's a redundant entry
      */
     sprintf (q, "select * from synopsis where charid='%s'", m->id);
     if (mysql_query (con, q) != 0)
@@ -120,14 +118,15 @@ db_insert_msg (char *mboxname, message * m)
     }
     result = mysql_store_result (con);
     row = mysql_fetch_row (result);
-    count = row==NULL?0:atoi (row[0]);
+    count = row == NULL ? 0 : atoi (row[0]);
     mysql_free_result (result);
     if (count != 0)
 	return GEMS_TRUE;
+
     /*
      * for(x=0;x<count;x++) { }
      * 
-     * for each simharid if body matches return GEMS_TRUE; 
+     * for each simharid if body matches return GEMS_TRUE;
      */
 
     if (m->header == NULL)
@@ -160,7 +159,6 @@ db_insert_msg (char *mboxname, message * m)
 	fprintf (dump, "%s\n%s\n", m->header, m->body);
 	fclose (dump);
     }
-
     if (m->sender == NULL)
 	oops ("NULL sender", NULL);
     if (m->subject == NULL)
@@ -183,7 +181,6 @@ db_insert_msg (char *mboxname, message * m)
 	oops ("failed to insert synopsis", mysql_error (con));
 	exit (0);
     }
-
     if (m->recipt == NULL)
 	oops ("NULL recipt", NULL);
     a = spawn_escape_string (m->recipt);
@@ -194,7 +191,6 @@ db_insert_msg (char *mboxname, message * m)
 	oops ("failed to insert recipt", NULL);
 	exit (0);
     }
-
     if (m->replyto == NULL)
 	oops ("NULL replyto", NULL);
     a = spawn_escape_string (m->replyto);
@@ -216,7 +212,6 @@ db_insert_msg (char *mboxname, message * m)
 	    exit (0);
 	}
     }
-
     isnormal = GEMS_FALSE;
     return GEMS_TRUE;
 }
@@ -427,7 +422,6 @@ db_read_body (int id)
 	oops ("mysql_store_result failed", NULL);
 	exit (EXIT_FAILURE);
     }
-
     row = mysql_fetch_row (result);
     body = stuff (result, row, 0);
     mysql_free_result (result);
@@ -439,7 +433,7 @@ db_read_body (int id)
     return body;
 }
 
-message * /*TODO*/
+message *			/* TODO */
 db_read_message (int id)
 {
     message *m;
@@ -451,7 +445,7 @@ db_read_message (int id)
     m->attachments = NULL;
 
     /*
-     * body 
+     * body
      */
     sprintf (q, "select body from body where id='%d'", id);
     if (mysql_query (con, q) != 0)
@@ -471,7 +465,7 @@ db_read_message (int id)
     mysql_free_result (result);
 
     /*
-     * header 
+     * header
      */
     sprintf (q, "select header from header where id='%d'", id);
     if (mysql_query (con, q) != 0)
@@ -491,7 +485,7 @@ db_read_message (int id)
     mysql_free_result (result);
 
     /*
-     * synopsis (mbox, status, senddate, sender, subject, charid) 
+     * synopsis (mbox, status, senddate, sender, subject, charid)
      */
     sprintf (q,
 	     "select mbox,status,senddate,sender,subject,charid from synopsis where id='%d'",
@@ -517,7 +511,7 @@ db_read_message (int id)
     mysql_free_result (result);
 
     /*
-     * recipt 
+     * recipt
      */
     sprintf (q, "select recipt from recipt where id='%d'", id);
     if (mysql_query (con, q) != 0)
@@ -537,7 +531,7 @@ db_read_message (int id)
     mysql_free_result (result);
 
     /*
-     * refs 
+     * refs
      */
     sprintf (q, "select refs from refs where id='%d'", id);
     if (mysql_query (con, q) != 0)
@@ -556,7 +550,7 @@ db_read_message (int id)
     mysql_free_result (result);
 
     /*
-     * replyto 
+     * replyto
      */
     sprintf (q, "select replyto from replyto where id='%d'", id);
     if (mysql_query (con, q) != 0)
@@ -584,7 +578,7 @@ db_read_message (int id)
     return m;
 }
 
-int /*TODO*/
+int				/* TODO */
 db_normalize ()
 {
     MYSQL_RES *r, *ir;
@@ -604,7 +598,6 @@ db_normalize ()
 	oops ("db is already normal", NULL);
 	return GEMS_TRUE;
     }
-
     while ((row = mysql_fetch_row (r)) != NULL)
     {
 	char *blah;
@@ -617,7 +610,7 @@ db_normalize ()
 	    oops ("couldn't grok the id during normalization", row[0]);
 
 	    /*
-	     * exit (-1); 
+	     * exit (-1);
 	     */
 	} else
 	{
@@ -657,7 +650,6 @@ db_is_child_of (int msg)
 	oops ("mysql_store_result failed", "");
 	exit (-1);
     }
-
     row = mysql_fetch_row (result);
     if (row[0] != NULL)
 	parent = atoi (row[0]);

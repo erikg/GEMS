@@ -11,25 +11,24 @@
 int
 face_uses_X ()
 {
-  return GEMS_FALSE;
+    return GEMS_FALSE;
 }
 
 void
 oops (char *a, char *b)
 {
-  printf ("%s: %s\n", a, b);
+    printf ("%s: %s\n", a, b);
 }
 
 int
 face_run (int argc, char **margv)
 {
-  if (db_normalize () == GEMS_FALSE)
-  {
-    printf (_("Failed to normalize the db"));
-    return GEMS_FALSE;
-  }
+    if (db_normalize () == GEMS_FALSE)
+    {
+	printf (_("Failed to normalize the db"));
+	return GEMS_FALSE;
+    }
+    printf ("\n");
 
-  printf ("\n");
-
-  return GEMS_TRUE;
+    return GEMS_TRUE;
 }

@@ -5,178 +5,183 @@
 #include "../include/face.h"	/* for oops() */
 
 
-	/* singly linked list */
-typedef struct anode
-{
-  char *line;
-  struct anode *next;
-}
-node;
+/*
+ * singly linked list 
+ */
+typedef struct anode {
+    char *line;
+    struct anode *next;
+} node;
 
-typedef struct alist
-{
-  node *head;
-  node *current;
-  node *last;
-}
-list;
+typedef struct alist {
+    node *head;
+    node *current;
+    node *last;
+} list;
 
-/*@null@*/
+/*
+ * @null@ 
+ */
 void *
 ll_newlist ()
 {
-  list *x;
-  x = (list *) malloc (sizeof (list));
-  if (x != NULL)
+    list *x;
+
+    x = (list *) malloc (sizeof (list));
+    if (x != NULL)
     {
-      x->head = NULL;
-      x->current = NULL;
-      x->last = NULL;
-      return x;
+	x->head = NULL;
+	x->current = NULL;
+	x->last = NULL;
+	return x;
     }
-  oops ("Failed to gnerate new list", NULL);
-  return NULL;
+    oops ("Failed to gnerate new list", NULL);
+    return NULL;
 }
 
 int
 ll_next (void *this)
 {
-  list *x;
-  x = (list *) this;
-  if (x == NULL || x->current == NULL || x->current->next == NULL)
-    return GEMS_FALSE;
-  x->current = x->current->next;
-  return GEMS_TRUE;
+    list *x;
+
+    x = (list *) this;
+    if (x == NULL || x->current == NULL || x->current->next == NULL)
+	return GEMS_FALSE;
+    x->current = x->current->next;
+    return GEMS_TRUE;
 }
 
 int
 ll_rewind (void *this)
 {
-  list *x;
-  if (this == NULL)
-    return GEMS_FALSE;
-  x = (list *) this;
-  x->current = x->head;
-  return GEMS_TRUE;
+    list *x;
+
+    if (this == NULL)
+	return GEMS_FALSE;
+    x = (list *) this;
+    x->current = x->head;
+    return GEMS_TRUE;
 }
 
-int				/* this is a major bottleneck (50% of spool2sql is here) */
+int				/* this is a major bottleneck (50% of *
+				 * spool2sql is here) */
 ll_addnode (void *this, char *line)
 {
-  node *x;
-  list *l;
+    node *x;
+    list *l;
 
-  if (this == NULL || line == NULL)	/* bad list */
-    return GEMS_FALSE;
+    if (this == NULL || line == NULL)	/* bad list */
+	return GEMS_FALSE;
 
-  x = (node *) malloc (sizeof (node));
-  if (x == NULL)
-    return GEMS_FALSE;
+    x = (node *) malloc (sizeof (node));
+    if (x == NULL)
+	return GEMS_FALSE;
 
-  x->line = (char *) malloc (sizeof (char) * (strlen (line) + 1));
-  if (x->line == NULL)
-    return GEMS_FALSE;		/* no malloc */
+    x->line = (char *) malloc (sizeof (char) * (strlen (line) + 1));
+    if (x->line == NULL)
+	return GEMS_FALSE;	/* no malloc */
 
-  strcpy (x->line, line);
-  x->next = NULL;
+    strcpy (x->line, line);
+    x->next = NULL;
 
-  l = (list *) this;
+    l = (list *) this;
 
-  if (l->head == NULL)
-    l->head = l->current = l->last = x;
-  else
+    if (l->head == NULL)
+	l->head = l->current = l->last = x;
+    else
     {
-      l->last->next = x;
-      l->last = x;
+	l->last->next = x;
+	l->last = x;
     }
 
-  return GEMS_TRUE;
+    return GEMS_TRUE;
 }
 
 char *
 ll_showline (void *this)
 {
-  list *l;
-  l = (list *) this;
-  if (l == NULL || l->current == NULL || l->current->line == NULL)
-    return NULL;
-  return l->current->line;
+    list *l;
+
+    l = (list *) this;
+    if (l == NULL || l->current == NULL || l->current->line == NULL)
+	return NULL;
+    return l->current->line;
 }
 
 static void
 rec_clearlist (node * this)
 {
-  if (this == NULL)
+    if (this == NULL)
+	return;
+    if (this->next != NULL)
+	rec_clearlist (this->next);
+    free (this->line);
+    free (this);
     return;
-  if (this->next != NULL)
-    rec_clearlist (this->next);
-  free (this->line);
-  free (this);
-  return;
 }
 
 
 int
 ll_clearlist (void *this)
 {
-/*  node *x, *y;	*/
-  if (this == NULL || ((list *) this)->head == NULL)
-    return GEMS_FALSE;
-/*  x = ((list *) this)->head;
-  while (x->next != NULL)
-    {
-      y = x->next;
-      if (x->line != NULL)
-	free (x->line);
-      free (x);
-      x = y;
-    }
-    */
-  rec_clearlist (((list *) this)->head);
-  free (this);
-  return GEMS_TRUE;
+    /*
+     * node *x, *y; 
+     */
+    if (this == NULL || ((list *) this)->head == NULL)
+	return GEMS_FALSE;
+
+    /*
+     * x = ((list *) this)->head; while (x->next != NULL) { y = x->next; if
+     * (x->line != NULL) free (x->line); free (x); x = y; }
+     */
+    rec_clearlist (((list *) this)->head);
+    free (this);
+    return GEMS_TRUE;
 }
 
 int
 ll_empty (void *v)
 {
-  list *l;
-  l = (list *) v;
-  if (l == NULL || l->head == NULL)
-    return GEMS_TRUE;
-  return GEMS_FALSE;
+    list *l;
+
+    l = (list *) v;
+    if (l == NULL || l->head == NULL)
+	return GEMS_TRUE;
+    return GEMS_FALSE;
 }
 
 int
 ll_deletenode (void *v)
 {
-  list *l;
-  node *n, *t;
-  l = (list *) v;
-  if (l == NULL || l->head == NULL)
-    return GEMS_FALSE;
-  n = l->head;
+    list *l;
+    node *n, *t;
 
-  while (n->next != NULL && n->next != l->current)
-    n = n->next;
+    l = (list *) v;
+    if (l == NULL || l->head == NULL)
+	return GEMS_FALSE;
+    n = l->head;
 
-  if (n->next == NULL)
-    return GEMS_FALSE;
+    while (n->next != NULL && n->next != l->current)
+	n = n->next;
 
-  t = n->next;
-  n->next = t->next;
-  free (t);
-  l->current = n->next;
+    if (n->next == NULL)
+	return GEMS_FALSE;
 
-  return GEMS_TRUE;
+    t = n->next;
+    n->next = t->next;
+    free (t);
+    l->current = n->next;
+
+    return GEMS_TRUE;
 }
 
 int
 ll_end (void *n)
 {
-  list *l;
-  l = (list *) n;
-  if (l->current == NULL)
-    return GEMS_TRUE;
-  return GEMS_FALSE;
+    list *l;
+
+    l = (list *) n;
+    if (l->current == NULL)
+	return GEMS_TRUE;
+    return GEMS_FALSE;
 }

@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-#  include <config.h>
+#include <config.h>
 #endif
 
 #include <gtk/gtk.h>
@@ -10,9 +10,7 @@
 
 
 void
-on_edit1_activate                      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
+on_edit1_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
 
 }
-

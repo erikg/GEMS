@@ -3,26 +3,25 @@
 
 /** parms contains all the information gotten from the config file */
 
-typedef struct
-{
-  char *libdir;
-  char *dbiname;
-  char *dbihost;
-  char *dbiuser;
-  char *dbipasswd;
-  char *dbidb;
+typedef struct {
+    char *libdir;
+    char *dbiname;
+    char *dbihost;
+    char *dbiuser;
+    char *dbipasswd;
+    char *dbidb;
 
-  char *facename;
+    char *facename;
 
-  char *rc;
-}
-parms;
+    char *rc;
+} parms;
 
 /** loads the configuration information from the file
- * @param 
+ * @param
  * @param
  */
 
 extern parms *load_parms (int *, char **);
-void parms_destroy(parms *p);
+void parms_destroy (parms * p);
+
 #endif

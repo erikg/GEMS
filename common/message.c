@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: message.c,v 1.17 2004/05/30 22:53:06 erik Exp $
+ * $Id: message.c,v 1.18 2004/09/04 00:56:46 erik Exp $
  */
 
 #include <stdio.h>
@@ -234,6 +234,7 @@ message_build_from_buffer (char *buf)
 		m->recipt = strdup (buf + i + 4);
 	    break;
 	default:
+	    break;
 	}
 	while (buf[i] != 0)
 	    i++;

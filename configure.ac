@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.3 2004/07/25 14:55:46 erik Exp $
+dnl $Id: configure.ac,v 1.4 2004/09/04 02:34:38 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -19,11 +19,11 @@ AC_C_CONST
 AC_HEADER_STDC([])
 
 # add /usr/local to shtuff
-#if test -d /usr/local
-#then
-#	CFLAGS="$(CFLAGS)-I/usr/local/include"
-#	LDADD="$(LDADD)-L/usr/local/lib"
-#fi
+if test -d /usr/local
+then
+	CFLAGS="$(CFLAGS)-I/usr/local/include"
+	LDADD="$(LDADD)-L/usr/local/lib"
+fi
 
 dnl AM_GNU_GETTEXT([external])
 dnl AM_GNU_GETTEXT()

@@ -117,6 +117,8 @@ message_build_from_list (void *list)
     return x;
 }
 
+void *memdup(void *src, int size){ void *m = malloc(size); memcpy(m,src,size); return m; }
+
 message *
 message_build_from_buffer (char *buf)
 {
@@ -129,8 +131,8 @@ message_build_from_buffer (char *buf)
 	x++;
     if (buf[x] == 0)
 	return NULL;		/* bad message */
-    buf[x + 1] = 0;
-    m->header = strdup (buf);
+    buf[x] = 0;
+    m->header = strdup(buf);
     m->body = strdup (buf + x + 2);
     for (i = x; i; i--)
 	if (buf[i] == '\n' && buf[i + 1] == '\n')

@@ -1,9 +1,9 @@
-dnl $Id: configure.ac,v 1.4 2004/09/04 02:34:38 erik Exp $
+dnl $Id: configure.ac,v 1.5 2004/09/06 20:31:54 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
 AC_CANONICAL_TARGET
-AM_INIT_AUTOMAKE(gems, 0.0)
+AM_INIT_AUTOMAKE(gems, 0.1)
 #AM_MAINTAINER_MODE
 
 AM_CONFIG_HEADER([include/config.h])
@@ -18,11 +18,13 @@ AC_ISC_POSIX
 AC_C_CONST
 AC_HEADER_STDC([])
 
+CPPFLAGS="${CPPFLAGS}"' -I${top_srcdir}'/include
+
 # add /usr/local to shtuff
 if test -d /usr/local
 then
-	CFLAGS="$(CFLAGS)-I/usr/local/include"
-	LDADD="$(LDADD)-L/usr/local/lib"
+	CPPFLAGS="${CPPFLAGS} -I/usr/local/include"
+	LDADD="${LDADD} -L/usr/local/lib"
 fi
 
 dnl AM_GNU_GETTEXT([external])
@@ -60,22 +62,18 @@ fi
 
 AC_MSG_CHECKING([PostgreSQL])
 have_postgresql=no
-#AC_CHECK_LIB(pq, PQconnectdb, [have_postgresql="yes"
-#			       POSTGRESQL_LIBDADD="-lpq"],
-#			      [LIBRARY_PATH="/usr/local/lib"
-#			       AC_CHECK_LIB()
-
-POSTGRESQL_LIBADD="-L/usr/local/lib/ -lpq"
-
-AC_SUBST(POSTGRESQL_LIBADD)
+POSTGRESQL_LIBADD=""
+AC_CHECK_LIB(pq, PQconnectdb, have_postgresql="yes")
 AM_CONDITIONAL(POSTGRESQL, [test "x$have_postgresql" == xyes])
 if test "x$have_postgresql" == xyes
 then
 	AC_MSG_RESULT([Yes])
+	POSTGRESQL_LIBADD="-lpg"
 	DB="${DB} PostgreSQL"
 else
 	AC_MSG_RESULT([No])
 fi
+AC_SUBST(POSTGRESQL_LIBADD)
 
 
 dnl **************************************************************************

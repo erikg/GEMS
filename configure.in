@@ -1,4 +1,4 @@
-dnl $Id: configure.in,v 1.26 2003/11/11 15:30:42 erik Exp $
+dnl $Id: configure.in,v 1.27 2004/01/23 00:43:11 erik Exp $
 
 AC_INIT(README)
 AC_CANONICAL_TARGET
@@ -59,17 +59,6 @@ fi
 
 dnl **************************************************************************
 
-GNOME=
-AC_ARG_WITH(gnome-includes,
-        [  --with-gnome-includes   Specify location of GNOME headers],[
-        CFLAGS="$CFLAGS -I$withval"
-        ])
-AC_ARG_WITH(gnome-libs,
-        [  --with-gnome-libs       Specify location of GNOME libs],[
-        LDFLAGS="$LDFLAGS -L$withval"
-        gnome_prefix=$withval
-        ])
-
 AC_ARG_ENABLE(gnome,
 [  --enable-gnome          Use GNOME [default=yes]], use_gnome=no, use_gnome=yes)
 if test "x$use_gnome" = xyes; then
@@ -84,9 +73,11 @@ if test "x$use_gnome" = xyes; then
                 AC_MSG_RESULT(yes)
         else
                 AC_MSG_RESULT(no)
+		GNOME=
         fi
 else
                 AC_MSG_RESULT(no)
+		GNOME=
 fi
 
 dnl **************************************************************************

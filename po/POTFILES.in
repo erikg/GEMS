@@ -5,3 +5,12 @@ face/utils/cleantables.c
 face/utils/showmail.c
 face/utils/spool2sql.c
 face/utils/sql2spool.c
+face/GNOME/o/main.c
+face/GNOME/o/interface.c
+face/GNOME/o/callbacks.c
+face/GNOME/o/support.c
+face/GNOME2/o/main.c
+face/GNOME2/o/interface.c
+face/GNOME2/o/callbacks.c
+face/GNOME2/o/support.c
+

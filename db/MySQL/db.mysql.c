@@ -183,7 +183,7 @@ db_insert_msg (char *mboxname, message * m)
     c = parse_date (m->senddate);
     d = spawn_escape_string (m->id,2);
     sprintf (q,
-	     "insert into synopsis values (%ld,%ld,'','%s','%s','%s','%s',0)",
+	     "insert into synopsis values (%ld,%ld,'','%s','%s','%s','%s')",
 	     id, mbox, c, a, b, d);
 /*
     free (a);
@@ -794,4 +794,50 @@ db_pref_get (char *pref)
     }
     mysql_free_result (res);
     return a;
+}
+
+unsigned int
+hash(char *str)
+{
+	char *x = str;
+	int i = 0;
+	while(*x)
+		i+=*x++;
+	return i;
+}
+
+void db_syncharhash(void)
+{
+   MYSQL_RES *res1, *res2;
+    MYSQL_ROW row1, row2;
+    int i = 1, max = 0;
+    int start, now, t;
+    
+    if(mysql_query(con,"select id,charid from synopsis")!=0)
+    {
+	    oops("MySQL::db_syncharhash","Failed");
+	    return;
+    }
+    res1 = mysql_store_result (con);
+    max = mysql_num_rows(res1);    
+    start = time(NULL);
+    while((row1 = mysql_fetch_row (res1))!=NULL)
+    {
+	    static float frac;
+	    now = time(NULL);
+	    sprintf(q,"select * from charid_hash where id=%s",row1[0]);
+	    mysql_query(con,q);
+	    res2=mysql_store_result(con);
+	    row2=mysql_fetch_row(res2);
+	    frac = (float)i/(float) max;
+	    t = start+max*(now-start)/i;
+	    printf("\r%d/%d (%.2f%%) %ds elapsed, ~%d left, ETA: %s" , i, max, 100.0*frac, now-start,			/* elapsed*/ (float)max*(float)(now-start)/(float)i,		/* left */ ctime(&t));	/* ETA */
+	    ++i;
+	    fflush(stdout);
+	    if(row2==NULL)
+	    {
+		    sprintf(q,"insert into charid_hash values(%d,%s)",hash(row1[1]), row1[0]);
+		    mysql_query(con,q);
+	    }
+    }
 }

@@ -67,4 +67,6 @@ extern int db_pref_set (char *pref, char *val);
 /** retreive a preference */
 extern char *db_pref_get (char *pref);
 
+void db_syncharhash(void);
+
 #endif

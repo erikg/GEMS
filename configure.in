@@ -92,8 +92,13 @@ AC_SUBST(GTK)
 AC_SUBST(GNOME)
 AC_SUBST(CURSES)
 
+AC_CHECK_FUNCS(dlopen, [MY_LDADD=""], [
+  AC_CHECK_LIB(dl, dlopen, [MY_LDADD="-ldl"], [
+    AC_MSG_ERROR([could not find dlopen().]) ]) ])
+
+
 MY_LDFLAGS="$LDFLAGS"
-MY_LDADD="$LDADD"
+dnl MY_LDADD="$LDADD"
 echo "MY_LDADD: $MY_LDADD"
 AC_SUBST(MY_LDFLAGS)
 AC_SUBST(MY_LDADD)

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: main.c,v 1.14 2003/04/05 18:36:28 erik Exp $
+ * $Id: main.c,v 1.15 2003/11/11 12:36:14 erik Exp $
  */
 
 
@@ -34,6 +34,8 @@
 #endif
 
 #include <gnome.h>
+
+#include <dlfcn.h>
 
 #include "defs.h"		/* gems includes */
 #include "message.h"
@@ -138,6 +140,35 @@ set_mboxlist ()
 }
 
 
+void
+face_init ()
+{
+printf("Opening up some libs\n");
+/* dlopen("libXpm.so", RTLD_LAZY); */
+/* dlopen("libjpeg.so", RTLD_LAZY); */
+dlopen("libgnomeui.so", RTLD_LAZY);
+/* dlopen("libart_lgpl.so", RTLD_LAZY); */
+/* dlopen("libgdk_imlib.so", RTLD_LAZY); */
+/* dlopen("libtiff.so", RTLD_LAZY); */
+/* dlopen("libungif.so", RTLD_LAZY); */
+/* dlopen("libpng.so", RTLD_LAZY); */
+/* dlopen("libSM.so", RTLD_LAZY); */
+/* dlopen("libICE.so", RTLD_LAZY); */
+dlopen("libgtk12.so", RTLD_LAZY);
+/* dlopen("libgdk12.so", RTLD_LAZY); */
+/* dlopen("libgmodule12.so", RTLD_LAZY); */
+/* dlopen("libXi.so", RTLD_LAZY); */
+/* dlopen("libXext.so", RTLD_LAZY); */
+/* dlopen("libX11.so", RTLD_LAZY); */
+/* dlopen("libgnome.so", RTLD_LAZY); */
+/* dlopen("libgnomesupport.so", RTLD_LAZY); */
+/* dlopen("libintl.so", RTLD_LAZY); */
+/* dlopen("libesd.so", RTLD_LAZY); */
+/* dlopen("libaudiofile.so", RTLD_LAZY); */
+/* dlopen("libglib12.so", RTLD_LAZY); */
+/* dlopen("libiconv.so", RTLD_LAZY); */
+}
+
 int
 face_uses_X ()
 {
@@ -150,6 +181,9 @@ face_run (int argc, char *argv[])
     char *x;
     int a = 0, b = 0;
     GtkCList *c;
+printf("ding\n");fflush(stdout);
+
+    face_init();
 
 #ifdef ENABLE_NLS
     bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);

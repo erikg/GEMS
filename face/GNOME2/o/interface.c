@@ -50,7 +50,7 @@ static GnomeUIInfo edit1_menu_uiinfo[] =
   GNOMEUIINFO_END
 };
 
-static GnomeUIInfo view1_menu_uiinfo[] =
+static GnomeUIInfo view1_uiinfo[] =
 {
   GNOMEUIINFO_END
 };
@@ -62,11 +62,11 @@ static GnomeUIInfo help1_menu_uiinfo[] =
   GNOMEUIINFO_END
 };
 
-static GnomeUIInfo menubar1_uiinfo[] =
+static GnomeUIInfo menubar_uiinfo[] =
 {
   GNOMEUIINFO_MENU_FILE_TREE (file1_menu_uiinfo),
   GNOMEUIINFO_MENU_EDIT_TREE (edit1_menu_uiinfo),
-  GNOMEUIINFO_MENU_VIEW_TREE (view1_menu_uiinfo),
+  GNOMEUIINFO_MENU_VIEW_TREE (view1_uiinfo),
   GNOMEUIINFO_MENU_HELP_TREE (help1_menu_uiinfo),
   GNOMEUIINFO_END
 };
@@ -109,7 +109,7 @@ create_gems (void)
   bonobodock1 = GNOME_APP (gems)->dock;
   gtk_widget_show (bonobodock1);
 
-  gnome_app_create_menus (GNOME_APP (gems), menubar1_uiinfo);
+  gnome_app_create_menus (GNOME_APP (gems), menubar_uiinfo);
 
   toolbar1 = gtk_toolbar_new ();
   gtk_widget_show (toolbar1);
@@ -291,19 +291,19 @@ create_gems (void)
   gtk_widget_show (appbar1);
   gnome_app_set_statusbar (GNOME_APP (gems), appbar1);
 
-  gnome_app_install_menu_hints (GNOME_APP (gems), menubar1_uiinfo);
+  gnome_app_install_menu_hints (GNOME_APP (gems), menubar_uiinfo);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (gems, gems, "gems");
   GLADE_HOOKUP_OBJECT (gems, bonobodock1, "bonobodock1");
-  GLADE_HOOKUP_OBJECT (gems, menubar1_uiinfo[0].widget, "file1");
+  GLADE_HOOKUP_OBJECT (gems, menubar_uiinfo[0].widget, "file1");
   GLADE_HOOKUP_OBJECT (gems, file1_menu_uiinfo[0].widget, "new1");
   GLADE_HOOKUP_OBJECT (gems, file1_menu_uiinfo[1].widget, "open1");
   GLADE_HOOKUP_OBJECT (gems, file1_menu_uiinfo[2].widget, "save1");
   GLADE_HOOKUP_OBJECT (gems, file1_menu_uiinfo[3].widget, "save_as1");
   GLADE_HOOKUP_OBJECT (gems, file1_menu_uiinfo[4].widget, "separator1");
   GLADE_HOOKUP_OBJECT (gems, file1_menu_uiinfo[5].widget, "quit1");
-  GLADE_HOOKUP_OBJECT (gems, menubar1_uiinfo[1].widget, "edit1");
+  GLADE_HOOKUP_OBJECT (gems, menubar_uiinfo[1].widget, "edit1");
   GLADE_HOOKUP_OBJECT (gems, edit1_menu_uiinfo[0].widget, "cut1");
   GLADE_HOOKUP_OBJECT (gems, edit1_menu_uiinfo[1].widget, "copy1");
   GLADE_HOOKUP_OBJECT (gems, edit1_menu_uiinfo[2].widget, "paste1");
@@ -312,8 +312,8 @@ create_gems (void)
   GLADE_HOOKUP_OBJECT (gems, edit1_menu_uiinfo[5].widget, "properties1");
   GLADE_HOOKUP_OBJECT (gems, edit1_menu_uiinfo[6].widget, "separator3");
   GLADE_HOOKUP_OBJECT (gems, edit1_menu_uiinfo[7].widget, "preferences1");
-  GLADE_HOOKUP_OBJECT (gems, menubar1_uiinfo[2].widget, "view1");
-  GLADE_HOOKUP_OBJECT (gems, menubar1_uiinfo[3].widget, "help1");
+  GLADE_HOOKUP_OBJECT (gems, menubar_uiinfo[2].widget, "view1");
+  GLADE_HOOKUP_OBJECT (gems, menubar_uiinfo[3].widget, "help1");
   GLADE_HOOKUP_OBJECT (gems, help1_menu_uiinfo[1].widget, "about1");
   GLADE_HOOKUP_OBJECT (gems, toolbar1, "toolbar1");
   GLADE_HOOKUP_OBJECT (gems, toolbar_compose, "toolbar_compose");
@@ -346,7 +346,7 @@ create_gems (void)
 }
 
 GtkWidget*
-create_aboot (void)
+create_about (void)
 {
   const gchar *authors[] = {
     "Erik Greenwald",
@@ -355,21 +355,22 @@ create_aboot (void)
   const gchar *documenters[] = { NULL };
   /* TRANSLATORS: Replace this string with your names, one name per line. */
   gchar *translators = _("translator_credits");
-  GtkWidget *aboot;
+  GtkWidget *about;
 
   if (!strcmp (translators, "translator_credits"))
     translators = NULL;
-  aboot = gnome_about_new ("gems", VERSION,
+  about = gnome_about_new ("gems", VERSION,
                         _("(C) 2000-2003 Erik Greenwald"),
                         _("GEMS E-Mail System"),
                         authors,
                         documenters,
                         translators,
                         NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (about), 5);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
-  GLADE_HOOKUP_OBJECT_NO_REF (aboot, aboot, "aboot");
+  GLADE_HOOKUP_OBJECT_NO_REF (about, about, "about");
 
-  return aboot;
+  return about;
 }
 

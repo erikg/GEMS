@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: snarf.c,v 1.12 2003/10/19 16:08:32 erik Exp $
+ * $Id: snarf.c,v 1.13 2003/11/11 12:36:14 erik Exp $
  */
 
 #include <stdio.h>
@@ -50,7 +51,7 @@ face_uses_X ()
 void
 oops (char *a, char *b)
 {
-    printf ("%s: %s\n", a, b);
+    printf ("\n%s: %s\n", a, b);
     return;
 }
 
@@ -87,14 +88,16 @@ parse (char *buf, unsigned int size)
     for (i = 0; i <= msgcount; ++i)
     {
 	message *m;
+	int ins;
 
 	m = message_build_from_buffer (msg[i]);
 	if (m == NULL)
 	    continue;
-	mbox = rule_check (m);
-	db_insert_msg (mbox, m);/* this sucks up time */
+	mbox = rule_check (m); 
+	ins = db_insert_msg (mbox, m);	/* this sucks up time */
 	message_destroy (m);
-	printf ("\r%d/%d  (%.2f%%)           ", i, msgcount, 100.0 * (float)i / (float)msgcount);
+	printf ("\r%d/%d  (%.2f%%)%s",  i, msgcount,
+	    100.0 * (float)i / (float)msgcount,ins==GEMS_FALSE?"  FAILED\n":"");
 	fflush (stdout);
     }
     printf ("\n");
@@ -108,27 +111,33 @@ face_run (int argc, char **argv)
     unsigned int size;
     char *buf;
 
-    fd = open (argv[1], O_RDONLY);
-
-    if (fd <= 0)
-	return (-1);
-
     if (rule_init () == GEMS_FALSE)
     {
-	printf (_ ("Failed to initialize ruleset\n"));
+	printf (_("Failed to initialize ruleset\n"));
 	exit (EXIT_FAILURE);
     }
-    buf = (char *)malloc (BIGBUFSIZ);
+    buf = (char *)malloc (BIGBUFSIZ + 1);
 
-    size = read (fd, buf, BIGBUFSIZ);
-    buf[size] = 0;
-    parse (buf, size);
+    while (++argv, --argc)
+    {
+	fd = open (argv[1], O_RDONLY);
+
+	if (fd <= 0)
+	{
+	    free (buf);
+	    return (-1);
+	}
+
+	size = read (fd, buf, BIGBUFSIZ);
+	buf[size] = 0;
+	parse (buf, size);
+	close (fd);
+    }
 
     if (rule_close () == GEMS_FALSE)
     {
-	printf (_ ("Failed closing ruleset\n"));
+	printf (_("Failed closing ruleset\n"));
     }
     free (buf);
-    close (fd);
     return GEMS_TRUE;
 }

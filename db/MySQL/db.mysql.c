@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.33 2003/11/01 13:12:58 erik Exp $
+ * $Id: db.mysql.c,v 1.34 2003/11/11 12:36:14 erik Exp $
  */
 
 #include <stdio.h>
@@ -158,7 +158,7 @@ db_insert_msg (char *mboxname, message * m)
     mysql_free_result (result);
 
     /*
-     * 01 this can be table-ized or fixed in the db...
+     * this can be table-ized or fixed in the db...
      */
     sprintf (q, "select mbox from mmbox where mboxname='%s'", mboxname);
     if (mysql_query (con, q) != 0)
@@ -171,29 +171,10 @@ db_insert_msg (char *mboxname, message * m)
     mbox = atoi (row[0]);
     mysql_free_result (result);
 
-    /*
-     * /01
-     */
-
-    /*
-     * count = (row == NULL ? 0 : atoi (row[0])); mysql_free_result (result);
-     * if (count != 0) return GEMS_TRUE;
-     */
-
-    /*
-     * for(x=0;x<count;x++) { }
-     * 
-     * for each simharid if body matches return GEMS_TRUE;
-     */
-
     if (m->header == NULL)
 	oops ("NULL header", NULL);
     a = spawn_escape_string (m->header, 0);
     sprintf (q, "insert into header values (0,'%s','false')", a);
-
-    /*
-     * free (a);
-     */
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to insert header", NULL);
@@ -209,23 +190,14 @@ db_insert_msg (char *mboxname, message * m)
 	oops ("NULL body", NULL);
     a = spawn_escape_string (m->body, 0);
     sprintf (q, "insert into body values (%ld,'%s','false')", id, a);
-
-    /*
-     * free (a);
-     */
     if (mysql_query (con, q) != 0)
     {
-
-	/*
-	 * FILE *dump;
-	 */
+	 FILE *dump;
 
 	oops ("failed to insert body", NULL);
 
-	/*
-	 * dump = fopen ("dump", "a"); fprintf (dump, "%s\n%s\n", m->header,
-	 * m->body); fclose (dump);
-	 */
+	 dump = fopen ("/tmp/dump", "a"); fprintf (dump, "%s\n%s\n", m->header,
+	 m->body); fclose (dump);
     }
     if (m->sender == NULL)
 	oops ("NULL sender", NULL);
@@ -241,9 +213,6 @@ db_insert_msg (char *mboxname, message * m)
 	"insert into synopsis values (%ld,%ld,'','%s','%s','%s','%s')",
 	id, mbox, c, a, b, d);
 
-    /*
-     * free (a); free (b); free (c); free (d);
-     */
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to insert synopsis", mysql_error (con));
@@ -708,16 +677,10 @@ db_normalize ()
 	blah = spawn_escape_string (row[0], 0);
 	sprintf (q, "select id from synopsis where charid='%s'", blah);
 
-	/*
-	 * free (blah);
-	 */
 	if (mysql_query (con, q) != 0)
 	{
 	    oops ("couldn't grok the id during normalization", row[0]);
-
-	    /*
-	     * exit (-1);
-	     */
+	     exit (-1);
 	} else
 	{
 	    ir = mysql_store_result (con);

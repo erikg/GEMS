@@ -3,4 +3,4 @@
  */
 
 GtkWidget* create_gems (void);
-GtkWidget* create_aboot (void);
+GtkWidget* create_about (void);

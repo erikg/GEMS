@@ -101,6 +101,6 @@ void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
+    gtk_widget_show(create_about());
 }
 

@@ -46,8 +46,8 @@ if test "x$use_gnome" = xyes; then
 		GNOME=GNOME
                 GNOME_CFLAGS=`gnome-config --cflags gnomeui`
                 GNOME_LIBS=`gnome-config --libs gnomeui`
-                CFLAGS="$CFLAGS $GNOME_CFLAGS"
-                LIBS="$LIBS $GNOME_LIBS"
+		AC_SUBST(GNOME_CFLAGS)
+		AC_SUBST(GNOME_LIBS)
                 AC_MSG_RESULT(yes)
         else
                 AC_MSG_RESULT(no)

@@ -7,6 +7,7 @@ gemsinclude_HEADERS =	db.h\
 			message.h\
 			receptor.h\
 			rules.h\
+			sckt.h\
 			spoolread.h\
 			stringinate.h\
 			transmitter.h

@@ -20,12 +20,12 @@
  *****************************************************************************/
 
 /*
- * $Id: sendmail.c,v 1.3 2003/04/05 18:36:30 erik Exp $
+ * $Id: sendmail.c,v 1.4 2003/04/05 19:01:19 erik Exp $
  */
 
 
 /*
- * $Id: sendmail.c,v 1.3 2003/04/05 18:36:30 erik Exp $
+ * $Id: sendmail.c,v 1.4 2003/04/05 19:01:19 erik Exp $
  */
 
 #include <stdio.h>
@@ -33,7 +33,7 @@
 
 static char *cmd[] = { "/usr/sbin/sendmail", "-oi", "-t", NULL };
 
-int transmit_sendmail (message *)
+int transmit_sendmail (message *m)
 {
 	int pid;
 	pid = fork();

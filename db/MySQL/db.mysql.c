@@ -298,27 +298,27 @@ db_read_synopsis (int mbox, int status)
     MYSQL_RES *result;
     MYSQL_ROW row;
     int x, numrows;
-printf("%d\n", status);
+
     switch (status)
     {
     case DB_READ:
 	sprintf (q,
-		 "select id,sender,senddate,subject from synopsis where mbox=%d and status LIKE '%%read%%'",
+		 "select id,sender,senddate,subject from synopsis where mbox=%d and status='read' order by senddate",
 		 mbox);
 	break;
     case DB_MARKED:
 	sprintf (q,
-		 "select id,sender,senddate,subject from synopsis where mbox=%d and status LIKE '%%marked%%'",
+		 "select id,sender,senddate,subject from synopsis where mbox=%d and status='marked' order by senddate",
 		 mbox);
 	break;
     case DB_ALL:
 	sprintf (q,
-		 "select id,sender,senddate,subject from synopsis where mbox=%d",
+		 "select id,sender,senddate,subject from synopsis where mbox=%d order by senddate",
 		 mbox);
 	break;
     case DB_UNREAD:
 	sprintf (q,
-		 "select id,sender,senddate,subject from synopsis where mbox=%d and status NOT LIKE '%%read%%' ",
+		 "select id,sender,senddate,subject from synopsis where mbox=%d and status!='read' order by senddate",
 		 mbox);
 	break;
     default:

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.30 2003/10/19 16:04:23 erik Exp $
+ * $Id: db.mysql.c,v 1.31 2003/10/19 16:06:46 erik Exp $
  */
 
 #include <stdio.h>
@@ -43,7 +43,7 @@ int isnormal = GEMS_FALSE;
 static char q[40000000];
 
 static char monthlist[12][4] =
-{"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
+    { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
     "nov", "dec"
 };
 
@@ -89,7 +89,9 @@ spawn_escape_string (char *in, int buf)
     if (in == NULL)
 	return NULL;
 
-    /* x = (char *) malloc (2 * strlen (in) + 1); */
+    /*
+     * x = (char *) malloc (2 * strlen (in) + 1); 
+     */
     mysql_escape_string (x, in, strlen (in));
     return x;
 }
@@ -107,17 +109,18 @@ parse_date (char *in)
     if (isalpha (in[0]))
 	in += 5;
 
-    sscanf (in, "%d %s %d %d:%d:%d", &day, mo, &year, &hour, &minute,
-	    &second);
+    sscanf (in, "%d %s %d %d:%d:%d", &day, mo, &year, &hour, &minute, &second);
 
     for (x = 0; x < 12; x++)
 	if (strcasecmp (monthlist[x], mo) == 0)
 	    month = x + 1;
 
-    /* a = (char *) malloc (24); */
+    /*
+     * a = (char *) malloc (24); 
+     */
 
     sprintf (a, "%04d-%02d-%02d %02d:%02d:%02d",
-	     year, month, day, hour, minute, second);
+	year, month, day, hour, minute, second);
 
     return a;
 }
@@ -154,7 +157,9 @@ db_insert_msg (char *mboxname, message * m)
     }
     mysql_free_result (result);
 
-    /* 01 this can be table-ized or fixed in the db... */
+    /*
+     * 01 this can be table-ized or fixed in the db... 
+     */
     sprintf (q, "select mbox from mmbox where mboxname='%s'", mboxname);
     if (mysql_query (con, q) != 0)
     {
@@ -165,7 +170,9 @@ db_insert_msg (char *mboxname, message * m)
     row = mysql_fetch_row (result);
     mbox = atoi (row[0]);
     mysql_free_result (result);
-    /* /01 */
+    /*
+     * /01 
+     */
 
     /*
      * count = (row == NULL ? 0 : atoi (row[0])); mysql_free_result (result);
@@ -183,7 +190,9 @@ db_insert_msg (char *mboxname, message * m)
     a = spawn_escape_string (m->header, 0);
     sprintf (q, "insert into header values (0,'%s','false')", a);
 
-    /* free (a); */
+    /*
+     * free (a); 
+     */
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to insert header", NULL);
@@ -200,11 +209,15 @@ db_insert_msg (char *mboxname, message * m)
     a = spawn_escape_string (m->body, 0);
     sprintf (q, "insert into body values (%ld,'%s','false')", id, a);
 
-    /* free (a); */
+    /*
+     * free (a); 
+     */
     if (mysql_query (con, q) != 0)
     {
 
-	/* FILE *dump; */
+	/*
+	 * FILE *dump; 
+	 */
 
 	oops ("failed to insert body", NULL);
 
@@ -224,8 +237,8 @@ db_insert_msg (char *mboxname, message * m)
     c = parse_date (m->senddate);
     d = spawn_escape_string (m->id, 2);
     sprintf (q,
-	     "insert into synopsis values (%ld,%ld,'','%s','%s','%s','%s')",
-	     id, mbox, c, a, b, d);
+	"insert into synopsis values (%ld,%ld,'','%s','%s','%s','%s')",
+	id, mbox, c, a, b, d);
 
     /*
      * free (a); free (b); free (c); free (d);
@@ -241,7 +254,9 @@ db_insert_msg (char *mboxname, message * m)
     a = spawn_escape_string (m->recipt, 0);
     sprintf (q, "insert into recipt values (%ld,'%s','to')", id, a);
 
-    /* free (a); */
+    /*
+     * free (a); 
+     */
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to insert recipt", NULL);
@@ -252,7 +267,9 @@ db_insert_msg (char *mboxname, message * m)
     a = spawn_escape_string (m->replyto, 0);
     sprintf (q, "insert into replyto values (%ld,'%s')", id, a);
 
-    /* free (a); */
+    /*
+     * free (a); 
+     */
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to insert replyto", mysql_error (con));
@@ -263,7 +280,9 @@ db_insert_msg (char *mboxname, message * m)
 	a = spawn_escape_string (m->references, 0);
 	sprintf (q, "insert into refs values (%ld,'%s',NULL)", id, a);
 
-	/* free (a); */
+	/*
+	 * free (a); 
+	 */
 	if (mysql_query (con, q) != 0)
 	{
 	    oops ("failed to insert refs", mysql_error (con));
@@ -344,23 +363,23 @@ db_read_synopsis (int mbox, int status)
     {
     case DB_READ:
 	sprintf (q,
-		 "select id,sender,senddate,subject from synopsis where mbox=%d and status='read' order by senddate",
-		 mbox);
+	    "select id,sender,senddate,subject from synopsis where mbox=%d and status='read' order by senddate",
+	    mbox);
 	break;
     case DB_MARKED:
 	sprintf (q,
-		 "select id,sender,senddate,subject from synopsis where mbox=%d and status='marked' order by senddate",
-		 mbox);
+	    "select id,sender,senddate,subject from synopsis where mbox=%d and status='marked' order by senddate",
+	    mbox);
 	break;
     case DB_ALL:
 	sprintf (q,
-		 "select id,sender,senddate,subject from synopsis where mbox=%d order by senddate",
-		 mbox);
+	    "select id,sender,senddate,subject from synopsis where mbox=%d order by senddate",
+	    mbox);
 	break;
     case DB_UNREAD:
 	sprintf (q,
-		 "select id,sender,senddate,subject from synopsis where mbox=%d and status!='read' order by senddate",
-		 mbox);
+	    "select id,sender,senddate,subject from synopsis where mbox=%d and status!='read' order by senddate",
+	    mbox);
 	break;
     default:
 	oops ("Invalid action specified", "Cannot retreive synopsis");
@@ -451,7 +470,7 @@ db_read_mboxlist (void)
     mysql_free_result (result);
     if (mysql_query
 	(con,
-    "select mbox,count(*) from synopsis where status!='read' group by mbox")
+	    "select mbox,count(*) from synopsis where status!='read' group by mbox")
 	!= 0)
     {
 	oops ("failed to count unread messages", mysql_error (con));
@@ -571,8 +590,8 @@ db_read_message (int id)
      * synopsis (mbox, status, senddate, sender, subject, charid)
      */
     sprintf (q,
-	     "select mbox,status,senddate,sender,subject,charid from synopsis where id='%d'",
-	     id);
+	"select mbox,status,senddate,sender,subject,charid from synopsis where id='%d'",
+	id);
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to read mail synopsis", mysql_error (con));
@@ -669,7 +688,7 @@ db_normalize ()
 
     if (mysql_query
 	(con,
-	 "select refs from refs where childof is NULL and refs is not NULL")
+	    "select refs from refs where childof is NULL and refs is not NULL")
 	!= 0)
     {
 	oops ("normalization failed", NULL);
@@ -688,7 +707,9 @@ db_normalize ()
 	blah = spawn_escape_string (row[0], 0);
 	sprintf (q, "select id from synopsis where charid='%s'", blah);
 
-	/* free (blah); */
+	/*
+	 * free (blah); 
+	 */
 	if (mysql_query (con, q) != 0)
 	{
 	    oops ("couldn't grok the id during normalization", row[0]);
@@ -702,8 +723,8 @@ db_normalize ()
 	    while ((irow = mysql_fetch_row (ir)) != NULL)
 	    {
 		sprintf (q,
-			 "update refs set childof=%s where refs='%s'",
-			 irow[0], row[0]);
+		    "update refs set childof=%s where refs='%s'",
+		    irow[0], row[0]);
 		mysql_query (con, q);
 	    }
 	}
@@ -751,8 +772,7 @@ db_fetch_rules (int *numrows)
     rule *r;
 
     if (mysql_query (con,
-	       "select name,sort,regex,mbox,peice from rules order by sort")
-	!= 0)
+	    "select name,sort,regex,mbox,peice from rules order by sort") != 0)
     {
 	oops ("failed to read rule set\n", "");
 	exit (0);
@@ -793,8 +813,8 @@ db_set_rules (rule ** rulelist)
     while (rulelist[x] != NULL)
     {
 	sprintf (q, "insert into rules values (%d,'%s','%s','%s','%s')", x,
-		 rulelist[x]->name, rulelist[x]->regex, rulelist[x]->mbox,
-		 rulelist[x]->peice);
+	    rulelist[x]->name, rulelist[x]->regex, rulelist[x]->mbox,
+	    rulelist[x]->peice);
 	if (mysql_query (con, q) != 0)
 	    rval = GEMS_FALSE;
 	x++;
@@ -883,7 +903,7 @@ db_syncharhash (void)
 	if (row2 == NULL)
 	{
 	    sprintf (q, "insert into charid_hash values(%d,%s)",
-		     hash (row1[1]), row1[0]);
+		hash (row1[1]), row1[0]);
 	    mysql_query (con, q);
 	}
     }

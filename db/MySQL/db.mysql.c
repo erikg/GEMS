@@ -183,7 +183,7 @@ db_insert_msg (char *mboxname, message * m)
     c = parse_date (m->senddate);
     d = spawn_escape_string (m->id,2);
     sprintf (q,
-	     "insert into synopsis values (%ld,%ld,'','%s','%s','%s','%s')",
+	     "insert into synopsis values (%ld,%ld,'','%s','%s','%s','%s',0)",
 	     id, mbox, c, a, b, d);
 /*
     free (a);

@@ -1,3 +1,7 @@
+/*
+ * $Id: callbacks.h,v 1.2 2005/01/20 05:00:37 erik Exp $
+ */
+
 #include <gnome.h>
 
 
@@ -47,4 +51,14 @@ on_preferences1_activate               (GtkMenuItem     *menuitem,
 
 void
 on_about1_activate                     (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+gboolean
+on_gems_delete_event                   (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data);
+
+gboolean
+on_gems_destroy_event                  (GtkWidget       *widget,
+                                        GdkEvent        *event,
                                         gpointer         user_data);

@@ -1,3 +1,7 @@
+/*
+ * $Id: callbacks.c,v 1.3 2005/01/20 05:00:37 erik Exp $
+ */
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
@@ -45,7 +49,7 @@ void
 on_quit1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
+    gtk_main_quit();
 }
 
 
@@ -102,5 +106,25 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
     gtk_widget_show(create_about());
+}
+
+
+gboolean
+on_gems_delete_event                   (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data)
+{
+  gtk_main_quit();
+  return FALSE;
+}
+
+
+gboolean
+on_gems_destroy_event                  (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data)
+{
+  gtk_main_quit();
+  return FALSE;
 }
 

@@ -77,12 +77,15 @@ create_gems (void)
   GtkWidget *gems;
   GtkWidget *bonobodock1;
   GtkWidget *toolbar1;
-  GtkWidget *tmp_toolbar_icon;
+  GtkIconSize tmp_toolbar_icon_size;
+  GtkWidget *tmp_image;
   GtkWidget *toolbar_compose;
   GtkWidget *toolbar_reply;
   GtkWidget *toolbar_forward;
+  GtkWidget *separatortoolitem1;
   GtkWidget *toolbar_prev;
   GtkWidget *toolbar_next;
+  GtkWidget *separatortoolitem2;
   GtkWidget *toolbar_rules;
   GtkWidget *hpaned1;
   GtkWidget *scrolledwindow1;
@@ -103,6 +106,9 @@ create_gems (void)
   GtkWidget *scrolledwindow3;
   GtkWidget *msg_body;
   GtkWidget *appbar1;
+  GtkTooltips *tooltips;
+
+  tooltips = gtk_tooltips_new ();
 
   gems = gnome_app_new ("gems", _("GEMS"));
 
@@ -118,70 +124,57 @@ create_gems (void)
                                 BONOBO_DOCK_TOP, 1, 0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (toolbar1), 1);
   gtk_toolbar_set_style (GTK_TOOLBAR (toolbar1), GTK_TOOLBAR_ICONS);
+  tmp_toolbar_icon_size = gtk_toolbar_get_icon_size (GTK_TOOLBAR (toolbar1));
 
-  tmp_toolbar_icon = gtk_image_new_from_stock ("gnome-stock-mail-new", gtk_toolbar_get_icon_size (GTK_TOOLBAR (toolbar1)));
-  toolbar_compose = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Compose"),
-                                _("Compose new message"), NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_label_set_use_underline (GTK_LABEL (((GtkToolbarChild*) (g_list_last (GTK_TOOLBAR (toolbar1)->children)->data))->label), TRUE);
+  tmp_image = gtk_image_new_from_stock ("gnome-stock-mail-new", tmp_toolbar_icon_size);
+  gtk_widget_show (tmp_image);
+  toolbar_compose = (GtkWidget*) gtk_tool_button_new (tmp_image, _("Compose"));
   gtk_widget_show (toolbar_compose);
+  gtk_container_add (GTK_CONTAINER (toolbar1), toolbar_compose);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (toolbar_compose), tooltips, _("Compose new message"), NULL);
 
-  tmp_toolbar_icon = gtk_image_new_from_stock ("gnome-stock-mail-rpl", gtk_toolbar_get_icon_size (GTK_TOOLBAR (toolbar1)));
-  toolbar_reply = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Reply"),
-                                _("Reply"), NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_label_set_use_underline (GTK_LABEL (((GtkToolbarChild*) (g_list_last (GTK_TOOLBAR (toolbar1)->children)->data))->label), TRUE);
+  tmp_image = gtk_image_new_from_stock ("gnome-stock-mail-rpl", tmp_toolbar_icon_size);
+  gtk_widget_show (tmp_image);
+  toolbar_reply = (GtkWidget*) gtk_tool_button_new (tmp_image, _("Reply"));
   gtk_widget_show (toolbar_reply);
+  gtk_container_add (GTK_CONTAINER (toolbar1), toolbar_reply);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (toolbar_reply), tooltips, _("Reply"), NULL);
 
-  tmp_toolbar_icon = gtk_image_new_from_stock ("gnome-stock-mail-fwd", gtk_toolbar_get_icon_size (GTK_TOOLBAR (toolbar1)));
-  toolbar_forward = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Forward"),
-                                _("Forward"), NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_label_set_use_underline (GTK_LABEL (((GtkToolbarChild*) (g_list_last (GTK_TOOLBAR (toolbar1)->children)->data))->label), TRUE);
+  tmp_image = gtk_image_new_from_stock ("gnome-stock-mail-fwd", tmp_toolbar_icon_size);
+  gtk_widget_show (tmp_image);
+  toolbar_forward = (GtkWidget*) gtk_tool_button_new (tmp_image, _("Forward"));
   gtk_widget_show (toolbar_forward);
+  gtk_container_add (GTK_CONTAINER (toolbar1), toolbar_forward);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (toolbar_forward), tooltips, _("Forward"), NULL);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
+  separatortoolitem1 = (GtkWidget*) gtk_separator_tool_item_new ();
+  gtk_widget_show (separatortoolitem1);
+  gtk_container_add (GTK_CONTAINER (toolbar1), separatortoolitem1);
 
-  tmp_toolbar_icon = gtk_image_new_from_stock ("gtk-go-back", gtk_toolbar_get_icon_size (GTK_TOOLBAR (toolbar1)));
-  toolbar_prev = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Previous"),
-                                _("Previous"), NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_label_set_use_underline (GTK_LABEL (((GtkToolbarChild*) (g_list_last (GTK_TOOLBAR (toolbar1)->children)->data))->label), TRUE);
+  tmp_image = gtk_image_new_from_stock ("gtk-go-back", tmp_toolbar_icon_size);
+  gtk_widget_show (tmp_image);
+  toolbar_prev = (GtkWidget*) gtk_tool_button_new (tmp_image, _("Previous"));
   gtk_widget_show (toolbar_prev);
+  gtk_container_add (GTK_CONTAINER (toolbar1), toolbar_prev);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (toolbar_prev), tooltips, _("Previous"), NULL);
 
-  tmp_toolbar_icon = gtk_image_new_from_stock ("gtk-go-forward", gtk_toolbar_get_icon_size (GTK_TOOLBAR (toolbar1)));
-  toolbar_next = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Next"),
-                                _("Next"), NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_label_set_use_underline (GTK_LABEL (((GtkToolbarChild*) (g_list_last (GTK_TOOLBAR (toolbar1)->children)->data))->label), TRUE);
+  tmp_image = gtk_image_new_from_stock ("gtk-go-forward", tmp_toolbar_icon_size);
+  gtk_widget_show (tmp_image);
+  toolbar_next = (GtkWidget*) gtk_tool_button_new (tmp_image, _("Next"));
   gtk_widget_show (toolbar_next);
+  gtk_container_add (GTK_CONTAINER (toolbar1), toolbar_next);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (toolbar_next), tooltips, _("Next"), NULL);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR (toolbar1));
+  separatortoolitem2 = (GtkWidget*) gtk_separator_tool_item_new ();
+  gtk_widget_show (separatortoolitem2);
+  gtk_container_add (GTK_CONTAINER (toolbar1), separatortoolitem2);
 
-  tmp_toolbar_icon = gtk_image_new_from_stock ("gnome-stock-book-red", gtk_toolbar_get_icon_size (GTK_TOOLBAR (toolbar1)));
-  toolbar_rules = gtk_toolbar_append_element (GTK_TOOLBAR (toolbar1),
-                                GTK_TOOLBAR_CHILD_BUTTON,
-                                NULL,
-                                _("Rules"),
-                                _("Rules"), NULL,
-                                tmp_toolbar_icon, NULL, NULL);
-  gtk_label_set_use_underline (GTK_LABEL (((GtkToolbarChild*) (g_list_last (GTK_TOOLBAR (toolbar1)->children)->data))->label), TRUE);
+  tmp_image = gtk_image_new_from_stock ("gnome-stock-book-red", tmp_toolbar_icon_size);
+  gtk_widget_show (tmp_image);
+  toolbar_rules = (GtkWidget*) gtk_tool_button_new (tmp_image, _("Rules"));
   gtk_widget_show (toolbar_rules);
+  gtk_container_add (GTK_CONTAINER (toolbar1), toolbar_rules);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (toolbar_rules), tooltips, _("Rules"), NULL);
 
   hpaned1 = gtk_hpaned_new ();
   gtk_widget_show (hpaned1);
@@ -253,6 +246,7 @@ create_gems (void)
   gtk_table_attach (GTK_TABLE (table1), label1, 0, 1, 0, 1,
                     (GtkAttachOptions) (0),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (label1), GTK_JUSTIFY_CENTER);
   gtk_misc_set_alignment (GTK_MISC (label1), 0, 0.5);
 
   label2 = gtk_label_new (_("Date"));
@@ -260,6 +254,7 @@ create_gems (void)
   gtk_table_attach (GTK_TABLE (table1), label2, 0, 1, 1, 2,
                     (GtkAttachOptions) (0),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (label2), GTK_JUSTIFY_CENTER);
   gtk_misc_set_alignment (GTK_MISC (label2), 0, 0.5);
 
   label3 = gtk_label_new (_("Subject"));
@@ -267,6 +262,7 @@ create_gems (void)
   gtk_table_attach (GTK_TABLE (table1), label3, 0, 1, 2, 3,
                     (GtkAttachOptions) (0),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (label3), GTK_JUSTIFY_CENTER);
   gtk_misc_set_alignment (GTK_MISC (label3), 0, 0.5);
 
   label4 = gtk_label_new (_("Recipients"));
@@ -274,7 +270,6 @@ create_gems (void)
   gtk_table_attach (GTK_TABLE (table1), label4, 0, 1, 3, 4,
                     (GtkAttachOptions) (0),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (label4), GTK_JUSTIFY_LEFT);
   gtk_misc_set_alignment (GTK_MISC (label4), 0, 0.5);
 
   scrolledwindow3 = gtk_scrolled_window_new (NULL, NULL);
@@ -291,6 +286,12 @@ create_gems (void)
   gtk_widget_show (appbar1);
   gnome_app_set_statusbar (GNOME_APP (gems), appbar1);
 
+  g_signal_connect ((gpointer) gems, "delete_event",
+                    G_CALLBACK (on_gems_delete_event),
+                    NULL);
+  g_signal_connect ((gpointer) gems, "destroy_event",
+                    G_CALLBACK (on_gems_destroy_event),
+                    NULL);
   gnome_app_install_menu_hints (GNOME_APP (gems), menubar_uiinfo);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -319,8 +320,10 @@ create_gems (void)
   GLADE_HOOKUP_OBJECT (gems, toolbar_compose, "toolbar_compose");
   GLADE_HOOKUP_OBJECT (gems, toolbar_reply, "toolbar_reply");
   GLADE_HOOKUP_OBJECT (gems, toolbar_forward, "toolbar_forward");
+  GLADE_HOOKUP_OBJECT (gems, separatortoolitem1, "separatortoolitem1");
   GLADE_HOOKUP_OBJECT (gems, toolbar_prev, "toolbar_prev");
   GLADE_HOOKUP_OBJECT (gems, toolbar_next, "toolbar_next");
+  GLADE_HOOKUP_OBJECT (gems, separatortoolitem2, "separatortoolitem2");
   GLADE_HOOKUP_OBJECT (gems, toolbar_rules, "toolbar_rules");
   GLADE_HOOKUP_OBJECT (gems, hpaned1, "hpaned1");
   GLADE_HOOKUP_OBJECT (gems, scrolledwindow1, "scrolledwindow1");
@@ -341,6 +344,7 @@ create_gems (void)
   GLADE_HOOKUP_OBJECT (gems, scrolledwindow3, "scrolledwindow3");
   GLADE_HOOKUP_OBJECT (gems, msg_body, "msg_body");
   GLADE_HOOKUP_OBJECT (gems, appbar1, "appbar1");
+  GLADE_HOOKUP_OBJECT_NO_REF (gems, tooltips, "tooltips");
 
   return gems;
 }
@@ -367,6 +371,7 @@ create_about (void)
                         translators,
                         NULL);
   gtk_container_set_border_width (GTK_CONTAINER (about), 5);
+  gtk_window_set_type_hint (GTK_WINDOW (about), GDK_WINDOW_TYPE_HINT_DIALOG);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (about, about, "about");

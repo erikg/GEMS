@@ -3,6 +3,10 @@
  * Glade will not overwrite this file.
  */
 
+/*
+ * $Id: main.c,v 1.7 2005/01/20 05:00:37 erik Exp $
+ */
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif

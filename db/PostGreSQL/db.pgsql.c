@@ -21,8 +21,15 @@
  *****************************************************************************/
 
 /*
- * $Id: db.pgsql.c,v 1.1 2004/02/01 15:56:09 erik Exp $
+ * $Id: db.pgsql.c,v 1.2 2004/02/01 18:13:29 erik Exp $
  */
+
+#include "defs.h"
+#include "message.h"
+#include "db.h"
+#include "rules.h"
+#include "face.h"               /* for oops() */
+
 
 /** initialize the db connection (done in shell) */
 int
@@ -33,7 +40,7 @@ db_init (char *host, char *db, char *user, char *pass)
 
 /** add a message to the db */
 int
-db_insert_msg (char *mbox, message *)
+db_insert_msg (char *mbox, message *m)
 {
     return;
 }
@@ -124,14 +131,14 @@ db_is_child_of (int msg)
 
 /** return an array of rules */
 rule *
-db_fetch_rules (int *)
+db_fetch_rules (int *i)
 {
     return;
 }
 
 /** set the rules (erasing the old ones)*/
 int
-db_set_rules (rule **)
+db_set_rules (rule **r)
 {
     return;
 }

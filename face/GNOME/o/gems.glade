@@ -1127,6 +1127,7 @@ BCC
 	  <name>button5</name>
 	  <can_focus>True</can_focus>
 	  <label>Identity List	</label>
+	  <relief>GTK_RELIEF_NORMAL</relief>
 	  <child>
 	    <padding>0</padding>
 	    <expand>False</expand>
@@ -1175,6 +1176,7 @@ BCC
 	  <name>button3</name>
 	  <can_focus>True</can_focus>
 	  <label>Recipient List</label>
+	  <relief>GTK_RELIEF_NORMAL</relief>
 	  <child>
 	    <padding>0</padding>
 	    <expand>False</expand>
@@ -1187,6 +1189,7 @@ BCC
 	  <name>button4</name>
 	  <can_focus>True</can_focus>
 	  <label>Address Book</label>
+	  <relief>GTK_RELIEF_NORMAL</relief>
 	  <child>
 	    <padding>0</padding>
 	    <expand>False</expand>
@@ -1879,6 +1882,7 @@ Body
 	    <last_modification_time>Tue, 28 Mar 2000 21:17:00 GMT</last_modification_time>
 	  </signal>
 	  <label>New Rule</label>
+	  <relief>GTK_RELIEF_NORMAL</relief>
 	  <child>
 	    <left_attach>1</left_attach>
 	    <right_attach>2</right_attach>

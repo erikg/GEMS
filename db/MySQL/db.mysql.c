@@ -373,13 +373,12 @@ db_read_mboxlist (void)
 
     for (x = 0; (row = mysql_fetch_row (result)) != NULL; x++)
     {
-	int y = atoi (row[1]);
+	int y = atoi (row[1])-1;
 
 	mboxlist[y] = (mboxs *) malloc (sizeof (mboxs));
-	mboxlist[y]->name = (char *) malloc (strlen (row[0] + 1));
-	if (mboxlist[y] == NULL || mboxlist[y]->name == NULL)
+	if (mboxlist[y] == NULL)
 	{
-	    oops ("malloc failed building mbox's", NULL);
+	    oops ("malloc failed building mbox's", mboxlist[y]->name);
 	    exit (-1);
 	}
 	if (row[0] == NULL)
@@ -387,14 +386,11 @@ db_read_mboxlist (void)
 	    oops ("NULL row", NULL);
 	    exit (-1);
 	}
-	strcpy (mboxlist[y]->name, row[0]);
+	mboxlist[y]->name = strdup (row[0]);
 	mboxlist[y]->id = atoi (row[1]);
 	mboxlist[y]->hasunread = 0;
     }
-/* XXX causes crash in linux? */
-#ifndef linux
     mysql_free_result (result);
-#endif
     if (mysql_query
 	(con,
 	 "select mbox,count(*) from synopsis where status!='read' group by mbox")
@@ -408,7 +404,7 @@ db_read_mboxlist (void)
 
     while ((row = mysql_fetch_row (result)) != NULL)
     {
-	y = atoi (row[0]);
+	y = atoi (row[0])-1;
 
 	if (mboxlist[y] != NULL)
 	    mboxlist[y]->hasunread = atoi (row[1]);

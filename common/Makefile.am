@@ -1,3 +1,5 @@
+# $Id: Makefile.am,v 1.4 2003/04/05 18:06:01 erik Exp $
+
 commondir = $(libdir)/gems
 
 common_LIBRARIES = libgemscommon.a

@@ -1,3 +1,5 @@
+# $Id: Makefile.am,v 1.7 2003/04/05 18:06:01 erik Exp $
+
 gemslibdir = $(libdir)/gems
 
 gemslib_LTLIBRARIES = libgems_face.cleantables.la libgems_face.normalize.la libgems_face.showmail.la libgems_face.spool2sql.la libgems_face.sql2spool.la libgems_face.test.la libgems_face.pop3check.la libgems_face.spool2sqlfast.la libgems_face.snarf.la libgems_face.synhash.la

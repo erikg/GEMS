@@ -1,3 +1,5 @@
+# $Id: Makefile.am,v 1.5 2003/04/05 18:06:02 erik Exp $
+
 bin_PROGRAMS = gems
 
 gems_SOURCES = shell.c prefs.c parms.c

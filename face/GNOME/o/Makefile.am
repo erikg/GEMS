@@ -1,3 +1,5 @@
+# $Id: Makefile.am,v 1.4 2003/04/05 18:06:01 erik Exp $
+
 gemslibdir = $(libdir)/gems
 gemslib_LTLIBRARIES = libgems_face.GNOME_o.la
 

@@ -1,3 +1,5 @@
+# $Id: Makefile.am,v 1.3 2003/04/05 18:06:01 erik Exp $
+
 SUBDIRS = o
 
 LDADD = @GNOME_LIBS@ @MY_LDADD@

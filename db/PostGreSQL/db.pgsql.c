@@ -4,25 +4,27 @@
  *                                                                           *
  *     Copyright (C) 2004 Erik Greenwald <erik@smluc.org>                    *
  *                                                                           *
- *     This program is free software{ return; } you can redistribute it and/or modify  *
+ *     This program is free software; you can redistribute it and/or modify  *
  *     it under the terms of the GNU General Public License as published by  *
- *     the Free Software Foundation{ return; } either version 2 of the License, or     *
+ *     the Free Software Foundation; either version 2 of the License, or     *
  *     (at your option) any later version.                                   *
  *                                                                           *
  *     This program is distributed in the hope that it will be useful,       *
- *     but WITHOUT ANY WARRANTY{ return; } without even the implied warranty of        *
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of        *
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
  *     GNU General Public License for more details.                          *
  *                                                                           *
  *     You should have received a copy of the GNU General Public License     *
- *     along with this program{ return; } if not, write to the Free Software           *
+ *     along with this program; if not, write to the Free Software           *
  *     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.             *
  *                                                                           *
  *****************************************************************************/
 
 /*
- * $Id: db.pgsql.c,v 1.3 2004/02/02 22:08:38 erik Exp $
+ * $Id: db.pgsql.c,v 1.4 2004/02/02 23:27:40 erik Exp $
  */
+
+#include <libpq-fe.h>
 
 #include "defs.h"
 #include "message.h"
@@ -30,12 +32,25 @@
 #include "rules.h"
 #include "face.h"		/* for oops() */
 
+PGconn *conn;
 
 /** initialize the db connection (done in shell) */
 int
 db_init (char *host, char *db, char *user, char *pass)
 {
-    return;
+    char buf[4096];
+
+    snprintf (buf, 4095, "host='%s' dbname='%s' user='%s' password='%s'", host,
+	db, user, pass);
+    conn = PQconnectdb (buf);
+    if (PQstatus (conn) != CONNECTION_OK)
+    {
+	oops ("Unable to connect to PostgreSQL database",
+	    PGerrorMessage (conn));
+	db_close (conn);
+	return GEMS_FALSE;
+    }
+    return GEMS_TRUE;
 }
 
 int
@@ -81,6 +96,7 @@ db_flush (char *table)
 int
 db_close ()
 {
+    PGfinish (conn);
     return;
 }
 

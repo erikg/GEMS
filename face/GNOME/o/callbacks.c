@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.19 2003/11/12 20:58:18 erik Exp $
+ * $Id: callbacks.c,v 1.20 2003/11/19 20:50:46 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -127,10 +128,10 @@ gboolean
 on_ctree1_event (GtkWidget * widget, GdkEvent * event, gpointer user_data)
 {
     if ((event) && (event->type == GDK_2BUTTON_PRESS))
-      {
-	  putmail (widget);
-	  return TRUE;
-      }
+    {
+	putmail (widget);
+	return TRUE;
+    }
     return FALSE;
 }
 
@@ -140,12 +141,12 @@ on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data)
 {
     char *x;
 
-    x = (char *) malloc (1024);
+    x = (char *)malloc (1024);
     sprintf (x, "%d",
-	     GTK_PANED (lookup_widget (gems, "hpaned1"))->handle_xpos + 2);
+	GTK_PANED (lookup_widget (gems, "hpaned1"))->handle_xpos + 2);
     db_pref_set ("GNOME_o_hpaned_pos", x);
     sprintf (x, "%d",
-	     GTK_PANED (lookup_widget (gems, "vpaned1"))->handle_ypos + 2);
+	GTK_PANED (lookup_widget (gems, "vpaned1"))->handle_ypos + 2);
     db_pref_set ("GNOME_o_vpaned_pos", x);
     sprintf (x, "%d", GTK_WIDGET (gems)->allocation.width);
     db_pref_set ("GNOME_o_gems_width", x);
@@ -158,14 +159,14 @@ on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data)
     sprintf (x, "%d", default_mboxlistbehavior);
     db_pref_set ("mboxdefaultaction", x);
     sprintf (x, "%d",
-	     GTK_CLIST (&
-			((GTK_CTREE (lookup_widget (gems, "ctree1")))->
-			 clist))->column[0].width);
+	GTK_CLIST (&
+	    ((GTK_CTREE (lookup_widget (gems, "ctree1")))->
+		clist))->column[0].width);
     db_pref_set ("GNOME_o_maillist_col1", x);
     sprintf (x, "%d",
-	     GTK_CLIST (&
-			((GTK_CTREE (lookup_widget (gems, "ctree1")))->
-			 clist))->column[1].width);
+	GTK_CLIST (&
+	    ((GTK_CTREE (lookup_widget (gems, "ctree1")))->
+		clist))->column[1].width);
     db_pref_set ("GNOME_o_maillist_col2", x);
 
     free (x);
@@ -175,7 +176,7 @@ on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data)
 
 void
 on_ctree2_tree_select_row (GtkCTree * ctree,
-			   GList * node, gint column, gpointer user_data)
+    GList * node, gint column, gpointer user_data)
 {
     GtkWidget *ctree1, *stat;
     GtkCTreeNode *n;
@@ -186,18 +187,14 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
     int x = 0, mboxcount;
     mboxview *m;
 
-    /*
-     * gtk_signal_handler_block(GTK_OBJECT(ctree),
-     * GtkCTreeClass->select_row);
-     */
     n = gtk_ctree_node_nth (ctree, (&(ctree->clist))->focus_row);
     m = (mboxview *) gtk_ctree_node_get_row_data (ctree, n);
 
     if (m == NULL)
-      {
-	  printf (_("Bad mbox (null)\n"));
-	  exit (-1);
-      }
+    {
+	printf (_("Bad mbox (null)\n"));
+	exit (-1);
+    }
     stat = lookup_widget (gems, "appbar1");
     ctree1 = lookup_widget (gems, "ctree1");
     appbar = lookup_widget (gems, "appbar1");
@@ -227,27 +224,27 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
 	mboxcount++;
 
     while (syn[x] != NULL)
-      {
-	  GtkCTreeNode *n;
+    {
+	GtkCTreeNode *n;
 
-	  text[0] = syn[x]->sender;
-	  text[1] = syn[x]->date;
-	  text[2] = syn[x]->subject;
+	text[0] = syn[x]->sender;
+	text[1] = syn[x]->date;
+	text[2] = syn[x]->subject;
 
-	  n = gtk_ctree_insert_node (GTK_CTREE (ctree1), NULL, NULL, text, 5,
-				     NULL, NULL, NULL, NULL, TRUE, TRUE);
-	  gtk_ctree_node_set_row_data (GTK_CTREE (ctree1), n, syn[x]);
+	n = gtk_ctree_insert_node (GTK_CTREE (ctree1), NULL, NULL, text, 5,
+	    NULL, NULL, NULL, NULL, TRUE, TRUE);
+	gtk_ctree_node_set_row_data (GTK_CTREE (ctree1), n, syn[x]);
 
-	  gnome_appbar_set_progress (GNOME_APPBAR (appbar),
-				     (float) x / (float) mboxcount);
-	  /*
-	   * pump the status bar 
-	   */
-	  if (gtk_events_pending ())
-	      gtk_main_iteration ();
+	gnome_appbar_set_progress (GNOME_APPBAR (appbar),
+	    (float)x / (float)mboxcount);
+	/*
+	 * pump the status bar 
+	 */
+	if (gtk_events_pending ())
+	    gtk_main_iteration ();
 
-	  x++;
-      }
+	x++;
+    }
     free (syn);
     gtk_clist_set_sort_column (clist, 1);
     gtk_clist_set_sort_type (clist, GTK_SORT_ASCENDING);
@@ -276,13 +273,13 @@ on_toolbar_prev_clicked (GtkButton * button, gpointer user_data)
 	return;
 
     n = gtk_ctree_node_nth (GTK_CTREE (ctree),
-			    (&(GTK_CTREE (ctree)->clist))->focus_row);
+	(&(GTK_CTREE (ctree)->clist))->focus_row);
     gtk_ctree_unselect (GTK_CTREE (ctree), n);
     if ((&(GTK_CTREE (ctree)->clist))->focus_row > 0)
 	(&(GTK_CTREE (ctree)->clist))->focus_row--;
 
     n = gtk_ctree_node_nth (GTK_CTREE (ctree),
-			    (&(GTK_CTREE (ctree)->clist))->focus_row);
+	(&(GTK_CTREE (ctree)->clist))->focus_row);
     gtk_ctree_select (GTK_CTREE (ctree), n);
 
     if (gtk_ctree_node_is_visible (GTK_CTREE (ctree), n) !=
@@ -305,17 +302,18 @@ on_toolbar_next_clicked (GtkButton * button, gpointer user_data)
     if (ctree->clist.rows == 0)
 	return;
     n = gtk_ctree_node_nth (GTK_CTREE (ctree),
-			    (&(GTK_CTREE (ctree)->clist))->focus_row);
+	(&(GTK_CTREE (ctree)->clist))->focus_row);
+
     gtk_ctree_unselect (GTK_CTREE (ctree), n);
     if ((&(GTK_CTREE (ctree)->clist))->focus_row <
 	((&(GTK_CTREE (ctree)->clist))->rows - 1))
 	(&(GTK_CTREE (ctree)->clist))->focus_row++;
     n = gtk_ctree_node_nth (GTK_CTREE (ctree),
-			    (&(GTK_CTREE (ctree)->clist))->focus_row);
+	(&(GTK_CTREE (ctree)->clist))->focus_row);
     gtk_ctree_select (GTK_CTREE (ctree), n);
 
-    if (gtk_ctree_node_is_visible (GTK_CTREE (ctree), n) !=
-	GTK_VISIBILITY_FULL)
+    if (gtk_ctree_node_is_visible (GTK_CTREE (ctree),
+	    n) != GTK_VISIBILITY_FULL)
 	gtk_ctree_node_moveto (GTK_CTREE (ctree), n, 0, 1, 0);
 
     putmail (GTK_WIDGET (ctree));
@@ -325,71 +323,67 @@ on_toolbar_next_clicked (GtkButton * button, gpointer user_data)
 
 gboolean
 on_ctree1_key_press_event (GtkWidget * widget,
-			   GdkEventKey * event, gpointer user_data)
+    GdkEventKey * event, gpointer user_data)
 {
     switch (event->keyval)
-      {
-      case GDK_Return:
-      case GDK_space:
-	  putmail (widget);
-	  break;
-      case GDK_N:
-      case GDK_n:
-      case GDK_Right:
-	  on_toolbar_next_clicked (NULL, NULL);
-	  break;
-      case GDK_P:
-      case GDK_p:
-      case GDK_Left:
-	  on_toolbar_prev_clicked (NULL, NULL);
-	  break;
-      case GDK_Down:
-	  {
-	      GtkWidget *text;
-	      GtkAdjustment *adj;
+    {
+    case GDK_Return:
+    case GDK_space:
+	putmail (widget);
+	break;
+    case GDK_N:
+    case GDK_n:
+    case GDK_Right:
+	on_toolbar_next_clicked (NULL, NULL);
+	break;
+    case GDK_P:
+    case GDK_p:
+    case GDK_Left:
+	on_toolbar_prev_clicked (NULL, NULL);
+	break;
+    case GDK_Down:
+	{
+	    GtkWidget *text;
+	    GtkAdjustment *adj;
 
-	      text = lookup_widget (gems, "text1");
-	      adj = GTK_TEXT (text)->vadj;
-	      gtk_adjustment_set_value (adj,
-					adj->value + adj->step_increment);
-	  }
-	  break;
-      case GDK_Page_Down:
-	  {
-	      GtkWidget *text;
-	      GtkAdjustment *adj;
+	    text = lookup_widget (gems, "text1");
+	    adj = GTK_TEXT (text)->vadj;
+	    gtk_adjustment_set_value (adj, adj->value + adj->step_increment);
+	}
+	break;
+    case GDK_Page_Down:
+	{
+	    GtkWidget *text;
+	    GtkAdjustment *adj;
 
-	      text = lookup_widget (gems, "text1");
-	      adj = GTK_TEXT (text)->vadj;
-	      gtk_adjustment_set_value (adj,
-					adj->value + adj->page_increment);
-	  }
-	  break;
-      case GDK_Up:
-	  {
-	      GtkWidget *text;
-	      GtkAdjustment *adj;
+	    text = lookup_widget (gems, "text1");
+	    adj = GTK_TEXT (text)->vadj;
+	    gtk_adjustment_set_value (adj, adj->value + adj->page_increment);
+	}
+	break;
+    case GDK_Up:
+	{
+	    GtkWidget *text;
+	    GtkAdjustment *adj;
 
-	      text = lookup_widget (gems, "text1");
-	      adj = GTK_TEXT (text)->vadj;
-	      gtk_adjustment_set_value (adj,
-					adj->value - adj->step_increment);
-	  }
-	  break;
-      case GDK_Page_Up:
-	  {
-	      GtkWidget *text;
-	      GtkAdjustment *adj;
+	    text = lookup_widget (gems, "text1");
+	    adj = GTK_TEXT (text)->vadj;
+	    gtk_adjustment_set_value (adj, adj->value - adj->step_increment);
+	}
+	break;
+    case GDK_Page_Up:
+	{
+	    GtkWidget *text;
+	    GtkAdjustment *adj;
 
-	      text = lookup_widget (gems, "text1");
-	      adj = GTK_TEXT (text)->vadj;
-	      gtk_adjustment_set_value (adj,
-					adj->value - adj->page_increment);
-	  }
-	  break;
-      default:
-	  return FALSE;
-      }
+	    text = lookup_widget (gems, "text1");
+	    adj = GTK_TEXT (text)->vadj;
+	    gtk_adjustment_set_value (adj, adj->value - adj->page_increment);
+	}
+	break;
+    default:
+	return FALSE;
+    }
 
     /*
      * the return TRUE; should stop the event, but it doesn't :/ 
@@ -428,12 +422,14 @@ on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
     body = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "text2");
 
     n = gtk_ctree_node_nth (GTK_CTREE (widget),
-			    (&(GTK_CTREE (widget)->clist))->focus_row);
+	(&(GTK_CTREE (widget)->clist))->focus_row);
     s = (synopsis *) gtk_ctree_node_get_row_data (GTK_CTREE (widget), n);
-    shtuff = replyify (s, (char *) db_read_body (s->id));
+    shtuff = replyify (s, (char *)db_read_body (s->id));
 
     gtk_entry_set_text (GTK_ENTRY (from), s->sender);
-    /* if(!strncasecmp("re: ", s->subject, 4)) */
+    /*
+     * if(!strncasecmp("re: ", s->subject, 4)) 
+     */
     if (tolower (s->subject[0]) == 'r' && tolower (s->subject[1]) == 'e'
 	&& s->subject[2] == ':' && s->subject[3] == ' ')
 	sprintf (buf, "%s", s->subject);
@@ -446,14 +442,14 @@ on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
     gtk_text_freeze (GTK_TEXT (body));
     gtk_text_set_point (GTK_TEXT (body), 0);
     gtk_text_forward_delete (GTK_TEXT (body),
-			     gtk_text_get_length (GTK_TEXT (body)));
+	gtk_text_get_length (GTK_TEXT (body)));
     gtk_text_insert (GTK_TEXT (body), NULL, NULL, NULL, shtuff, -1);
     gtk_text_thaw (GTK_TEXT (body));
     if (widget == NULL)
-      {
-	  free (s);
-	  free (shtuff);
-      }
+    {
+	free (s);
+	free (shtuff);
+    }
     gtk_text_set_editable (GTK_TEXT (body), TRUE);
     gtk_widget_show (comp);
     return;
@@ -476,8 +472,7 @@ on_ctree1_click_column (GtkCList * clist, gint column, gpointer user_data)
 	sort = column | (sort & SORT_DIRECTION);
     gtk_clist_set_sort_column (clist, column);
     gtk_clist_set_sort_type (clist,
-			     (sort & SORT_DIRECTION) ? GTK_SORT_ASCENDING :
-			     GTK_SORT_DESCENDING);
+	(sort & SORT_DIRECTION) ? GTK_SORT_ASCENDING : GTK_SORT_DESCENDING);
     gtk_clist_sort (clist);
 }
 
@@ -522,11 +517,11 @@ on_mboxlist_event (GtkWidget * widget, GdkEvent * event, gpointer user_data)
 
     if ((event) && (event->type == GDK_BUTTON_PRESS)
 	&& (((GdkEventButton *) event)->button == 3))
-      {
-	  m = GTK_MENU (create_menu1 ());
-	  gtk_widget_show (GTK_WIDGET (m));
-	  gtk_menu_popup (m, NULL, NULL, NULL, NULL, 0, 0);
-      }
+    {
+	m = GTK_MENU (create_menu1 ());
+	gtk_widget_show (GTK_WIDGET (m));
+	gtk_menu_popup (m, NULL, NULL, NULL, NULL, 0, 0);
+    }
     return FALSE;
 }
 
@@ -536,10 +531,8 @@ on_mailboxdeleteok_clicked (GtkButton * button, gpointer user_data)
     char *m;
 
     m = ((mboxs *)
-	 gtk_object_get_user_data (GTK_OBJECT
-				   (lookup_widget
-				    (GTK_WIDGET (button),
-				     "delete_mbox"))))->name;
+	gtk_object_get_user_data (GTK_OBJECT
+	    (lookup_widget (GTK_WIDGET (button), "delete_mbox"))))->name;
     db_dropmbox (m);
     gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "delete_mbox"));
     set_mboxlist ();
@@ -556,7 +549,7 @@ void
 on_mailboxcreateok_clicked (GtkButton * button, gpointer user_data)
 {
     db_addmbox (gtk_entry_get_text
-		(GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "entry7"))));
+	(GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "entry7"))));
     gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "create_mbox"));
     set_mboxlist ();
 }
@@ -566,7 +559,7 @@ void
 on_mailboxcreateapply_clicked (GtkButton * button, gpointer user_data)
 {
     db_addmbox (gtk_entry_get_text
-		(GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "entry7"))));
+	(GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "entry7"))));
     set_mboxlist ();
 }
 
@@ -591,10 +584,10 @@ gnome_o_put_the_damn_rules_in_the_box (GtkWidget * w)
     gtk_clist_clear (clist);
     r = (rule *) db_fetch_rules (&numrules);
     for (x = 0; x < numrules; x++)
-      {
-	  gtk_clist_insert (clist, x, &(r[x].name));
-	  gtk_clist_set_row_data (clist, x, &r[x]);
-      }
+    {
+	gtk_clist_insert (clist, x, &(r[x].name));
+	gtk_clist_set_row_data (clist, x, &r[x]);
+    }
     return;
 }
 
@@ -608,7 +601,7 @@ face_gnome_o_rule_setpeice (GtkWidget * w, gpointer * trash)
 
     r = (rule *)
 	gtk_clist_get_row_data (GTK_CLIST (lookup_widget (w, "clist1")),
-				rule_row_current);
+	rule_row_current);
     free (r->peice);
     r->peice = g_strdup ((gchar *) trash);
 }
@@ -630,18 +623,17 @@ on_toolbar_rule_clicked (GtkButton * button, gpointer user_data)
     while (mboxlist[x] != NULL)
 	gl = g_list_append (gl, mboxlist[x++]->name);
     gtk_combo_set_popdown_strings (GTK_COMBO (lookup_widget (r, "combo2")),
-				   gl);
+	gl);
     gtk_signal_connect (GTK_OBJECT
-			(gtk_option_menu_get_menu
-			 (GTK_OPTION_MENU
-			  (lookup_widget (r, "optionmenu2")))),
-			"focus_out_event", face_gnome_o_rule_setpeice, NULL);
+	(gtk_option_menu_get_menu
+	    (GTK_OPTION_MENU
+		(lookup_widget (r, "optionmenu2")))),
+	"focus_out_event", face_gnome_o_rule_setpeice, NULL);
 }
 
 void
 on_rule_list_select_row (GtkCList * clist,
-			 gint row,
-			 gint column, GdkEvent * event, gpointer user_data)
+    gint row, gint column, GdkEvent * event, gpointer user_data)
 {
     rule *r;
     GtkCombo *c2;
@@ -653,11 +645,9 @@ on_rule_list_select_row (GtkCList * clist,
     rule_row_current = row;
     r = (rule *) gtk_clist_get_row_data (clist, row);
     gtk_entry_set_text (GTK_ENTRY
-			(lookup_widget (GTK_WIDGET (clist), "entry8")),
-			r->name);
+	(lookup_widget (GTK_WIDGET (clist), "entry8")), r->name);
     gtk_entry_set_text (GTK_ENTRY
-			(lookup_widget (GTK_WIDGET (clist), "entry9")),
-			r->regex);
+	(lookup_widget (GTK_WIDGET (clist), "entry9")), r->regex);
 
     c2 = GTK_COMBO (lookup_widget (GTK_WIDGET (clist), "combo2"));
     gtk_entry_set_editable (GTK_ENTRY (c2->entry), FALSE);
@@ -671,56 +661,49 @@ on_rule_list_select_row (GtkCList * clist,
 	x = 0;
     mi = gtk_menu_item_new_with_label ("Message");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-			GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice),
-			(gpointer) "Message");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Message");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
     if (!strcmp (r->peice, "Header"))
 	x = 1;
     mi = gtk_menu_item_new_with_label ("Header");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-			GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice),
-			(gpointer) "Header");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Header");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
     if (!strcmp (r->peice, "Subject"))
 	x = 2;
     mi = gtk_menu_item_new_with_label ("Subject");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-			GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice),
-			(gpointer) "Subject");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Subject");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
     if (!strcmp (r->peice, "From"))
 	x = 3;
     mi = gtk_menu_item_new_with_label ("From");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-			GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice),
-			(gpointer) "From");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "From");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
     if (!strcmp (r->peice, "Recipients"))
 	x = 4;
     mi = gtk_menu_item_new_with_label ("Recipients");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-			GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice),
-			(gpointer) "Recipients");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Recipients");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
     if (!strcmp (r->peice, "Sender"))
 	x = 5;
     mi = gtk_menu_item_new_with_label ("Sender");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-			GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice),
-			(gpointer) "Sender");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Sender");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
     if (!strcmp (r->peice, "Body"))
 	x = 6;
     mi = gtk_menu_item_new_with_label ("Body");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-			GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice),
-			(gpointer) "Body");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Body");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
 
@@ -760,12 +743,12 @@ on_rule_apply_clicked (GtkButton * button, gpointer user_data)
 
     clist = GTK_CLIST (lookup_widget (GTK_WIDGET (button), "clist1"));
     length = clist->rows + 1;
-    rulelist = (void *) malloc (sizeof (void *) * length);
+    rulelist = (void *)malloc (sizeof (void *) * length);
 
     for (x = 0; x < length; x++)
-      {
-	  rulelist[x] = gtk_clist_get_row_data (clist, x);
-      }
+    {
+	rulelist[x] = gtk_clist_get_row_data (clist, x);
+    }
 
     db_set_rules (rulelist);
     free (rulelist);
@@ -788,14 +771,12 @@ on_rule_name_changed (GtkEditable * editable, gpointer user_data)
 
     r = (rule *)
 	gtk_clist_get_row_data (GTK_CLIST
-				(lookup_widget
-				 (GTK_WIDGET (editable), "clist1")),
-				rule_row_current);
+	(lookup_widget (GTK_WIDGET (editable), "clist1")), rule_row_current);
     free (r->name);
     r->name = g_strdup (gtk_editable_get_chars (editable, 0, -1));
     gtk_clist_set_text (GTK_CLIST
-			(lookup_widget (GTK_WIDGET (editable), "clist1")),
-			rule_row_current, 0, r->name);
+	(lookup_widget (GTK_WIDGET (editable), "clist1")),
+	rule_row_current, 0, r->name);
 }
 
 
@@ -806,18 +787,15 @@ on_rule_mbox_changed (GtkEditable * editable, gpointer user_data)
 
     r = (rule *)
 	gtk_clist_get_row_data (GTK_CLIST
-				(lookup_widget
-				 (GTK_WIDGET (editable), "clist1")),
-				rule_row_current);
+	(lookup_widget (GTK_WIDGET (editable), "clist1")), rule_row_current);
     if (r == NULL)
 	return;
     free (r->mbox);
     r->mbox =
 	g_strdup (gtk_entry_get_text
-		  (GTK_ENTRY
-		   (GTK_COMBO
-		    (lookup_widget (GTK_WIDGET (editable), "combo2"))->
-		    entry)));
+	(GTK_ENTRY
+	    (GTK_COMBO
+		(lookup_widget (GTK_WIDGET (editable), "combo2"))->entry)));
 }
 
 
@@ -825,16 +803,16 @@ void
 on_rule_regex_changed (GtkEditable * editable, gpointer user_data)
 {
     free (((rule *)
-	   gtk_clist_get_row_data (GTK_CLIST
-				   (lookup_widget
-				    (GTK_WIDGET (editable), "clist1")),
-				   rule_row_current))->regex);
+	    gtk_clist_get_row_data (GTK_CLIST
+		(lookup_widget
+		    (GTK_WIDGET (editable), "clist1")),
+		rule_row_current))->regex);
     ((rule *)
-     gtk_clist_get_row_data (GTK_CLIST
-			     (lookup_widget
-			      (GTK_WIDGET (editable), "clist1")),
-			     rule_row_current))->regex =
-g_strdup (gtk_editable_get_chars (editable, 0, -1));
+	gtk_clist_get_row_data (GTK_CLIST
+	    (lookup_widget
+		(GTK_WIDGET (editable), "clist1")),
+	    rule_row_current))->regex =
+	g_strdup (gtk_editable_get_chars (editable, 0, -1));
 }
 
 
@@ -858,54 +836,52 @@ on_rule_new_rule_clicked (GtkButton * button, gpointer user_data)
 }
 
 void
-on_custom1_activate                    (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
+on_custom1_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
     gtk_widget_show (create_custom_mbox ());
 }
 
 
 void
-on_mboxcustomok_clicked                (GtkButton       *button,
-                                        gpointer         user_data)
+on_mboxcustomok_clicked (GtkButton * button, gpointer user_data)
 {
-    db_addmbox_view (
-	gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "mbox_create_custom_name"))),
-	gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "mbox_create_custom_query"))));
+    db_addmbox_view (gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET
+		    (button), "mbox_create_custom_name"))),
+	gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET (button),
+		    "mbox_create_custom_query"))));
     gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "custom_mbox"));
     set_mboxlist ();
 }
 
 
 void
-on_mboxcustomapply_clicked             (GtkButton       *button,
-                                        gpointer         user_data)
+on_mboxcustomapply_clicked (GtkButton * button, gpointer user_data)
 {
-    db_addmbox_view (
-	gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "mbox_create_custom_name"))),
-	gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "mbox_create_custom_query"))));
+    db_addmbox_view (gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET
+		    (button), "mbox_create_custom_name"))),
+	gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET (button),
+		    "mbox_create_custom_query"))));
     set_mboxlist ();
 }
 
 
 void
-on_mboxcustomcancel_clicked            (GtkButton       *button,
-                                        gpointer         user_data)
+on_mboxcustomcancel_clicked (GtkButton * button, gpointer user_data)
 {
     gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "custom_mbox"));
 }
 
 
 gboolean
-on_mboxlist_keyevent                   (GtkWidget       *widget,
-                                        GdkEventKey     *event,
-                                        gpointer         user_data)
+on_mboxlist_keyevent (GtkWidget * widget,
+    GdkEventKey * event, gpointer user_data)
 {
     switch (event->keyval)
     {
+
     case GDK_Return:
     case GDK_space:
-	putmail (widget);
+	on_ctree2_tree_select_row (widget, NULL, 0, NULL);
 	break;
     case GDK_N:
     case GDK_n:
@@ -923,4 +899,3 @@ on_mboxlist_keyevent                   (GtkWidget       *widget,
 
     return FALSE;
 }
-

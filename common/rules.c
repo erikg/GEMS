@@ -20,14 +20,10 @@ rule_init ()
   int x;
   
   rules = (rule *) db_fetch_rules ((int *) &numrules);
-  printf("%d rules\n", numrules);
   preg = (void *) malloc (sizeof (regex_t) * (numrules + 1));
   memset(preg,0,sizeof(preg));
   for (x = 0; x < numrules; x++)
-   {
-      printf("%d: %x %s\n", x, &preg[x], rules[x].regex);
       regcomp (&preg[x], rules[x].regex, REG_EXTENDED);
-   }
   return GEMS_TRUE;
 }
 
@@ -68,11 +64,8 @@ rule_check (message * m)
     {
 	c = rule_concern (&rules[x], m);
 	if (c)
-	    if (regexec (&preg[x], c, 0, NULL, 0) == 0){
-		printf("Matched rule: %s\n", rules[x].mbox);
+	    if (regexec (&preg[x], c, 0, NULL, 0) == 0)
 		return rules[x].mbox;}
-    }
-	printf("No matches, using %s\n", inbox);
     return inbox;
 }
 

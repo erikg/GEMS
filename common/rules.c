@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: rules.c,v 1.15 2003/04/05 18:36:27 erik Exp $
+ * $Id: rules.c,v 1.16 2003/10/19 16:11:04 erik Exp $
  */
 
 #include "rules.h"
@@ -34,17 +34,17 @@
 
 static char inbox[] = "inbox";
 
-rule *rules;
-int numrules;
+static rule *rules;
+static int numrules = 0;
 
-regex_t *preg;
+static regex_t *preg;
 
 int
 rule_init ()
 {
     int x;
 
-    rules = (rule *) db_fetch_rules ((int *) &numrules);
+    rules = (rule *) db_fetch_rules (&numrules);
     preg = (void *) malloc (sizeof (regex_t) * (numrules + 1));
     memset (preg, 0, sizeof (regex_t) * (numrules + 1));
     for (x = 0; x < numrules; x++)

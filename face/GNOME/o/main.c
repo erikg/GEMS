@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: main.c,v 1.20 2004/01/23 01:01:31 erik Exp $
+ * $Id: main.c,v 1.21 2004/02/01 19:05:38 erik Exp $
  */
 
 
@@ -143,30 +143,6 @@ set_mboxlist ()
 void
 face_init ()
 {
-printf("Opening up some libs\n");
-/* dlopen("libXpm.so", RTLD_LAZY); */
-/* dlopen("libjpeg.so", RTLD_LAZY); */
-dlopen("libgnomeui.so", RTLD_LAZY);
-/* dlopen("libart_lgpl.so", RTLD_LAZY); */
-/* dlopen("libgdk_imlib.so", RTLD_LAZY); */
-/* dlopen("libtiff.so", RTLD_LAZY); */
-/* dlopen("libungif.so", RTLD_LAZY); */
-/* dlopen("libpng.so", RTLD_LAZY); */
-/* dlopen("libSM.so", RTLD_LAZY); */
-/* dlopen("libICE.so", RTLD_LAZY); */
-dlopen("libgtk12.so", RTLD_LAZY);
-/* dlopen("libgdk12.so", RTLD_LAZY); */
-/* dlopen("libgmodule12.so", RTLD_LAZY); */
-/* dlopen("libXi.so", RTLD_LAZY); */
-/* dlopen("libXext.so", RTLD_LAZY); */
-/* dlopen("libX11.so", RTLD_LAZY); */
-/* dlopen("libgnome.so", RTLD_LAZY); */
-/* dlopen("libgnomesupport.so", RTLD_LAZY); */
-/* dlopen("libintl.so", RTLD_LAZY); */
-/* dlopen("libesd.so", RTLD_LAZY); */
-/* dlopen("libaudiofile.so", RTLD_LAZY); */
-/* dlopen("libglib12.so", RTLD_LAZY); */
-/* dlopen("libiconv.so", RTLD_LAZY); */
 }
 
 int
@@ -181,7 +157,6 @@ face_run (int argc, char *argv[])
     char *x;
     int a = 0, b = 0;
     GtkCList *c;
-printf("ding\n");fflush(stdout);
 
     face_init();
 

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.36 2003/11/11 15:05:22 erik Exp $
+ * $Id: db.mysql.c,v 1.37 2003/11/11 15:21:06 erik Exp $
  */
 
 #include <stdio.h>
@@ -379,7 +379,6 @@ db_read_synopsis (int mbox, int status)
 
     result = mysql_store_result (con);
     row = mysql_fetch_row (result);
-    mysql_free_result (result);
     if (row[0] != NULL)
 	sprintf (q, "%s", row[0]);
     else
@@ -409,6 +408,7 @@ db_read_synopsis (int mbox, int status)
 	    oops ("Invalid action specified", "Cannot retreive synopsis");
 	    return NULL;
 	}
+    mysql_free_result (result);
     return db_read_synopsis_raw (q);
 }
 

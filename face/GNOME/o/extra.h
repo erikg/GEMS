@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: extra.h,v 1.6 2003/04/05 18:36:28 erik Exp $
+ * $Id: extra.h,v 1.7 2004/01/22 23:40:18 erik Exp $
  */
 
 #ifndef __EXTRAS_H
@@ -32,12 +33,10 @@ extern int default_mboxlistbehavior;
 extern unsigned char sort;
 extern GdkColor *color_magenta, *color_black;
 
-typedef struct _mboxview
-{
+typedef struct _mboxview {
     mboxs *mailbox;
     int status;
-}
-mboxview;
+} mboxview;
 
 mboxview *new_mboxview (mboxs * mb, int status);
 

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.h,v 1.10 2004/02/01 22:26:59 erik Exp $
+ * $Id: db.h,v 1.11 2005/01/05 13:28:41 erik Exp $
  */
 
 #ifndef __DB_H
@@ -74,6 +74,9 @@ mboxs **db_read_mboxlist (void);
 
 /** read the body of an email for reading */
 char *db_read_body (int id);
+
+/** read the header of an email for reading */
+char *db_read_header (int id);
 
 /** read the entire message for forwarding, replying,
  * and creating spools */

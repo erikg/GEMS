@@ -1,6 +1,6 @@
-# $Id: Makefile.am,v 1.6 2003/04/17 14:48:29 erik Exp $
+# $Id: Makefile.am,v 1.7 2004/02/01 19:41:03 erik Exp $
 
-# $Id: Makefile.am,v 1.6 2003/04/17 14:48:29 erik Exp $
+# $Id: Makefile.am,v 1.7 2004/02/01 19:41:03 erik Exp $
 
 SUBDIRS = po $(intl) include common receptor transmitter db face shell doc
 
@@ -14,10 +14,10 @@ packages: deb rpm
 
 .PHONY : rpm
 rpm: dist
-	cp $(PACKAGE)-$(VERSION).tar.gz /usr/src/redhat/SOURCES/
-	rpm -ba rpm-$(PACKAGE).spec
-	cp /usr/src/redhat/RPMS/i386/$(PACKAGE)-$(VERSION)-*.i386.rpm .
-	cp /usr/src/redhat/SRPMS/$(PACKAGE)-$(VERSION)-*.src.rpm .
+	cp $(PACKAGE)-$(VERSION).tar.gz ${HOME}/rpm/SOURCES/
+	rpmbuild -ba $(PACKAGE).spec
+	cp ${HOME}/rpm/RPMS/i386/$(PACKAGE)-$(VERSION)-*.i386.rpm .
+	cp ${HOME}/rpm/SRPMS/$(PACKAGE)-$(VERSION)-*.src.rpm .
 
 .PHONY : deb
 deb:

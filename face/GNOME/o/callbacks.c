@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.22 2005/01/13 14:29:53 erik Exp $
+ * $Id: callbacks.c,v 1.23 2005/01/20 04:45:10 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -884,7 +884,9 @@ on_mboxlist_keyevent (GtkWidget * widget,
 
     case GDK_Return:
     case GDK_space:
+	/*
 	on_ctree2_tree_select_row (widget, NULL, 0, NULL);
+	*/
 	break;
     case GDK_N:
     case GDK_n:

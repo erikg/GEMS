@@ -154,7 +154,7 @@ db_insert_msg (char *mboxname, message * m)
   printf("%s\n", q);
   if (mysql_query (con, q) != 0)
     {
-      oops ("failed to insert synopsis", NULL);
+      oops ("failed to insert synopsis", mysql_error(con));
       exit (0);
     }
 

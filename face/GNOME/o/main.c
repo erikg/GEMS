@@ -29,15 +29,20 @@ oops (char *a, char *b)
   printf ("%s: %s\n", a, b);
 }
 
-void
-update_mboxlist()
+gint
+update_mboxlist(gpointer nothing)
 {
   mboxs **mboxlist;
   GtkCTree *tree;
   int x=0;
 
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
+
 	/* whoa this is slow. */
   mboxlist = (mboxs **) db_read_mboxlist ();
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
   tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
   gtk_clist_freeze (&GTK_CTREE (tree)->clist);
   while(mboxlist[x]!=NULL)
@@ -49,6 +54,7 @@ update_mboxlist()
       x++;
   }
   gtk_clist_thaw (&GTK_CTREE (tree)->clist);
+  return 1;
 }
 
 void
@@ -114,7 +120,7 @@ set_mboxlist ()
 */
   gtk_clist_thaw (&GTK_CTREE (tree)->clist);
   free (mboxlist);
-  update_mboxlist();
+  update_mboxlist(NULL);
   return;
 }
 
@@ -187,6 +193,7 @@ face_run (int argc, char *argv[])
     c->column[1].width = atoi (x);
 
   gtk_widget_show (gems);
+  gtk_timeout_add(600000,update_mboxlist,NULL);
   gtk_main ();
 
   return 0;

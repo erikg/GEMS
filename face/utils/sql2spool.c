@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: sql2spool.c,v 1.4 2003/04/05 18:36:28 erik Exp $
+ * $Id: sql2spool.c,v 1.5 2004/05/31 13:07:26 erik Exp $
  */
 
 #include <stdio.h>
@@ -75,13 +75,14 @@ face_run (int argc, char **margv)
     boxes = db_read_mboxlist ();
     while (boxes[i] != NULL)
     {
+	fprintf(stderr, "box: %s\n", boxes[i]->name);
 	msgs = db_read_synopsis (boxes[i]->id, DB_ALL);
 	j = 0;
 	while (msgs[j] != NULL)
 	{
 	    m = db_read_message (msgs[j]->id);
 
-	    fprintf (fp, "\n%s%s", m->header, m->body);
+	    fprintf (fp, "%s%s\n", m->header, m->body);
 	    message_destroy (m);
 	    ++j;
 	}

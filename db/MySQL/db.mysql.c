@@ -13,6 +13,8 @@ MYSQL *con;
 
 int isnormal = GEMS_FALSE;
 
+static char q[40000000];
+
 static char monthlist[12][4] =
     { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct",
     "nov", "dec"
@@ -91,16 +93,13 @@ int
 db_insert_msg (char *mboxname, message * m)
 {
     long int id, mbox = 0, x, count;
-    char *q, *a, *b, *c, *d;
+    char *a, *b, *c, *d;
     MYSQL_RES *result;
     MYSQL_ROW row;
-
-    q = (char *) malloc (sizeof (char) * 4000000);
 
     sprintf (q, "select mbox from mmbox where mboxname='%s'", mboxname);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to retreive mbox", NULL);
 	exit (0);
     }
@@ -116,7 +115,6 @@ db_insert_msg (char *mboxname, message * m)
     sprintf (q, "select * from synopsis where charid='%s'", m->id);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to retreive mbox", NULL);
 	exit (0);
     }
@@ -139,7 +137,6 @@ db_insert_msg (char *mboxname, message * m)
     free (a);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to insert header", NULL);
 	exit (0);
     }
@@ -205,7 +202,6 @@ db_insert_msg (char *mboxname, message * m)
     free (a);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to insert replyto", mysql_error (con));
 	exit (0);
     }
@@ -216,12 +212,10 @@ db_insert_msg (char *mboxname, message * m)
 	free (a);
 	if (mysql_query (con, q) != 0)
 	{
-	    free (q);
 	    oops ("failed to insert refs", mysql_error (con));
 	    exit (0);
 	}
     }
-    free (q);
 
     isnormal = GEMS_FALSE;
     return GEMS_TRUE;
@@ -230,29 +224,23 @@ db_insert_msg (char *mboxname, message * m)
 int
 db_addmbox (char *mbox)
 {
-    char *q;
     int rval;
 
-    q = (char *) malloc (strlen (mbox) +
-			 strlen ("insert into mmbox values (0,'')") + 1);
     sprintf (q, "insert into mmbox values (0,'%s')", mbox);
     if (mysql_query (con, q) != 0)
 	rval = GEMS_FALSE;
     else
 	rval = GEMS_TRUE;
-    free (q);
     return rval;
 }
 
 int
 db_dropmbox (char *mbox)
 {
-    char *q;
     int x, r = GEMS_FALSE;
     MYSQL_RES *result;
     MYSQL_ROW row;
 
-    q = (char *) malloc (1024);
     sprintf (q, "select mbox from mmbox where mboxname='%s'", mbox);
     if (mysql_query (con, q) == 0)
     {
@@ -265,28 +253,21 @@ db_dropmbox (char *mbox)
 	mysql_query (con, q);
 	r = GEMS_TRUE;
     }
-    free (q);
     return r;
 }
 
 int
 db_flush (char *table)
 {
-    char *q;
     int rval;
 
     if (table == NULL)
 	return GEMS_FALSE;
-    q = (char *) malloc (strlen (table) + 20);
-    if (q == NULL)
-	return GEMS_FALSE;
     sprintf (q, "delete from %s", table);
-    fflush (0);
     if (mysql_query (con, q) != 0)
 	rval = GEMS_FALSE;
     else
 	rval = GEMS_TRUE;
-    free (q);
     return rval;
 }
 
@@ -302,12 +283,9 @@ synopsis **
 db_read_synopsis (int mbox, int status)
 {
     synopsis **synops;
-    char *q;
     MYSQL_RES *result;
     MYSQL_ROW row;
     int x, numrows;
-
-    q = (char *) malloc (1024);
 
     switch (status)
     {
@@ -339,11 +317,9 @@ db_read_synopsis (int mbox, int status)
     }
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to read synopsis list", mysql_error (con));
 	exit (0);
     }
-    free (q);
     result = mysql_store_result (con);
 
     numrows = mysql_num_rows (result);
@@ -376,23 +352,14 @@ mboxs **
 db_read_mboxlist (void)
 {
     int x;
-    char *q;
     mboxs **mboxlist;
     MYSQL_RES *result;
     MYSQL_ROW row;
     my_ulonglong mboxcount;
 
-    q = (char *) malloc (1024);
-    if (q == NULL)
-    {
-	oops ("Failed to allocate query", NULL);
-	exit (0);
-    }
-
     sprintf (q, "select mboxname,mbox from mmbox");
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to read mailbox list", mysql_error (con));
 	exit (0);
     }
@@ -427,7 +394,6 @@ db_read_mboxlist (void)
 		 mboxlist[x]->id);
 	if (mysql_query (con, q) != 0)
 	{
-	    free (q);
 	    oops ("failed to count unread messages", mysql_error (con));
 	    // exit (0);
 	}
@@ -437,7 +403,6 @@ db_read_mboxlist (void)
 	mysql_free_result (result);
     }
 
-    free (q);
     mboxlist[mboxcount] = NULL;
     return mboxlist;
 }
@@ -445,15 +410,13 @@ db_read_mboxlist (void)
 char *
 db_read_body (int id)
 {
-    char *body, *q;
+    char *body;
     MYSQL_RES *result;
     MYSQL_ROW row;
 
-    q = (char *) malloc (128);
     sprintf (q, "select body from body where id='%d'", id);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to read mail body", mysql_error (con));
 	exit (0);
     }
@@ -461,7 +424,6 @@ db_read_body (int id)
 
     if (result == NULL)
     {
-	free (q);
 	oops ("mysql_store_result failed", NULL);
 	exit (EXIT_FAILURE);
     }
@@ -473,7 +435,6 @@ db_read_body (int id)
     sprintf (q, "update synopsis set status = 'read' where id='%d'", id);
     if (mysql_query (con, q) != 0)
 	oops ("Failed to set mail as read", mysql_error (con));
-    free (q);
 
     return body;
 }
@@ -482,12 +443,10 @@ message * /*TODO*/
 db_read_message (int id)
 {
     message *m;
-    char *q;
     MYSQL_RES *result;
     MYSQL_ROW row;
 
     m = (message *) malloc (sizeof (message));
-    q = (char *) malloc (1024);
 
     m->attachments = NULL;
 
@@ -497,14 +456,12 @@ db_read_message (int id)
     sprintf (q, "select body from body where id='%d'", id);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to read mail body", mysql_error (con));
 	exit (0);
     }
     result = mysql_store_result (con);
     if (result == NULL)
     {
-	free (q);
 	oops ("mysql_store_result failed", NULL);
 	exit (EXIT_FAILURE);
     }
@@ -519,14 +476,12 @@ db_read_message (int id)
     sprintf (q, "select header from header where id='%d'", id);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to read mail header", mysql_error (con));
 	exit (0);
     }
     result = mysql_store_result (con);
     if (result == NULL)
     {
-	free (q);
 	oops ("mysql_store_result failed", NULL);
 	exit (EXIT_FAILURE);
     }
@@ -543,14 +498,12 @@ db_read_message (int id)
 	     id);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to read mail synopsis", mysql_error (con));
 	exit (0);
     }
     result = mysql_store_result (con);
     if (result == NULL)
     {
-	free (q);
 	oops ("mysql_store_result failed", NULL);
 	exit (EXIT_FAILURE);
     }
@@ -569,14 +522,12 @@ db_read_message (int id)
     sprintf (q, "select recipt from recipt where id='%d'", id);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to read mail recipt", mysql_error (con));
 	exit (0);
     }
     result = mysql_store_result (con);
     if (result == NULL)
     {
-	free (q);
 	oops ("mysql_store_result failed", NULL);
 	exit (EXIT_FAILURE);
     }
@@ -591,14 +542,12 @@ db_read_message (int id)
     sprintf (q, "select refs from refs where id='%d'", id);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to read mail refs", mysql_error (con));
 	exit (0);
     }
     result = mysql_store_result (con);
     if (result == NULL)
     {
-	free (q);
 	oops ("mysql_store_result failed", NULL);
 	exit (EXIT_FAILURE);
     }
@@ -612,14 +561,12 @@ db_read_message (int id)
     sprintf (q, "select replyto from replyto where id='%d'", id);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to read mail replyto", mysql_error (con));
 	exit (0);
     }
     result = mysql_store_result (con);
     if (result == NULL)
     {
-	free (q);
 	oops ("mysql_store_result failed", NULL);
 	exit (EXIT_FAILURE);
     }
@@ -633,7 +580,6 @@ db_read_message (int id)
     sprintf (q, "update synopsis set status='read' where id='%d'", id);
     if (mysql_query (con, q) != 0)
 	oops ("Failed to set mail as read", mysql_error (con));
-    free (q);
 
     return m;
 }
@@ -643,9 +589,6 @@ db_normalize ()
 {
     MYSQL_RES *r, *ir;
     MYSQL_ROW row, irow;
-    char *q;
-
-    q = (char *) malloc (65535);
 
     if (mysql_query
 	(con,
@@ -695,22 +638,18 @@ db_normalize ()
 int				/* returns 0 if no parent */
 db_is_child_of (int msg)
 {
-    char *q;
     int parent = 0;
     MYSQL_RES *result;
     MYSQL_ROW row;
 
     if (isnormal == GEMS_FALSE)
 	db_normalize ();
-    q = (char *) malloc (128);
     sprintf (q, "select child from refs where id='%d'", msg);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	oops ("failed to read child_of", mysql_error (con));
 	exit (0);
     }
-    free (q);
     result = mysql_store_result (con);
 
     if (result == NULL)
@@ -769,12 +708,10 @@ db_fetch_rules (int *numrows)
 int
 db_set_rules (rule ** rulelist)
 {
-    char *q;
     int x;
     int rval = GEMS_TRUE;
 
     mysql_query (con, "delete from rules");	/* delete all the rules */
-    q = (char *) malloc (1024);
     x = 0;
     while (rulelist[x] != NULL)
     {
@@ -785,24 +722,18 @@ db_set_rules (rule ** rulelist)
 	    rval = GEMS_FALSE;
 	x++;
     }
-    free (q);
     return rval;
 }
 
 int
 db_pref_set (char *pref, char *val)
 {
-    char *q;
     int x;
 
-    q = (char *) malloc (strlen (pref) + strlen (val) +
-			 strlen
-			 ("insert into preferences values ('','')..."));
     sprintf (q, "delete from preferences where name='%s'", pref);
     mysql_query (con, q);
     sprintf (q, "insert into preferences values ('%s','%s')", pref, val);
     x = mysql_query (con, q);
-    free (q);
     if (x != 0)
 	return GEMS_FALSE;
     return GEMS_TRUE;
@@ -811,28 +742,22 @@ db_pref_set (char *pref, char *val)
 char *
 db_pref_get (char *pref)
 {
-    char *q;
+    char *a;
     MYSQL_RES *res;
     MYSQL_ROW row;
 
-    q = (char *) malloc (strlen (pref) +
-			 strlen
-			 ("select value from preferences where name='.'."));
     sprintf (q, "select value from preferences where name='%s'", pref);
     if (mysql_query (con, q) != 0)
     {
-	free (q);
 	return NULL;
     }
     res = mysql_store_result (con);
     row = mysql_fetch_row (res);
-    free (q);
-    q = NULL;
     if (row != NULL && row[0] != NULL)
     {
-	q = (char *) malloc (strlen (row[0]) + 1);
-	strcpy (q, row[0]);
+	a = (char *) malloc (strlen (row[0]) + 1);
+	strcpy (a, row[0]);
     }
     mysql_free_result (res);
-    return q;
+    return a;
 }

@@ -134,14 +134,46 @@
 	* getoptlong support
 	* db/MySQL improved error display
 
-20001216:
-
-20001215:
-
-20001207:
-
 20001107:
 	* Initial Version
 
-$Id: ChangeLog,v 1.4 2005/04/02 17:23:12 erik Exp $
+20000827:
+	* changed name to gems
+
+20000319:
+	* regex rules working
+
+20000227:
+	* GNOME_o begun
+
+20000215:
+	* initial shell
+
+20000208:
+	* autoconf/automake stuff
+
+20000206:
+	* redid mysql tables
+	* date handling
+
+20000126:
+	* started using glade
+
+20000125:
+	* bug fixing
+	* 712 lines
+
+20000124:
+	* "stringinate" added
+	* bug fixes
+
+20000123:
+	* Started the project
+	* Crude spool reader, linked list, message notion, db connection,
+	'showmail', flush table util, ... 
+	* 586 lines of code, parses 10k mails in 30s on a cyrix 120mhz
+
+	
+
+$Id: ChangeLog,v 1.5 2005/04/02 17:47:45 erik Exp $
 

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: snarf.c,v 1.17 2004/10/17 18:58:33 erik Exp $
+ * $Id: snarf.c,v 1.18 2005/01/12 22:11:31 erik Exp $
  */
 
 #include <stdio.h>
@@ -96,8 +96,8 @@ parse (char *buf, unsigned int size)
 	mbox = rule_check (m);
 	ins = db_insert_msg (mbox, m);	/* this sucks up time */
 	message_destroy (m);
-	printf ("\r%d/%d  (%.2f%%)%s", i, msgcount,
-	    100.0 * (float)i / (float)msgcount,
+	printf ("\r%d/%d  (%.2f%%)%s", i, msgcount + 1,
+	    100.0 * (float)i / (float)msgcount + 1,
 	    ins == GEMS_FALSE ? "  FAILED\n" : "");
 	fflush (stdout);
     }

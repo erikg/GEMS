@@ -21,9 +21,6 @@ face_uses_X ()
 int
 face_run (int argc, char *argv[])
 {
-  GtkWidget *gems;
-  GtkWidget *about;
-
 #ifdef ENABLE_NLS
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -35,6 +32,7 @@ face_run (int argc, char *argv[])
                       GNOME_PARAM_APP_DATADIR, PACKAGE_DATA_DIR,
                       NULL);
 
+  gtk_widget_show(create_gems());
   gtk_main ();
   return 0;
 }

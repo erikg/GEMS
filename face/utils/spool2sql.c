@@ -57,7 +57,6 @@ face_run (int argc, char **margv)
 
       mbox = rule_check (mess);
       db_insert_msg (mbox, mess);
-      free(mbox);
       if (ll_clearlist (list) == GEMS_FALSE)
 	printf (_("Couldn't flush list out of memory!\n"));
       if (message_destroy (mess) == GEMS_FALSE)

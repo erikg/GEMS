@@ -14,7 +14,9 @@ _pop3_last_message (int s)
     if (s == -1)
 	return -1;
     write (s, "LAST\r\n", 6);
+printf("Sent 'last' to %d\n",s);fflush(stdout);
     read (s, buf, 1024);
+printf("Got \"%s\"\n",buf);fflush(stdout);
     if (strncmp (buf, "+OK ", 4))
 	return -1;
     return atoi (buf + 4);
@@ -73,12 +75,16 @@ receive_pop3 (char *hostname, int port, char *username, char *password)
     char *mbox, stat[5];
 
     s = socket_open (hostname, port);
-    if (_pop3_username (s, username) == GEMS_FALSE)
+    if (_pop3_user (s, username) == GEMS_FALSE)
 	return -1;
-    if (_pop3_password (s, password) == GEMS_FALSE)
+printf("User accepted\n");fflush(stdout);
+    if (_pop3_passwd (s, password) == GEMS_FALSE)
 	return -1;
+printf("Password accepted, I am logged in.\n");fflush(stdout);
     last = _pop3_last_message (s);
+printf("Last message: %d\n", last);fflush(stdout);
     max = _pop3_stat (s);
+printf("Max message: %d\n", max);fflush(stdout);
 
     for (x = last; x <= max; x++)
       {

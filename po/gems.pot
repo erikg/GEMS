@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2001-01-13 02:26-0600\n"
+"POT-Creation-Date: 2001-01-14 00:24-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,15 +29,15 @@ msgid ""
 "%s\n"
 msgstr ""
 
-#: face/utils/showmail.c:48 face/utils/spool2sql.c:64
+#: face/utils/showmail.c:48 face/utils/spool2sql.c:61
 msgid "Couldn't flush list out of memory!\n"
 msgstr ""
 
-#: face/utils/showmail.c:50 face/utils/spool2sql.c:66
+#: face/utils/showmail.c:50 face/utils/spool2sql.c:63
 msgid "Couldn't flush message out of memory!\n"
 msgstr ""
 
-#: face/utils/showmail.c:55 face/utils/spool2sql.c:78
+#: face/utils/showmail.c:55 face/utils/spool2sql.c:75
 #: face/utils/sql2spool.c:73
 msgid "Couldn't close the spool\n"
 msgstr ""
@@ -57,10 +57,10 @@ msgid ""
 "Null body!\n"
 msgstr ""
 
-#: face/utils/spool2sql.c:73
+#: face/utils/spool2sql.c:70
 msgid "Failed closing ruleset\n"
 msgstr ""
 
-#: face/utils/spool2sql.c:82
+#: face/utils/spool2sql.c:79
 msgid "Failed to normalize the db"
 msgstr ""

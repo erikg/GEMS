@@ -89,6 +89,8 @@ db_insert_msg (char *mboxname, message * m)
   MYSQL_RES *result;
   MYSQL_ROW row;
 
+  printf("mboxname: %s\n", mboxname);fflush(stdout);
+
   q = (char *) malloc (sizeof (char) * 4000000);
 
   sprintf (q, "select mbox from mmbox where mboxname='%s'", mboxname);

@@ -7,30 +7,27 @@
 #include <sys/types.h>
 #include <regex.h>
 
-char *inbox;
+static char inbox[] = "inbox";
 
 rule *rules;
 int numrules;
 
-regex_t **preg;
-
-regmatch_t *pmatch;
+regex_t *preg;
 
 int
 rule_init ()
 {
   int x;
-  inbox = (char *) malloc (sizeof ("inbox") + sizeof (char));
   
-  sprintf (inbox, "inbox");
   rules = (rule *) db_fetch_rules ((int *) &numrules);
-  preg = (void *) malloc (sizeof (void *) * (numrules + 1));
+  printf("%d rules\n", numrules);
+  preg = (void *) malloc (sizeof (regex_t) * (numrules + 1));
+  memset(preg,0,sizeof(preg));
   for (x = 0; x < numrules; x++)
-    {
-      preg[x] = (regex_t *) malloc (sizeof (regex_t));
-      regcomp (preg[x], rules[x].regex, REG_EXTENDED);
-    }
-  pmatch = (regmatch_t *) malloc (65535 * sizeof (regmatch_t));
+   {
+      printf("%d: %x %s\n", x, &preg[x], rules[x].regex);
+      regcomp (&preg[x], rules[x].regex, REG_EXTENDED);
+   }
   return GEMS_TRUE;
 }
 
@@ -71,9 +68,11 @@ rule_check (message * m)
     {
 	c = rule_concern (&rules[x], m);
 	if (c)
-	    if (regexec (preg[x], c, 0, NULL, 0) == 0)
-		return rules[x].mbox;
+	    if (regexec (&preg[x], c, 0, NULL, 0) == 0){
+		printf("Matched rule: %s\n", rules[x].mbox);
+		return rules[x].mbox;}
     }
+	printf("No matches, using %s\n", inbox);
     return inbox;
 }
 
@@ -83,15 +82,13 @@ rule_close ()
   int x;
   for (x = 0; x < numrules; x++)
     {
-      regfree (preg[x]);
-      free (preg[x]);
+      regfree (&preg[x]);
       free (rules[x].regex);
       free (rules[x].mbox);
     }
   free (preg);
   free (rules);
   free (inbox);
-  free (pmatch);
   return GEMS_TRUE;
 }
 

@@ -1,33 +1,5 @@
 /*
- * this is a cut'n'paste from telnetting to my smtp server (smail)
  * 
- * 250-The following SMTP commands are recognized: 250- 250-   HELO hostname -
- * startup and give your hostname 250-   EHLO hostname                   -
- * startup with extension info 250-   MAIL FROM:<sender-address>      - start
- * transaction from sender 250-   RCPT TO:<recipient-address>     - name
- * recipient for message 250-   VRFY <address>                  - verify
- * deliverability of address 250-   EXPN <address>                  - expand
- * mailing list address 250-   DATA                            - start text
- * of mail message 250-   RSET                            - reset state, drop
- * transaction 250-   NOOP                            - do nothing 250- DEBUG
- * [level]                   - set debugging level, default 1 250- HELP
- * - produce this help message 250-   QUIT - close SMTP connection
- * 
- * 
- * This is from some literature I have on the subject...
- * 
- * HELO domain MAIL FROM:username RCPT TO:username DATA QUIT
- * 
- * 
- * We should also note the return values. Here's some catagories (as best as I
- * can guess them) and some specific returns.
- * 
- * 2XX ok message (success) 250 OK 251 forwarding/routing
- * 
- * 3XX prompt for input 354 'start mail input' (messages get ended with a . on a
- * single line.)
- * 
- * 5XX errors 550 no such user
  */
 
 #include <stdio.h>		/* for NULL */

@@ -244,7 +244,7 @@ on_toolbar_prev_clicked (GtkButton * button, gpointer user_data)
     gint row;
     GtkCTreeNode *n;
 
-    ctree = lookup_widget (gems, "ctree1");
+    ctree = GTK_CTREE(lookup_widget (gems, "ctree1"));
 
     if (ctree->clist.rows < 1)
 	return;
@@ -380,8 +380,10 @@ on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
 {
     synopsis *s;
     GtkCTreeNode *n;
-    GtkWidget *from, *subj, *date, *recipt, *body, *comp;
+    GtkWidget *from, *to, *subj, *date, *recipt, *body, *comp, *widget;
     char *shtuff;
+
+    widget = lookup_widget(gems, "ctree1");
 
     if (widget != NULL)
     {
@@ -395,10 +397,11 @@ on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
     comp = create_compose ();
 
     from = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry1");
+//    to   = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry5");
     date = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry2");
-    subj = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry3");
+    subj = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry6");
     recipt = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry4");
-    body = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "text1");
+    body = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "text2");
 
     gtk_entry_set_text (GTK_ENTRY (from), s->sender);
     gtk_entry_set_text (GTK_ENTRY (subj), s->subject);

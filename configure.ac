@@ -1,4 +1,4 @@
-dnl $Id: configure.in,v 1.34 2004/03/03 13:02:10 erik Exp $
+dnl $Id: configure.ac,v 1.1 2004/04/27 21:58:48 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])

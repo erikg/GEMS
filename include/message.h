@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: message.h,v 1.5 2003/04/05 18:36:29 erik Exp $
+ * $Id: message.h,v 1.6 2004/02/01 18:23:06 erik Exp $
  */
 
 #ifndef _MESSAGE_H
@@ -60,12 +60,12 @@ typedef struct {
 } mboxs;
 
 /** convert a linked list to a message struct */
-extern message *message_build_from_list (void *list);
+message *message_build_from_list (void *list);
 
 /** convert a text buffer to a message struct */
-extern message *message_build_from_buffer (char *buf);
+message *message_build_from_buffer (char *buf);
 
 /** purge a message from memory */
-extern int message_destroy (message * mess);
+int message_destroy (message * mess);
 
 #endif

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: rules.h,v 1.3 2003/04/05 18:36:29 erik Exp $
+ * $Id: rules.h,v 1.4 2004/02/01 18:23:06 erik Exp $
  */
 
 #ifndef __RULES_H
@@ -43,21 +43,21 @@ typedef struct _rule {
 } rule;
 
 /** a generic regex wrapper */
-extern int regex (char *, char *);
+int regex (char *, char *);
 
 /** load the rules and set them */
-extern int rule_init ();
+int rule_init ();
 
 /** see which mbox this message belongs in */
-extern char *rule_check (message *);
+char *rule_check (message *);
 
 /** destroy the rule set */
-extern int rule_close ();
+int rule_close ();
 
 /** create a new set of rules (overwriting the old ones) */
-extern int rule_set (rule **);
+int rule_set (rule **);
 
 /** return a list of rules */
-extern rule **rule_get ();
+rule **rule_get ();
 
 #endif

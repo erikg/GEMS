@@ -20,19 +20,19 @@
  *****************************************************************************/
 
 /*
- * $Id: face.h,v 1.3 2003/04/05 18:36:28 erik Exp $
+ * $Id: face.h,v 1.4 2004/02/01 18:23:06 erik Exp $
  */
 
 
 	/** returns GEMS_TRUE if requires X */
-extern int face_uses_X ();
+int face_uses_X ();
 
 	/** actually execute the 'face' */
-extern int face_run (int argc, char **argv);
+int face_run (int argc, char **argv);
 
 	/** if an error occurs in the shell or subsystem, the face is
 	 * responsible for reporting it. This is the mechanism used.
 	 * gems_err refers to the component error (dbi, shell, etc)
 	 * subsystem_err is what the component could find out (mysql_error, etc)
 	 */
-extern void oops (char *gems_err, char *subsystem_err);
+void oops (char *gems_err, char *subsystem_err);

@@ -20,25 +20,25 @@
  *****************************************************************************/
 
 /*
- * $Id: spoolread.h,v 1.4 2003/04/05 18:36:29 erik Exp $
+ * $Id: spoolread.h,v 1.5 2004/02/01 18:23:06 erik Exp $
  */
 
 #ifndef __SPOOLREAD_H
 #define __SPOOLREAD_H
 
 /** open up a spool file for reading */
-extern int open_spool (char *spoolname);
+int open_spool (char *spoolname);
 
 /** read the next message from the spool */
 /*
  * @null@ 
  */
-extern void *read_message ();
+void *read_message ();
 
 FILE *spool_file();
 int spool_fd();
 
 /** close the spool... */
-extern int close_spool ();
+int close_spool ();
 
 #endif

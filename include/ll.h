@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: ll.h,v 1.4 2003/04/05 18:36:28 erik Exp $
+ * $Id: ll.h,v 1.5 2004/02/01 18:23:06 erik Exp $
  */
 
 /*
@@ -35,39 +35,39 @@
 /*
  * @null@ 
  */
-extern void *ll_newlist (void);
+void *ll_newlist (void);
 
 /** sets the 'current' node to the next one */
-extern int ll_next (void *list);
+int ll_next (void *list);
 
 /** sets the 'current' node to the head */
-extern int ll_rewind (void *list);
+int ll_rewind (void *list);
 
 /** appends a node to the end of this list */
-extern int ll_addnode (void *list, char *line);
+int ll_addnode (void *list, char *line);
 
 /** delete the current node, place pointer at next node
   * a->B->c->d    =>    a->C->d   (cap is current)  */
-extern int ll_deletenode (void *list);
+int ll_deletenode (void *list);
 
 /** returns the line in the current node. does NOT change current. */
 /*
  * @null@ 
  */
-extern char *ll_showline (void *list);
+char *ll_showline (void *list);
 
 /** purge the list, do this when you're done with the list */
-extern int ll_clearlist (void *list);
+int ll_clearlist (void *list);
 
 /** returns GEMS_TRUE if the list has no elements, GEMS_FALSE if it does */
-extern int ll_empty (void *list);
+int ll_empty (void *list);
 
 /** returns GEMS_TRUE if the current node is the last node of the list
  */
-extern int ll_end (void *list);
+int ll_end (void *list);
 
 /** append two lists. Damages lista. */
-extern void *ll_append (void *lista, void *listb);
+void *ll_append (void *lista, void *listb);
 
 
 #endif

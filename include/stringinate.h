@@ -20,14 +20,14 @@
  *****************************************************************************/
 
 /*
- * $Id: stringinate.h,v 1.4 2003/04/05 18:36:29 erik Exp $
+ * $Id: stringinate.h,v 1.5 2004/02/01 18:23:06 erik Exp $
  */
 
 #ifndef __STRINGINATE_H
 #define __STRINGINATE_H
 
 /** convert a linked list into a single character array (string) */
-extern char *stringinate (void *list);
+char *stringinate (void *list);
 
 /** read a file into a linked list. */
 void *read_file_to_list (char *filename);

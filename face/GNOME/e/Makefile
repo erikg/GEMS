@@ -16,7 +16,7 @@ SHELL = /bin/sh
 
 srcdir = .
 top_srcdir = ../../..
-prefix = /usr/local
+prefix = /home/erik
 exec_prefix = ${prefix}
 
 bindir = ${exec_prefix}/bin
@@ -57,8 +57,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-host_alias = i586-pc-linux-gnu
-host_triplet = i586-pc-linux-gnu
+host_alias = i386-unknown-freebsd5.0
+host_triplet = i386-unknown-freebsd5.0
 AS = @AS@
 CATALOGS = 
 CATOBJEXT = .gmo
@@ -69,52 +69,36 @@ DATADIRNAME = share
 DLLTOOL = @DLLTOOL@
 GENCAT = 
 GMOFILES = 
-GMSGFMT = /usr/bin/msgfmt
+GMSGFMT = /usr/local/bin/msgfmt
 GNOME = GNOME
-GNOMEGNORBA_LIBS = -rdynamic -lgnorba -lORBitCosNaming -lORBit -lIIOP -lORBitutil -lgnomeui -lart_lgpl -lgdk_imlib -lSM -lICE -lgtk -lgdk -lgmodule -lXi -lXext -lX11 -lgnome -lgnomesupport -lesd -laudiofile -lm -ldb -lglib -ldl
-GNOMEUI_LIBS = -rdynamic -lgnomeui -lart_lgpl -lgdk_imlib -lSM -lICE -lgtk -lgdk -lgmodule -lXi -lXext -lX11 -lgnome -lgnomesupport -lesd -laudiofile -lm -ldb -lglib -ldl
-GNOME_APPLETS_LIBS = 
-GNOME_CAPPLET_LIBS = 
-GNOME_CONFIG = /usr/bin/gnome-config
-GNOME_INCLUDEDIR = -I/usr/include -DNEED_GNOMESUPPORT_H -I/usr/lib/gnome-libs/include -I/usr/lib/glib/include -I/usr/X11R6/include
-GNOME_LIBDIR = -rdynamic -L/usr/lib -L/usr/X11R6/lib
-GNOME_LIBS = -lgnome -lgnomesupport -lesd -laudiofile -lm -ldb -lglib -ldl
-GNORBA_CFLAGS = -I/usr/include -DNEED_GNOMESUPPORT_H -I/usr/lib/gnome-libs/include -I/usr/lib/glib/include -I/usr/X11R6/include
-GNORBA_LIBS = -rdynamic -L/usr/lib -L/usr/X11R6/lib -lgnorba -lORBitCosNaming -lORBit -lIIOP -lORBitutil -lgnomeui -lart_lgpl -lgdk_imlib -lSM -lICE -lgtk -lgdk -lgmodule -lXi -lXext -lX11 -lgnome -lgnomesupport -lesd -laudiofile -lm -ldb -lglib -ldl
 GTK = GTK
-GTKXMHTML_LIBS = -rdynamic -lgtkxmhtml -lXpm -ljpeg -lpng -lz -lSM -lICE -lgtk -lgdk -lgmodule -lglib -ldl -lXi -lXext -lX11 -lm
-GTK_CFLAGS = -I/usr/lib/glib/include -I/usr/X11R6/include
-GTK_CONFIG = /usr/bin/gtk-config
-GTK_LIBS = -L/usr/lib -L/usr/X11R6/lib -lgtk -lgdk -rdynamic -lgmodule -lglib -ldl -lXi -lXext -lX11 -lm
+GTK_CFLAGS = -I/usr/X11R6/include/gtk12 -I/usr/local/include/glib12 -I/usr/local/include -I/usr/X11R6/include
+GTK_CONFIG = /usr/X11R6/bin/gtk-config
+GTK_LIBS = -L/usr/X11R6/lib -L/usr/X11R6/lib -lgtk12 -lgdk12 -L/usr/local/lib -Wl,-E -lgmodule12 -lglib12 -lintl -lxpg4 -lXext -lX11 -lm
 GT_NO = 
 GT_YES = #YES#
 INCLUDE_LOCALE_H = #include <locale.h>
 INSTOBJEXT = .mo
-INTLDEPS = 
-INTLLIBS = 
-INTLOBJS = 
+INTLDEPS = $(top_builddir)/intl/libintl.a
+INTLLIBS = $(top_builddir)/intl/libintl.a
+INTLOBJS = $(GETTOBJS)
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LN_S = ln -s
 MAKEINFO = makeinfo
 MKINSTALLDIRS = ./mkinstalldirs
-MSGFMT = /usr/bin/msgfmt
+MSGFMT = /usr/local/bin/msgfmt
 MYSQL = MySQL
 MY_LDADD = 
 MY_LDFLAGS = 
 OBJDUMP = @OBJDUMP@
-ORBIT_CFLAGS = -I/usr/lib/glib/include -I/usr/include
-ORBIT_CONFIG = /usr/bin/orbit-config
-ORBIT_IDL = /usr/bin/orbit-idl
-ORBIT_LIBS = -L/usr/lib -lORBitCosNaming -lORBit -lIIOP -lORBitutil -lglib -lm
 PACKAGE = gems
 POFILES = 
 POSTGRESQL = 
 POSUB = po
 RANLIB = ranlib
-USE_INCLUDED_LIBINTL = no
+USE_INCLUDED_LIBINTL = yes
 USE_NLS = yes
 VERSION = 0.0
-ZVT_LIBS = -rdynamic -lzvt -lutil -lSM -lICE -lgtk -lgdk -lgmodule -lglib -ldl -lXi -lXext -lX11 -lm
 l = 
 
 gemslibdir = $(libdir)/gems
@@ -126,16 +110,16 @@ noinst_HEADERS = callbacks.h  interface.h  support.h
 
 EXTRA_DIST = gems.glade
 
-INCLUDES = -I/usr/include -DNEED_GNOMESUPPORT_H -I/usr/lib/gnome-libs/include -I/usr/lib/glib/include -I/usr/X11R6/include -I$(toplevel_dir)/intl -DLOCALEDIR=\"$(localedir)\" -DPACKAGE_LOCALE_DIR=\"$(localedir)\"
-LDFLAGS = -rdynamic -rdynamic -lgnomeui -lart_lgpl -lgdk_imlib -lSM -lICE -lgtk -lgdk -lgmodule -lXi -lXext -lX11 -lgnome -lgnomesupport -lesd -laudiofile -lm -ldb -lglib -ldl 
-LDDADD =  $(toplevel_dir)/common/libgemscommon.a 
+INCLUDES = @GNOME_INCLUDEDIR@ -I$(toplevel_dir)/intl -DLOCALEDIR=\"$(localedir)\" -DPACKAGE_LOCALE_DIR=\"$(localedir)\"
+LDFLAGS = -rdynamic @GNOMEUI_LIBS@ 
+LDDADD = $(top_builddir)/intl/libintl.a $(toplevel_dir)/common/libgemscommon.a 
 localedir = $(datadir)/locale
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
 LTLIBRARIES =  $(gemslib_LTLIBRARIES)
 
 
-DEFS =  -DPACKAGE=\"gems\" -DVERSION=\"0.0\" -DSTDC_HEADERS=1 -DHAVE_ALLOCA_H=1 -DHAVE_ALLOCA=1 -DHAVE_UNISTD_H=1 -DHAVE_GETPAGESIZE=1 -DHAVE_MMAP=1 -DHAVE_ARGZ_H=1 -DHAVE_LIMITS_H=1 -DHAVE_LOCALE_H=1 -DHAVE_NL_TYPES_H=1 -DHAVE_MALLOC_H=1 -DHAVE_STRING_H=1 -DHAVE_UNISTD_H=1 -DHAVE_SYS_PARAM_H=1 -DHAVE_GETCWD=1 -DHAVE_MUNMAP=1 -DHAVE_PUTENV=1 -DHAVE_SETENV=1 -DHAVE_SETLOCALE=1 -DHAVE_STRCHR=1 -DHAVE_STRCASECMP=1 -DHAVE_STRDUP=1 -DHAVE___ARGZ_COUNT=1 -DHAVE___ARGZ_STRINGIFY=1 -DHAVE___ARGZ_NEXT=1 -DHAVE_STPCPY=1 -DHAVE_LC_MESSAGES=1 -DENABLE_NLS=1 -DHAVE_GETTEXT=1 -DHAVE_DCGETTEXT=1  -I. -I$(srcdir) 
+DEFS =  -DPACKAGE=\"gems\" -DVERSION=\"0.0\" -DSTDC_HEADERS=1 -DHAVE_ALLOCA=1 -DHAVE_UNISTD_H=1 -DHAVE_GETPAGESIZE=1 -DHAVE_MMAP=1 -DHAVE_LIMITS_H=1 -DHAVE_LOCALE_H=1 -DHAVE_NL_TYPES_H=1 -DHAVE_STRING_H=1 -DHAVE_UNISTD_H=1 -DHAVE_SYS_PARAM_H=1 -DHAVE_GETCWD=1 -DHAVE_MUNMAP=1 -DHAVE_PUTENV=1 -DHAVE_SETENV=1 -DHAVE_SETLOCALE=1 -DHAVE_STRCHR=1 -DHAVE_STRCASECMP=1 -DHAVE_STRDUP=1 -DHAVE_LC_MESSAGES=1 -DENABLE_NLS=1  -I. -I$(srcdir) 
 CPPFLAGS = 
 LIBS = 
 libgems_face_GNOME_e_la_LDFLAGS = 

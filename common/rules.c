@@ -62,12 +62,12 @@ rule_check (message * m)
     if (m == NULL)
 	return inbox;
     for (x = 0; x < numrules; x++)
-    {
-	c = rule_concern (&rules[x], m);
-	if (c)
-	    if (regexec (&preg[x], c, 0, NULL, 0) == 0)
-		return rules[x].mbox;
-    }
+      {
+	  c = rule_concern (&rules[x], m);
+	  if (c)
+	      if (regexec (&preg[x], c, 0, NULL, 0) == 0)
+		  return rules[x].mbox;
+      }
     return inbox;
 }
 
@@ -77,11 +77,11 @@ rule_close ()
     int x;
 
     for (x = 0; x < numrules; x++)
-    {
-	regfree (&preg[x]);
-	free (rules[x].regex);
-	free (rules[x].mbox);
-    }
+      {
+	  regfree (&preg[x]);
+	  free (rules[x].regex);
+	  free (rules[x].mbox);
+      }
     free (preg);
     free (rules);
     return GEMS_TRUE;

@@ -8,16 +8,20 @@
 /*
  * singly linked list 
  */
-typedef struct anode {
+typedef struct anode
+{
     char *line;
     struct anode *next;
-} node;
+}
+node;
 
-typedef struct alist {
+typedef struct alist
+{
     node *head;
     node *current;
     node *last;
-} list;
+}
+list;
 
 
 /*
@@ -30,12 +34,12 @@ ll_newlist ()
 
     x = (list *) malloc (sizeof (list));
     if (x != NULL)
-    {
-	x->head = NULL;
-	x->current = NULL;
-	x->last = NULL;
-	return x;
-    }
+      {
+	  x->head = NULL;
+	  x->current = NULL;
+	  x->last = NULL;
+	  return x;
+      }
     oops ("Failed to gnerate new list", NULL);
     return NULL;
 }
@@ -90,10 +94,10 @@ ll_addnode (void *this, char *line)
     if (l->head == NULL)
 	l->head = l->current = l->last = x;
     else
-    {
-	l->last->next = x;
-	l->last = x;
-    }
+      {
+	  l->last->next = x;
+	  l->last = x;
+      }
 
     return GEMS_TRUE;
 }
@@ -194,7 +198,6 @@ ll_append (void *lista, void *listb)
 	return listb;
     if (listb == NULL)
 	return lista;
-    ((list *)lista)->last->next = ((list *)listb)->head;
+    ((list *) lista)->last->next = ((list *) listb)->head;
     return lista;
 }
-

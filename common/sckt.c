@@ -25,14 +25,14 @@ socket_open (char *hostname, int port)
 	inet_addr (inet_ntoa (*((struct in_addr *) h->h_addr_list[0])));
 
     if ((s = socket (AF_INET, SOCK_STREAM, 0)) == -1)
-    {
-	perror ("socket_open socket");
-	exit (-1);
-    }
+      {
+	  perror ("socket_open socket");
+	  exit (-1);
+      }
     if (connect (s, (struct sockaddr *) &sockinf, sizeof (struct sockaddr)))
-    {
-	perror ("socket_open connect");
-	exit (-1);
-    }
+      {
+	  perror ("socket_open connect");
+	  exit (-1);
+      }
     return s;
 }

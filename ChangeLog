@@ -89,6 +89,9 @@
 20021205:
 	* GNOME/o default sort changed to date, not subject
 
+20020723:
+	* Version 0.0 Released.
+
 20020204:
 	* db/MySQL update tables so synopsis id is unique.
 
@@ -175,5 +178,5 @@
 
 	
 
-$Id: ChangeLog,v 1.5 2005/04/02 17:47:45 erik Exp $
+$Id: ChangeLog,v 1.6 2005/04/02 20:20:22 erik Exp $
 

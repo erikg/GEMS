@@ -62,15 +62,19 @@ rule_concern (rule * r, message * m)
 char *
 rule_check (message * m)
 {
-  int x;
-  char *c;			/* the section of the email we care about */
-  for (x = 0; x < numrules; x++)
+    int x;
+    char *c;			/* the section of the email we care about */
+
+    if (m == NULL)
+	return inbox;
+    for (x = 0; x < numrules; x++)
     {
-      c = rule_concern (&rules[x], m);
-      if (regexec (preg[x], c, 0, NULL, REG_NOSUB) == 0)
-	  return rules[x].mbox;
+	c = rule_concern (&rules[x], m);
+	if (c)
+	    if (regexec (preg[x], c, 0, NULL, 0) == 0)
+		return rules[x].mbox;
     }
-  return inbox;
+    return inbox;
 }
 
 int

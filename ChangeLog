@@ -1,40 +1,99 @@
 20050402:
 	* fixed snarfs output numbers
 
+20050120:
+	* GNOME/o eliminate double paint of mbox list
+
+20050113:
+	* copyright update
+
 20050105:
 	* LDADD passed out
+	* db read header method spec'd
+
+20041017:
+	* face/util dump face
+	* face/util/snarf add file locking to mbox
 
 20040906:
 	* Fixes for 'out of dir' building
+	* psql checking
 
 20040904:
 	* Look for /usr/local
 
 20040531:
 	* (db/MySQL) null guard on body.
+	* face/util/sql2spool print mbox on stderr
+	* face/util/sql2spool newlines at end of mail, not beginning
 
 20040530:
 	* libtool use improvements.
+	* get rid of dlopen() calls
+	* improved memory handling in db.mysql
+
+20040527:
+	* pass rules in during rule init...
 
 20040521:
 	* Support conditionals in make system
 
+20040427:
+	* move configure.in to configure.ac
+	* initial docbook support
+
+20040303:
+	* build system updates
+
 20040227:
 	* docbook fixes
+
+20040216:
+	* postgres "oops" stub
+
+20040214:
+	* postgres flush and dropmbox
+
+20040202:
+	* postgres init and close funcs
 
 20040201:
 	* RPM fixes
 	* initial MySQL db init stuff
 	* initial postgresql support.
+	* use a ~/.gems/ dir instead of ~/.gemsrc file
+
+20040123:
+	* lib fu in shell?
+
+20031112:
+	* GNOME/o allow next/prev keypress when on mbox list focus...
 
 20031111:
 	* more view stuff? (db)
 	* raw mbox query support.
+	* fixed erroneous free call in mysql module
 
 20031019:
 	* fixes for mysql4
 
+20031018:
+	* fixed a bug in snarf (= vs ==, eck)
+
+20030417:
+	* libintl fixes?
+
+20030405:
+	* beginnings of sendmail transmission.
+
+20021205:
+	* GNOME/o default sort changed to date, not subject
+
+20020204:
+	* db/MySQL update tables so synopsis id is unique.
+
 20011218:
+	* face/util new snarf to replace spool2sql...
 
 20011209:
 
@@ -48,14 +107,32 @@
 
 20010224:
 	* optimization to read-mboxlist
+	* 'compose' button enabled, sorta
+
+20010212:
+	* GNOME/o mutilate message for reply
 
 20010210:
+	* GNOME/o freeze and thaw the big displays
+
+20010125:
+	* GNOME/o reply fu...
+
+20010116:
+	* GNOME/o clear mail list on mbox change
+
+20010115:
+	* added sckt.h header
+	* GNOME/o paint mbox's with unread mail red
 
 20010114:
-	* handle mail redundancy
+	* db/MySQL handle mail redundancy
+	* db/MySQL fix for uninitialized data
+	* face/util pop3check face added
 
 20010113:
 	* getoptlong support
+	* db/MySQL improved error display
 
 20001216:
 
@@ -65,4 +142,6 @@
 
 20001107:
 	* Initial Version
+
+$Id: ChangeLog,v 1.4 2005/04/02 17:23:12 erik Exp $
 

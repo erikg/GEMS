@@ -1,3 +1,5 @@
+# this is outdated. Do not use till it's fixed.
+
 create table attachments (id int unsigned not null, attachment longtext not null);
 create table body        (id int unsigned primary key not null, body longtext not null);
 create table header      (id int unsigned auto_increment not null primary key, header text not null);

@@ -1,45 +1,20 @@
-## Process this file with automake to produce Makefile.in
+# $Id: Makefile.am,v 1.3 2003/04/18 01:52:21 erik Exp $
 
-#SUBDIRS = po
+gemslibdir = $(libdir)/gems
+gemslib_LTLIBRARIES = libgems_face.GNOME2_o.la
 
+libgems_face_GNOME2_o_la_SOURCES = callbacks.c extra.c interface.c main.c support.c
+ 
+noinst_HEADERS= callbacks.h extra.h interface.h support.h
+
+EXTRA_DIST = gems.glade gems.gladep
+ 
 INCLUDES = \
-	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
-	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
-	@GNOME2_CFLAGS@
+        -DPACKAGE_DATA_DIR=\""$(datadir)"\" \
+        -DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+        @GNOME2_CFLAGS@
 
-bin_PROGRAMS = gems
+LDFLAGS  = -rdynamic -L/usr/X11R6/lib
+LDADD = @GNOME2_LIBS@ $(INTLLIBS) $(toplevel_dir)/common/libgemscommon.a @MY_LDADD@
 
-gems_SOURCES = \
-	main.c \
-	support.c support.h \
-	interface.c interface.h \
-	callbacks.c callbacks.h
-
-gems_LDADD = @GNOME2_LIBS@ $(INTLLIBS)
-
-EXTRA_DIST = \
-	autogen.sh \
-	gems.glade \
-	gems.gladep
-
-install-data-local:
-	@$(NORMAL_INSTALL)
-	if test -d $(srcdir)/pixmaps; then \
-	  $(mkinstalldirs) $(DESTDIR)$(datadir)/pixmaps/$(PACKAGE); \
-	  for pixmap in $(srcdir)/pixmaps/*; do \
-	    if test -f $$pixmap; then \
-	      $(INSTALL_DATA) $$pixmap $(DESTDIR)$(datadir)/pixmaps/$(PACKAGE); \
-	    fi \
-	  done \
-	fi
-
-dist-hook:
-	if test -d pixmaps; then \
-	  mkdir $(distdir)/pixmaps; \
-	  for pixmap in pixmaps/*; do \
-	    if test -f $$pixmap; then \
-	      cp -p $$pixmap $(distdir)/pixmaps; \
-	    fi \
-	  done \
-	fi
 

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.h,v 1.9 2004/02/01 19:46:21 erik Exp $
+ * $Id: db.h,v 1.10 2004/02/01 22:26:59 erik Exp $
  */
 
 #ifndef __DB_H
@@ -45,11 +45,11 @@
 /** initialize the db connection (done in shell) */
 int db_init (char *host, char *db, char *user, char *pass);
 
-/** initialize the db connection and generate the tables. */
-int db_init_firstrun (char *host, char *db, char *user, char *pass);
+/** generate the tables. */
+int db_init_firstrun ();
 
 /** add a message to the db */
-int db_insert_msg (char *mbox, message *);
+int db_insert_msg (char *mbox, message *m);
 
 /** add a mailbox to the db */
 int db_addmbox (char *mbox);
@@ -86,10 +86,10 @@ int db_normalize ();
 int db_is_child_of (int msg);
 
 /** return an array of rules */
-rule *db_fetch_rules (int *);
+rule *db_fetch_rules (int *count);
 
 /** set the rules (erasing the old ones)*/
-int db_set_rules (rule **);
+int db_set_rules (rule **r);
 
 /** set a preference */
 int db_pref_set (char *pref, char *val);

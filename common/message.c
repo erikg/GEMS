@@ -18,7 +18,7 @@ mutilate_line (char *line, int length)
 }
 
 message *
-message_build (void *list)
+message_build_from_list (void *list)
 {
   message *x;
   void *header;

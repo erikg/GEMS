@@ -69,7 +69,6 @@ load_parms (int *argc, char **margv)
     {
       char *a;
       a = ll_showline (ll);
-	printf("line: %s\n", a);fflush(stdout);
       if (!strcmp ("--", a))
 	{
 	  x--;

@@ -39,7 +39,7 @@ face_run (int argc, char **argv)
     {
       if (ll_rewind (list) == GEMS_FALSE)
 	printf (_("Failed rewind\n"));
-      mess = message_build (list);
+      mess = message_build_from_list (list);
 
       printf (_("%s: %s -> %s Subject: %s\n%s\n"), mess->id,
 	      mess->sender, mess->recipt, mess->subject, mess->body);

@@ -27,10 +27,13 @@ main (int argc, char **argv)
   void *dbi;
   void *face;
   void *common;
+  void *receptor;
 
   char *dbifullname;
   char *facefullname;
   char *commonname;
+  char *receptorname;
+  char *transmittorname;
   char **margv;			/* mutable argv */
 
   void (*_db_init) (char *, char *, char *, char *);
@@ -64,6 +67,10 @@ main (int argc, char **argv)
     (char *) malloc (strlen (p->libdir) + strlen (p->facename) +
 		     strlen ("/gems/libgems_face..so.."));
 
+  receptorname =
+    (char *) malloc (strlen (p->libdir) +
+		     strlen ("gems/libgemsreceptor.so."));
+
   if (p->libdir[0] != '\n' && p->libdir[0] != 0 && p->libdir[0] != '\r')
     {
       sprintf (dbifullname, "%s/gems/libgems_db.%s.so", p->libdir,
@@ -71,12 +78,14 @@ main (int argc, char **argv)
       sprintf (facefullname, "%s/gems/libgems_face.%s.so", p->libdir,
 	       p->facename);
       sprintf (commonname, "%sgems/libgemscommon.so", p->libdir);
+      sprintf (receptorname, "%sgems/libgemsreceptor.so", p->libdir);
     }
   else
     {
       sprintf (dbifullname, "gems/libgems_db.%s.so", p->dbiname);
       sprintf (facefullname, "gems/libgems_face.%s.so", p->facename);
       sprintf (commonname, "gems/libgemscommon.so");
+      sprintf (receptorname, "gems/libgemsreceptor.so");
     }
 
   if (p == NULL)
@@ -93,6 +102,15 @@ main (int argc, char **argv)
     }
 
   free (commonname);
+
+  if ((receptor = dlopen (receptorname, RTLD_LAZY | RTLD_GLOBAL)) == NULL)
+    {
+      printf ("Unable to open receptor library %s\n%s\n", receptorname,
+	      dlerror ());
+      return EXIT_FAILURE;
+    }
+
+  free (receptorname);
 
   dbi = dlopen (dbifullname, RTLD_LAZY | RTLD_GLOBAL);
   if (dbi == NULL)
@@ -130,7 +148,7 @@ main (int argc, char **argv)
 //  dlclose (face);	/* this freaks out gnome and causes segfault */
   dlclose (dbi);
   dlclose (common);
-
+  dlclose(receptor);
   return 0;
 /*  return EXIT_SUCCESS;	*/
 }

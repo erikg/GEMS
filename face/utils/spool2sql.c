@@ -50,7 +50,7 @@ face_run (int argc, char **margv)
     {
       if (ll_rewind (list) == GEMS_FALSE)
 	printf (_("Failed rewind\n"));
-      mess = message_build (list);
+      mess = message_build_from_list (list);
 
       if (mess->body == NULL)
 	printf (_("\nNull body!\n"));

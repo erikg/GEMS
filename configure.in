@@ -4,6 +4,7 @@ AM_INIT_AUTOMAKE(gems, 0.0)
 AC_CANONICAL_HOST
 
 ALL_LINGUAS=""
+GETOPT_LONG_DIR=""                                                              
 
 AM_PROG_LIBTOOL
 AC_PROG_MAKE_SET
@@ -23,6 +24,14 @@ AM_GNU_GETTEXT
 
 MYSQL=MySQL
 POSTGRESQL=
+
+AC_CHECK_FUNCS(getopt_long , [GETOPT_LONG_DIR=""], [
+        GETOPT_LONG_DIR="getopt_long"
+        CFLAGS="$CFLAGS -I../getopt_long"
+        LIBS="$LIBS ../getopt_long/libgetopt_long.a"
+        AC_DEFINE(NO_GETOPT_LONG)
+        ] )
+AC_SUBST(GETOPT_LONG_DIR)
 
 AM_PATH_GTK(1.1.0,GTK=GTK,GTK=)
 

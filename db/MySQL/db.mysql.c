@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.39 2004/05/30 21:01:14 erik Exp $
+ * $Id: db.mysql.c,v 1.40 2004/05/30 22:46:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -562,8 +562,7 @@ db_read_message (int id)
     MYSQL_ROW row;
 
     m = (message *) malloc (sizeof (message));
-
-    m->attachments = NULL;
+    memset (m, 0, sizeof (message));
 
     /*
      * body
@@ -647,8 +646,11 @@ db_read_message (int id)
 	exit (EXIT_FAILURE);
     }
     row = mysql_fetch_row (result);
-    m->recipt = (char *)malloc (*mysql_fetch_lengths (result) + 1);
-    sprintf (m->recipt, "%s", row[0]);
+    if (row)
+    {
+	m->recipt = (char *)malloc (mysql_fetch_lengths (result) + 1);
+	sprintf (m->recipt, "%s", row[0]);
+    }
     mysql_free_result (result);
 
     /*
@@ -686,11 +688,12 @@ db_read_message (int id)
 	exit (EXIT_FAILURE);
     }
     row = mysql_fetch_row (result);
-    m->replyto = (char *)malloc (*mysql_fetch_lengths (result) + 1);
-    sprintf (m->replyto, "%s", row[0]);
+    if (row)
+    {
+	m->replyto = (char *)malloc (*mysql_fetch_lengths (result) + 1);
+	sprintf (m->replyto, "%s", row[0]);
+    }
     mysql_free_result (result);
-
-    m->recvdate = NULL;
 
     sprintf (q, "update synopsis set status='read' where id='%d'", id);
     if (mysql_query (con, q) != 0)

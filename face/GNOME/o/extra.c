@@ -92,6 +92,7 @@ replyify (char *buf)
     free (buf);
     newbuf = stringinate (list);
     ll_clearlist (list);
-    free (list);
+//    if(list)
+//      free (list);
     return newbuf;
 }

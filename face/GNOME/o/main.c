@@ -36,26 +36,15 @@ update_mboxlist (gpointer nothing)
     GtkCTree *tree;
     int x = 0;
 
-    while (gtk_events_pending ())
-	gtk_main_iteration ();
-printf("Reading list.");fflush(stdout);
-    /*
-     * whoa this is slow. 
-     */
     mboxlist = (mboxs **) db_read_mboxlist ();
-printf(".\n");fflush(stdout);
-    while (gtk_events_pending ())
-	gtk_main_iteration ();
     tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
     gtk_clist_freeze (&GTK_CTREE (tree)->clist);
+    x = 0;
     while (mboxlist[x] != NULL)
     {
-	if (mboxlist[x]->hasunread > 0)
-	    gtk_clist_set_foreground (&(tree->clist), x, color_magenta);
-	else
-	    gtk_clist_set_foreground (&(tree->clist), x, color_black);
-    while (gtk_events_pending ())
-	gtk_main_iteration ();
+	gtk_clist_set_foreground (&(tree->clist), x-1,
+				  (mboxlist[x]->hasunread >
+				   0) ? color_magenta : color_black);
 	x++;
     }
     gtk_clist_thaw (&GTK_CTREE (tree)->clist);
@@ -70,31 +59,17 @@ set_mboxlist ()
     GtkCTree *tree;
     char *read, *unread, *marked, *all;
 
-    printf ("mboxlist: getting mboxlist\n");
-    fflush (stdout);
     mboxlist = (mboxs **) db_read_mboxlist ();
-    printf ("mboxlist: getting tree\n");
-    fflush (stdout);
     tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
-    printf ("mboxlist: allocating\n");
-    fflush (stdout);
-    all = (char *) malloc (12);
-    sprintf (all, "all");
-    read = (char *) malloc (12);
-    sprintf (read, "read");
-    unread = (char *) malloc (12);
-    sprintf (unread, "unread");
-    marked = (char *) malloc (12);
-    sprintf (marked, "marked");
+    all = strdup ("all");
+    read = strdup ("read");
+    unread = strdup ("unread");
+    marked = strdup ("marked");
 
-    printf ("mboxlist: prepping list\n");
-    fflush (stdout);
     gtk_clist_freeze (&GTK_CTREE (tree)->clist);
     gtk_clist_clear (&GTK_CTREE (tree)->clist);
 
     x = 0;
-    printf ("mboxlist: building\n");
-    fflush (stdout);
     while (mboxlist[x] != NULL)
     {
 	GtkCTreeNode *node, *n;
@@ -127,18 +102,12 @@ set_mboxlist ()
 	x++;
     }
 
-    printf ("mboxlist: thawing\n");
-    fflush (stdout);
     /*
      * gtk_ctree_select(GTK_CTREE (tree), select_node);
      */
     gtk_clist_thaw (&GTK_CTREE (tree)->clist);
     free (mboxlist);
-    printf ("mboxlist: doing color stuff\n");
-    fflush (stdout);
-    /*
-     * update_mboxlist (NULL); 
-     */
+    update_mboxlist (NULL);
     return;
 }
 
@@ -160,21 +129,14 @@ face_run (int argc, char *argv[])
     bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
     textdomain (PACKAGE);
 #endif
-    printf ("Initting GNOME\n");
-    fflush (stdout);
     gnome_init ("gems", VERSION, argc, argv);
-
-    printf ("building gems\n");
-    fflush (stdout);
     gems = create_gems ();
     gtk_widget_realize (gems);
 
-    printf ("setting colors\n");
-    fflush (stdout);
     color_magenta = (GdkColor *) malloc (sizeof (GdkColor));
     color_black = (GdkColor *) malloc (sizeof (GdkColor));
 
-    color_magenta->red = (40000);
+    color_magenta->red = (65535);
     color_magenta->green = (0);
     color_magenta->blue = (0);
     color_black->red = (0);
@@ -186,12 +148,7 @@ face_run (int argc, char *argv[])
 	g_error (_("Color allocation failed\n"));
 
 
-    printf ("setting mboxlist\n");
-    fflush (stdout);
     set_mboxlist ();
-
-    printf ("setting preferences\n");
-    fflush (stdout);
     if ((x = (char *) db_pref_get ("GNOME_o_hpaned_pos")) != NULL)
 	gtk_paned_set_position (GTK_PANED (lookup_widget (gems, "hpaned1")),
 				atoi (x));
@@ -219,14 +176,8 @@ face_run (int argc, char *argv[])
     if ((x = (char *) db_pref_get ("GNOME_o_maillist_col2")) != NULL)
 	c->column[1].width = atoi (x);
 
-    printf ("Showing gems\n");
-    fflush (stdout);
     gtk_widget_show (gems);
-    printf ("adding update timeout\n");
-    fflush (stdout);
     gtk_timeout_add (600000, update_mboxlist, NULL);
-    printf ("main\n");
-    fflush (stdout);
     gtk_main ();
 
     return 0;

@@ -351,7 +351,7 @@ db_read_mboxlist (void)
     MYSQL_RES *result;
     MYSQL_ROW row;
 
-    if (mysql_query (con, "select mboxname,mbox from mmbox") != 0)
+    if (mysql_query (con, "select mboxname,mbox from mmbox order by mbox") != 0)
     {
 	oops ("failed to read mailbox list", mysql_error (con));
 	exit (0);

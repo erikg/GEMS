@@ -20,13 +20,14 @@
  *****************************************************************************/
 
 /*
- * $Id: parms.c,v 1.5 2003/04/05 18:36:29 erik Exp $
+ * $Id: parms.c,v 1.6 2003/11/11 15:30:42 erik Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "config.h"
 #include "defs.h"
 #include "ll.h"
 #include "parms.h"

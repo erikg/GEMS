@@ -24,5 +24,5 @@ parms;
  */
 
 extern parms *load_parms (int *, char **);
-
+void parms_destroy(parms *p);
 #endif

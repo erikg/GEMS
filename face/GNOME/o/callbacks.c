@@ -159,8 +159,8 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
   int x = 0, mboxcount;
   mboxview *m;
 
-//  gtk_signal_handler_block(GTK_OBJECT(ctree), GtkCTreeClass->select_row);
-  
+/*  gtk_signal_handler_block(GTK_OBJECT(ctree), GtkCTreeClass->select_row);
+  */
   n = gtk_ctree_node_nth (ctree, (&(ctree->clist))->focus_row);
   m = (mboxview *) gtk_ctree_node_get_row_data (ctree, n);
 
@@ -225,7 +225,8 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
 
   gtk_clist_thaw (clist);
   gnome_appbar_pop (GNOME_APPBAR (stat));
-//  gtk_signal_handler_unblock(GTK_OBJECT(ctree), select_row);
+/*  gtk_signal_handler_unblock(GTK_OBJECT(ctree), select_row);
+*/
 }
 
 void

@@ -90,9 +90,9 @@ set_mboxlist ()
 
       x++;
     }
-
+/*
   gtk_ctree_select(GTK_CTREE (tree), select_node);
-
+*/
   gtk_clist_thaw (&GTK_CTREE (tree)->clist);
   free (mboxlist);
   return;

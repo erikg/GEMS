@@ -1,4 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include "defs.h"
 #include "receptor.h"
 #include "message.h"
@@ -99,6 +103,7 @@ printf("Max message: %d\n", max);fflush(stdout);
 		i++;
 	}
 	printf("Message: %s\n",buf);
+#if 0
 //              while(getline != ".")
 //                      list_add(l, getline)
 
@@ -107,7 +112,9 @@ printf("Max message: %d\n", max);fflush(stdout);
 //	  mbox = rule_check (mess);
 //	  db_insert_msg (mbox, mess);
 //	  message_destroy (mess);
+#endif
 	  ll_clearlist (list);
+
       }
     close (s);
     return GEMS_TRUE;

@@ -145,7 +145,9 @@ main (int argc, char **argv)
 
   parms_destroy (parm);
   _db_close ();
-//  dlclose (face);	/* this freaks out gnome and causes segfault */
+#if 0
+  dlclose (face);	/* this freaks out gnome and causes segfault */
+#endif
   dlclose (dbi);
   dlclose (common);
   dlclose(receptor);

@@ -385,7 +385,7 @@ db_read_mboxlist (void)
 	strcpy (mboxlist[x]->name, row[0]);
 	mboxlist[x]->id = atoi (row[1]);
     }
-    // mysql_free_result (result);
+    mysql_free_result (result);
 
     for (x = 0; x < mboxcount; x++)
     {
@@ -395,7 +395,7 @@ db_read_mboxlist (void)
 	if (mysql_query (con, q) != 0)
 	{
 	    oops ("failed to count unread messages", mysql_error (con));
-	    // exit (0);
+	    exit (0);
 	}
 	result = mysql_store_result (con);
 	row = mysql_fetch_row (result);

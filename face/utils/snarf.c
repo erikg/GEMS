@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: snarf.c,v 1.16 2004/05/31 13:07:41 erik Exp $
+ * $Id: snarf.c,v 1.17 2004/10/17 18:58:33 erik Exp $
  */
 
 #include <stdio.h>
@@ -124,6 +124,7 @@ face_run (int argc, char **argv)
     while (++argv, --argc)
     {
 	fd = open (argv[1], O_RDONLY);
+	flock(fd, LOCK_EX);
 
 	if (fd <= 0)
 	{
@@ -134,6 +135,7 @@ face_run (int argc, char **argv)
 	size = read (fd, buf, BIGBUFSIZ);
 	buf[size] = 0;
 	parse (buf, size);
+	flock(fd, LOCK_UN);
 	close (fd);
     }
 

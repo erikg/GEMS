@@ -1,10 +1,11 @@
-dnl $Id: configure.in,v 1.21 2003/04/11 17:17:23 erik Exp $
+dnl $Id: configure.in,v 1.22 2003/04/17 13:48:15 erik Exp $
 
 AC_INIT(README)
-AC_CANONICAL_HOST
 AM_INIT_AUTOMAKE(gems, 0.0)
 
 ALL_LINGUAS=""
+
+AC_CANONICAL_HOST
 
 AC_PROG_CC
 AM_PROG_LIBTOOL

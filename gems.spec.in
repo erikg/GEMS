@@ -1,13 +1,13 @@
 Summary: A modular MUA.
-Name: gems
-Version: 0.0
+Name: @PACKAGE@
+Version: @VERSION@
 Release: 1
 Copyright: GPL
 Vendor: Erik Greenwald
-Url: http://math.smsu.edu/~br0ke/gems.html
+Url: http://math.smsu.edu/~erik/software.php?name=gems
 Group: Applications/Mail
-Source0: http://math.smsu.edu/~br0ke/files/gems-0.0.tar.gz
-Buildroot: /var/tmp/gems
+Source0: http://math.smsu.edu/~erik/files/@PACKAGE@-@VERSION.tar.gz
+Buildroot: /var/tmp/@PACKAGE@
 
 %description
 kickass MUA

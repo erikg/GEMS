@@ -177,8 +177,6 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
     ctree1 = lookup_widget (gems, "ctree1");
     appbar = lookup_widget (gems, "appbar1");
 
-    update_mboxlist ();
-
     /*** TODO *** clear the mail things */
     putmail (NULL);
 
@@ -227,6 +225,8 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
     }
     free (syn);
 
+    update_mboxlist ();
+
     gnome_appbar_set_progress (GNOME_APPBAR (appbar), 0.0);
 
     gtk_clist_thaw (clist);
@@ -244,7 +244,7 @@ on_toolbar_prev_clicked (GtkButton * button, gpointer user_data)
     gint row;
     GtkCTreeNode *n;
 
-    ctree = GTK_CTREE(lookup_widget (gems, "ctree1"));
+    ctree = GTK_CTREE (lookup_widget (gems, "ctree1"));
 
     if (ctree->clist.rows < 1)
 	return;
@@ -383,7 +383,7 @@ on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
     GtkWidget *from, *to, *subj, *date, *recipt, *body, *comp, *widget;
     char *shtuff;
 
-    widget = lookup_widget(gems, "ctree1");
+    widget = lookup_widget (gems, "ctree1");
 
     if (widget != NULL)
     {
@@ -397,7 +397,7 @@ on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
     comp = create_compose ();
 
     from = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry1");
-//    to   = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry5");
+    // to = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry5");
     date = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry2");
     subj = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry6");
     recipt = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry4");

@@ -63,7 +63,7 @@ ll_rewind (void *this)
     return GEMS_TRUE;
 }
 
-int				/* this is a major bottleneck (50% of * *
+int				/* this is a major bottleneck (50% of * * *
 				 * spool2sql is here) */
 ll_addnode (void *this, char *line)
 {

@@ -61,12 +61,12 @@ face_run (int argc, char **margv)
 	if (mess->body == NULL)
 	    printf (_("\nNull body!\n"));
 	mbox = rule_check (mess);
-	db_insert_msg (mbox, mess);
+	if (db_insert_msg (mbox, mess) == GEMS_FALSE)
+	    printf ("db_insert_msg failed in spool2sqlfast\n");
 	if (message_destroy (mess) == GEMS_FALSE)
 	    printf (_("Couldn't flush message out of memory!\n"));
 	printf (".");
 	fflush (stdout);
-
     }
     if (rule_close () == GEMS_FALSE)
     {
@@ -78,3 +78,4 @@ face_run (int argc, char **margv)
     printf ("\n");
     return GEMS_TRUE;
 }
+

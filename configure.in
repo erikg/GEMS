@@ -92,7 +92,7 @@ AC_SUBST(MY_LDADD)
 
 AC_OUTPUT([
 Makefile po/Makefile.in intl/Makefile common/Makefile db/Makefile face/Makefile
-face/utils/Makefile shell/Makefile include/Makefile
+face/utils/Makefile shell/Makefile include/Makefile getopt_long/Makefile
 receptor/Makefile transmitter/Makefile
 db/MySQL/Makefile
 face/GTK/Makefile face/GTK/e/Makefile

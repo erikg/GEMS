@@ -23,7 +23,8 @@ rule_init ()
     preg = (void *) malloc (sizeof (regex_t) * (numrules + 1));
     memset (preg, 0, sizeof (regex_t) * (numrules + 1));
     for (x = 0; x < numrules; x++)
-	regcomp (&preg[x], rules[x].regex, REG_EXTENDED|REG_ICASE|REG_NOSUB);
+	regcomp (&preg[x], rules[x].regex,
+		 REG_EXTENDED | REG_ICASE | REG_NOSUB);
     return GEMS_TRUE;
 }
 

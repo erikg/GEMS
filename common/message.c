@@ -135,40 +135,44 @@ message_build_from_buffer (char *buf)
     for (i = x; i; i--)
 	if (buf[i] == '\n' && buf[i + 1] == '\n')
 	    buf[i + 1] = 0;
+    for (i = x; i; i--)
+	if (buf[i] == '\n')
+	    buf[i] = 0;
     while (i < x)
     {
 	switch (tolower (buf[i]))
 	{
 	case 'c':
-	    if (!strcmp (buf + i, "Cc: "))
+	    if (!strncmp (buf + i, "Cc: ", 4))
 		m->recipt = strdup (buf + i + 4);
 	    break;
 	case 'd':
-	    if (!strcmp (buf + i, "Date: "))
+	    if (!strncmp (buf + i, "Date: ", 6))
 		m->senddate = strdup (buf + i + 6);
 	    break;
 	case 'f':
-	    if (!strcmp (buf + i, "From: "))
+	    if (!strncmp (buf + i, "From: ", 6))
 		m->sender = strdup (buf + i + 6);
 	    break;
 	case 'm':
-	    if (!strcmp (buf + i, "Message-") && (tolower (buf[i + 8]) == 'i')
+	    if (!strncmp (buf + i, "Message-", 8)
+		&& (tolower (buf[i + 8]) == 'i')
 		&& (tolower (buf[i + 9]) == 'd')
-		&& strcmp (buf + i + 10, ": "))
+		&& !strncmp (buf + i + 10, ": ", 2))
 		m->id = strdup (buf + i + 12);
 	    break;
 	case 'r':
-	    if (!strcmp (buf + i, "References: "))
+	    if (!strncmp (buf + i, "References: ", 12))
 		m->references = strdup (buf + i + 12);
-	    if (!strcmp (buf + i, "Reply-To: "))
+	    if (!strncmp (buf + i, "Reply-To: ", 10))
 		m->replyto = strdup (buf + i + 10);
 	    break;
 	case 's':
-	    if (!strcmp (buf + i, "Subject: "))
+	    if (!strncmp (buf + i, "Subject: ", 9))
 		m->subject = strdup (buf + i + 9);
 	    break;
 	case 't':
-	    if (!strcmp (buf + i, "To: "))
+	    if (!strncmp (buf + i, "To: ", 4))
 		m->recipt = strdup (buf + i + 4);
 	    break;
 	default:
@@ -177,6 +181,8 @@ message_build_from_buffer (char *buf)
 	    i++;
 	i++;
     }
+    if (m->replyto == NULL)
+	m->replyto = strdup (m->sender);
     return m;
 }
 

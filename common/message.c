@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: message.c,v 1.14 2003/04/19 18:08:13 erik Exp $
+ * $Id: message.c,v 1.15 2004/02/13 00:53:30 erik Exp $
  */
 
 #include <stdio.h>
@@ -179,9 +179,9 @@ message_build_from_buffer (char *buf)
     x=0;
     while ( buf[x] )
 	if( (buf[x]=='\n'||buf[x]=='\r') &&
-		(  strncmp(buf+x,"\n\n",2)
-		|| strncmp(buf+x,"\n\r\n\r",4)
-		|| strncmp(buf+x,"\r\n\r\n",4)))
+		(  !strncmp(buf+x,"\n\n",2)
+		|| !strncmp(buf+x,"\n\r\n\r",4)
+		|| !strncmp(buf+x,"\r\n\r\n",4)))
 		goto OUT;
 	else
 		x++;

@@ -1,10 +1,10 @@
-dnl $Id: configure.ac,v 1.2 2004/05/21 13:28:40 erik Exp $
+dnl $Id: configure.ac,v 1.3 2004/07/25 14:55:46 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE(gems, 0.0)
-AM_MAINTAINER_MODE
+#AM_MAINTAINER_MODE
 
 AM_CONFIG_HEADER([include/config.h])
 

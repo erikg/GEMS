@@ -60,15 +60,15 @@ parse (char *buf, unsigned int size)
 		msgcount++;
 	    }
 
-    --msgcount;
-    for (i = 0; i <= msgcount; i++)
+    for (i = 1; i <= msgcount; i++)
 	{
 		message *m;
-		printf("             \r%d/%d  (%.2f%%)", i, msgcount, 100.0*(float)i/(float)msgcount);
+		printf("\r                                                                               \r");
+		printf("%d/%d  (%.2f%%)", i, msgcount, 100.0*(float)i/(float)msgcount);
 		fflush(stdout);
-		m = message_build_from_buffer(msg[i]);
+		m = message_build_from_buffer(msg[i-1]);
 		mbox = rule_check(m);
-		db_insert_msg(mbox,m);
+		db_insert_msg(mbox,m);	/* this sucks up time */
 		message_destroy(m);
 	}
 	printf("\n");

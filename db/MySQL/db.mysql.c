@@ -98,6 +98,23 @@ db_insert_msg (char *mboxname, message * m)
     MYSQL_RES *result;
     MYSQL_ROW row;
 
+    /*
+     * check if it's a redundant entry
+     */
+    sprintf (q, "select * from synopsis where charid='%s'", m->id);
+    if (mysql_query (con, q) != 0)
+    {
+	oops ("failed to check for dup", NULL);
+	exit (0);
+    }
+    result = mysql_store_result (con);
+    row = mysql_fetch_row (result);
+    if(row!=NULL){
+	    mysql_free_result(result);
+	   return GEMS_TRUE;
+    }
+    mysql_free_result(result);
+
     /* 01 this can be table-ized or fixed in the db... */
     sprintf (q, "select mbox from mmbox where mboxname='%s'", mboxname);
     if (mysql_query (con, q) != 0)
@@ -111,19 +128,6 @@ db_insert_msg (char *mboxname, message * m)
     mysql_free_result (result);
     /* /01 */
 
-    /*
-     * check if it's a redundant entry
-     */
-    sprintf (q, "select * from synopsis where charid='%s'", m->id);
-    if (mysql_query (con, q) != 0)
-    {
-	oops ("failed to check for dup", NULL);
-	exit (0);
-    }
-    result = mysql_store_result (con);
-    row = mysql_fetch_row (result);
-    if(row!=NULL)
-	   return GEMS_TRUE;
     /*
     count = (row == NULL ? 0 : atoi (row[0]));
     mysql_free_result (result);
@@ -139,7 +143,7 @@ db_insert_msg (char *mboxname, message * m)
     if (m->header == NULL)
 	oops ("NULL header", NULL);
     a = spawn_escape_string (m->header,0);
-    sprintf (q, "insert into header values (0,'%s')", a);
+    sprintf (q, "insert into header values (0,'%s','false')", a);
 /*    free (a);*/
     if (mysql_query (con, q) != 0)
     {
@@ -155,7 +159,7 @@ db_insert_msg (char *mboxname, message * m)
     if (m->body == NULL)
 	oops ("NULL body", NULL);
     a = spawn_escape_string (m->body,0);
-    sprintf (q, "insert into body values (%ld,'%s')", id, a);
+    sprintf (q, "insert into body values (%ld,'%s','false')", id, a);
 /*    free (a);*/
     if (mysql_query (con, q) != 0)
     {
@@ -194,6 +198,7 @@ db_insert_msg (char *mboxname, message * m)
     }
     if (m->recipt == NULL)
 	oops ("NULL recipt", NULL);
+#if 0
     a = spawn_escape_string (m->recipt,0);
     sprintf (q, "insert into recipt values (%ld,'%s','to')", id, a);
 /*    free (a);*/
@@ -223,6 +228,7 @@ db_insert_msg (char *mboxname, message * m)
 	    exit (0);
 	}
     }
+#endif
     isnormal = GEMS_FALSE;
     return GEMS_TRUE;
 }

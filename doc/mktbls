@@ -3,7 +3,7 @@ create table body        (id int unsigned primary key not null, body longtext no
 create table header      (id int unsigned auto_increment not null primary key, header text not null);
 create table mmbox       (mbox int primary key not null auto_increment, mboxname text not null);
 create table preferences (name text not null, value text not null);
-create table synopsis    (id int unsigned primary key not null, mbox int not null, senddate date not null, sender text not null, subject text not null);
+create table synopsis    (id int unsigned primary key not null unique, mbox int not null, senddate date not null, sender text not null, subject text not null);
 create table recipt      (id int unsigned not null, recipt text not null, type tinytext not null);
 create table refs  (id int unsigned not null, refs text not null, number int unsigned not null);
 create table replyto	 (id int unsigned not null, replyto tinytext not null);

@@ -1,11 +1,11 @@
-# $Id: Makefile.am,v 1.3 2003/04/18 01:52:21 erik Exp $
+# $Id: Makefile.am,v 1.4 2003/04/18 21:16:23 erik Exp $
 
 gemslibdir = $(libdir)/gems
 gemslib_LTLIBRARIES = libgems_face.GNOME2_o.la
 
-libgems_face_GNOME2_o_la_SOURCES = callbacks.c extra.c interface.c main.c support.c
+libgems_face_GNOME2_o_la_SOURCES = callbacks.c interface.c main.c support.c
  
-noinst_HEADERS= callbacks.h extra.h interface.h support.h
+noinst_HEADERS= callbacks.h interface.h support.h
 
 EXTRA_DIST = gems.glade gems.gladep
  

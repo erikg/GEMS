@@ -19,6 +19,7 @@ extern GtkWidget *gems;	/* nasty. Must preceed extra.h */
 
 #define SORT_DIRECTION 128
 extern unsigned char sort;
+extern void update_mboxlist();
 
 void
 on_new_file1_activate (GtkMenuItem * menuitem, gpointer user_data)
@@ -175,7 +176,7 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
   appbar = lookup_widget (gems, "appbar1");
 
   /* update the mboxlist (ctree2) */
-
+  update_mboxlist();
   /*** TODO XXX TODO ***/
   
   gnome_appbar_push (GNOME_APPBAR (stat), _("Reading synopsis"));

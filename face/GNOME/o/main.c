@@ -30,13 +30,34 @@ oops (char *a, char *b)
 }
 
 void
+update_mboxlist()
+{
+  mboxs **mboxlist;
+  GtkCTree *tree;
+  int x=0;
+
+	/* whoa this is slow. */
+  mboxlist = (mboxs **) db_read_mboxlist ();
+  tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
+  gtk_clist_freeze (&GTK_CTREE (tree)->clist);
+  while(mboxlist[x]!=NULL)
+  {
+      if (mboxlist[x]->hasunread > 0)
+	gtk_clist_set_foreground (&(tree->clist), x, color_magenta);
+      else
+	gtk_clist_set_foreground (&(tree->clist), x, color_black);
+      x++;
+  }
+  gtk_clist_thaw (&GTK_CTREE (tree)->clist);
+}
+
+void
 set_mboxlist ()
 {
   int x;
   mboxs **mboxlist;
   GtkCTree *tree;
   char *read, *unread, *marked, *all;
-  GtkCTreeNode *select_node;
 
   mboxlist = (mboxs **) db_read_mboxlist ();
   tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
@@ -85,8 +106,6 @@ set_mboxlist ()
 			       NULL, TRUE, TRUE);
       gtk_ctree_node_set_row_data (tree, n,
 				   new_mboxview (mboxlist[x], DB_MARKED));
-      if (mboxlist[x]->hasunread > 0)
-	gtk_clist_set_foreground (&(tree->clist), x, color_magenta);
 
       x++;
     }
@@ -95,6 +114,7 @@ set_mboxlist ()
 */
   gtk_clist_thaw (&GTK_CTREE (tree)->clist);
   free (mboxlist);
+  update_mboxlist();
   return;
 }
 

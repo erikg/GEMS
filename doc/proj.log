@@ -170,3 +170,9 @@ Aug27:
 		* mime
 	Everything is now called 'gems'. s/bmail/gems/ everywhere
 
+Dec 14:
+	Happy bday to me.
+
+Dec 15:
+	Tweaked the gnome makefiles and configure.in file so it fbsd is happy
+

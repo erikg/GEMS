@@ -21,6 +21,7 @@ rule_init ()
 {
   int x;
   inbox = (char *) malloc (sizeof ("inbox") + sizeof (char));
+  
   sprintf (inbox, "inbox");
   rules = (rule *) db_fetch_rules ((int *) &numrules);
   preg = (void *) malloc (sizeof (void *) * (numrules + 1));
@@ -63,15 +64,11 @@ rule_check (message * m)
 {
   int x;
   char *c;			/* the section of the email we care about */
-
   for (x = 0; x < numrules; x++)
     {
       c = rule_concern (&rules[x], m);
-
-      if (regexec (preg[x], c, strlen (c), pmatch, REG_NOSUB) == 0)
-	{
+      if (regexec (preg[x], c, strlen (c), pmatch, 0/*REG_NOSUB*/) == 0)
 	  return rules[x].mbox;
-	}
     }
   return inbox;
 }

@@ -395,7 +395,7 @@ db_read_mboxlist (void)
 	{
 	  free (q);
 	  oops ("failed to count unread messages", mysql_error (con));
-	  exit (0);
+//	  exit (0);
 	}
       result = mysql_store_result (con);
       row = mysql_fetch_row (result);

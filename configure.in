@@ -1,26 +1,19 @@
-dnl $Id: configure.in,v 1.24 2003/10/11 17:17:01 erik Exp $
+dnl $Id: configure.in,v 1.25 2003/10/19 00:47:45 erik Exp $
 
 AC_INIT(README)
-AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE(gems, 0.0)
 AM_MAINTAINER_MODE
 
 ALL_LINGUAS=""
 
-AC_CANONICAL_HOST
-
 AC_PROG_CC
 AM_PROG_LIBTOOL
-AC_PROG_MAKE_SET
-AC_PROG_CXX
 AC_PROG_INSTALL
 AC_ISC_POSIX
 
 AC_C_CONST
 AC_STDC_HEADERS
-
-AC_FUNC_ALLOCA
 
 CFLAGS="$CFLAGS -I\$(top_srcdir)/include -I/usr/local/include"
 
@@ -30,6 +23,8 @@ GETTEXT_PACKAGE=gems
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
 AM_GLIB_GNU_GETTEXT
+intl=
+AC_SUBST(intl)
 
 MYSQL=MySQL
 MYSQL_LIBADD="-L/usr/local/lib/mysql -L/usr/lib/mysql -lmysqlclient"
@@ -48,6 +43,8 @@ LDL_LIBS=""
 AC_CHECK_FUNCS(dlopen , , [AC_CHECK_LIB(dl, dlopen, LDL_LIBS="")])
 AC_SUBST(LDL_LIBS)
 
+dnl **************************************************************************
+dnl ************************  FACES  *****************************************
 dnl **************************************************************************
 
 GTK=
@@ -135,43 +132,20 @@ AC_SUBST(MY_LDFLAGS)
 AC_SUBST(MY_LDADD)
 
 AC_OUTPUT([
-Makefile po/Makefile.in intl/Makefile common/Makefile db/Makefile face/Makefile
-face/utils/Makefile shell/Makefile include/Makefile
-receptor/Makefile transmitter/Makefile
-db/MySQL/Makefile
-face/GTK/Makefile face/GTK/e/Makefile
-face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile
-face/GNOME2/Makefile face/GNOME2/Makefile face/GNOME2/o/Makefile
-doc/Makefile
-])
+	Makefile po/Makefile.in intl/Makefile common/Makefile db/Makefile face/Makefile
+	face/utils/Makefile shell/Makefile include/Makefile
+	receptor/Makefile transmitter/Makefile
+	db/MySQL/Makefile
+	face/GTK/Makefile face/GTK/e/Makefile
+	face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile
+	face/GNOME2/Makefile face/GNOME2/o/Makefile
+	doc/Makefile])
 
 dnl print out what we learned...
 echo -e \\n\\n
 echo "==============================================================================="
-echo -n "DBMS's: "
-if test "$MYSQL" = "MySQL"; then
-echo -n "MySQL "
-fi
-if test "$POSTGRESQL" = "PostgreSQL"; then
-echo -n "PostgreSQL "
-fi
-echo
-echo -n "Face sets: "
-if test "$GTK" = "GTK"; then
-echo -n "GTK+ "
-fi
-if test "$GNOME" = "GNOME"; then
-echo -n "GNOME "
-fi
-if test "$GNOME2" = "GNOME2"; then
-echo -n "GNOME2 "
-fi
-if test "$CURSES" = "curses"; then
-echo -n "curses"
-fi
-echo
-echo
+echo "DBMS's: $MYSQL $POSTGRESQL"
+echo "Face sets: $GTK $GNOME $GNOME2 $CURSES"
 echo "Installing to: $prefix"
-echo
 echo "==============================================================================="
 

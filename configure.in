@@ -1,7 +1,8 @@
-dnl $Id: configure.in,v 1.22 2003/04/17 13:48:15 erik Exp $
+dnl $Id: configure.in,v 1.23 2003/04/17 15:49:45 erik Exp $
 
 AC_INIT(README)
 AM_INIT_AUTOMAKE(gems, 0.0)
+AM_MAINTAINER_MODE
 
 ALL_LINGUAS=""
 
@@ -22,7 +23,11 @@ AC_FUNC_ALLOCA
 CFLAGS="$CFLAGS -I\$(top_srcdir)/include -I/usr/local/include"
 
 dnl AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT()
+dnl AM_GNU_GETTEXT()
+GETTEXT_PACKAGE=gems
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
+AM_GLIB_GNU_GETTEXT
 
 MYSQL=MySQL
 MYSQL_LIBADD="-L/usr/local/lib/mysql -L/usr/lib/mysql -lmysqlclient"
@@ -41,6 +46,8 @@ LDL_LIBS=""
 AC_CHECK_FUNCS(dlopen , , [AC_CHECK_LIB(dl, dlopen, LDL_LIBS="")])
 AC_SUBST(LDL_LIBS)
 
+dnl **************************************************************************
+
 GTK=
 AC_ARG_ENABLE(gtk,
 [  --enable-gtk            Use GTK (default=yes)],use_gtk=no,use_gtk=yes)
@@ -48,6 +55,8 @@ if test "$use_gtk" = "yes"
 then
     AM_PATH_GTK(1.1.0,GTK=GTK,GTK=)
 fi
+
+dnl **************************************************************************
 
 GNOME=
 AC_ARG_WITH(gnome-includes,
@@ -79,6 +88,18 @@ else
                 AC_MSG_RESULT(no)
 fi
 
+dnl **************************************************************************
+
+GNOME2=GNOME2
+pkg_modules="libgnomeui-2.0"
+PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+GNOME2_CFLAGS=$PACKAGE_CFLAGS
+GNOME2_LIBS=$PACKAGE_LIBS
+AC_SUBST(GNOME2_CFLAGS)
+AC_SUBST(GNOME2_LIBS)
+
+dnl **************************************************************************
+
 CURSES=
 CURSEMAKE=
 dnl AC_CHECK_CURSES
@@ -97,6 +118,8 @@ AC_SUBST(GTK)
 AC_SUBST(GNOME)
 AC_SUBST(GNOME2)
 AC_SUBST(CURSES)
+
+dnl **************************************************************************
 
 AC_CHECK_FUNCS(dlopen, [MY_LDADD=""], [
   AC_CHECK_LIB(dl, dlopen, [MY_LDADD="-ldl"], [

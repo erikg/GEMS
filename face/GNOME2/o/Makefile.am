@@ -1,11 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = po
+#SUBDIRS = po
 
 INCLUDES = \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
-	@PACKAGE_CFLAGS@
+	@GNOME2_CFLAGS@
 
 bin_PROGRAMS = gems
 
@@ -15,7 +15,7 @@ gems_SOURCES = \
 	interface.c interface.h \
 	callbacks.c callbacks.h
 
-gems_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
+gems_LDADD = @GNOME2_LIBS@ $(INTLLIBS)
 
 EXTRA_DIST = \
 	autogen.sh \

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.18 2003/11/11 15:05:22 erik Exp $
+ * $Id: callbacks.c,v 1.19 2003/11/12 20:58:18 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -893,5 +893,34 @@ on_mboxcustomcancel_clicked            (GtkButton       *button,
                                         gpointer         user_data)
 {
     gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "custom_mbox"));
+}
+
+
+gboolean
+on_mboxlist_keyevent                   (GtkWidget       *widget,
+                                        GdkEventKey     *event,
+                                        gpointer         user_data)
+{
+    switch (event->keyval)
+    {
+    case GDK_Return:
+    case GDK_space:
+	putmail (widget);
+	break;
+    case GDK_N:
+    case GDK_n:
+    case GDK_Right:
+	on_toolbar_next_clicked (NULL, NULL);
+	break;
+    case GDK_P:
+    case GDK_p:
+    case GDK_Left:
+	on_toolbar_prev_clicked (NULL, NULL);
+	break;
+    default:
+	break;
+    }
+
+    return FALSE;
 }
 

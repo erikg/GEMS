@@ -421,6 +421,11 @@
 	    <handler>on_mboxlist_event</handler>
 	    <last_modification_time>Mon, 13 Mar 2000 03:27:27 GMT</last_modification_time>
 	  </signal>
+	  <signal>
+	    <name>key_press_event</name>
+	    <handler>on_mboxlist_keyevent</handler>
+	    <last_modification_time>Tue, 11 Nov 2003 23:30:02 GMT</last_modification_time>
+	  </signal>
 	  <columns>1</columns>
 	  <column_widths>80</column_widths>
 	  <selection_mode>GTK_SELECTION_SINGLE</selection_mode>

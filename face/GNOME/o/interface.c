@@ -535,6 +535,9 @@ create_gems (void)
   gtk_signal_connect (GTK_OBJECT (ctree2), "event",
                       GTK_SIGNAL_FUNC (on_mboxlist_event),
                       NULL);
+  gtk_signal_connect (GTK_OBJECT (ctree2), "key_press_event",
+                      GTK_SIGNAL_FUNC (on_mboxlist_keyevent),
+                      NULL);
   gtk_signal_connect (GTK_OBJECT (ctree1), "event",
                       GTK_SIGNAL_FUNC (on_ctree1_event),
                       NULL);

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.h,v 1.6 2003/11/11 15:05:22 erik Exp $
+ * $Id: callbacks.h,v 1.7 2003/11/12 20:58:18 erik Exp $
  */
 
 #include <gnome.h>
@@ -144,4 +144,9 @@ on_mboxcustomapply_clicked             (GtkButton       *button,
 
 void
 on_mboxcustomcancel_clicked            (GtkButton       *button,
+                                        gpointer         user_data);
+
+gboolean
+on_mboxlist_keyevent                   (GtkWidget       *widget,
+                                        GdkEventKey     *event,
                                         gpointer         user_data);

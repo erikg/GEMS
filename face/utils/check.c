@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: check.c,v 1.1 2004/10/17 17:14:58 erik Exp $
+ * $Id: check.c,v 1.2 2005/01/05 13:33:40 erik Exp $
  */
 
 #include <stdio.h>
@@ -56,12 +56,11 @@ face_run (int argc, char **margv)
 {
     void *list;
     message *mess;
-    char *spoolname, *mbox;
-    rule *rules;
-    int numrules;
 
+/*
     if (close_spool () != GEMS_TRUE)
 	printf (_("Couldn't close the spool\n"));
+*/
 
     printf ("\n");
 

@@ -62,7 +62,7 @@ parse (char *buf, unsigned int size)
 		printf(".");fflush(stdout);
 		m = message_build_from_buffer(msg[i]);
 		mbox = rule_check(m);
-		db_insert_msg(mbox,m);
+//		db_insert_msg(mbox,m);
 		message_destroy(m);
 	}
 	printf("\n");
@@ -91,9 +91,7 @@ face_run (int argc, char **argv)
 
     size = read (fd, buf, BIGBUFSIZ);
     buf[size] = 0;
-printf("Parsing\n");
     parse (buf, size);
-printf("Parsed\n");
 
     if (rule_close () == GEMS_FALSE)
     {

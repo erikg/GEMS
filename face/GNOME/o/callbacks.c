@@ -224,17 +224,18 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
 	x++;
     }
     free (syn);
+    gtk_clist_set_sort_column (clist, 2);
+    gtk_clist_set_sort_type (clist, GTK_SORT_ASCENDING);
+    gtk_clist_sort (clist);
     gtk_clist_thaw (clist);
-
     update_mboxlist ();
-
     gnome_appbar_set_progress (GNOME_APPBAR (appbar), 0.0);
-
     gnome_appbar_pop (GNOME_APPBAR (stat));
 
     /*
      * gtk_signal_handler_unblock(GTK_OBJECT(ctree), select_row);
      */
+
 }
 
 void

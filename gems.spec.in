@@ -2,7 +2,7 @@ Summary: A modular MUA.
 Name: @PACKAGE@
 Version: @VERSION@
 Release: 1
-Copyright: GPL
+License: GPL
 Vendor: Erik Greenwald
 Url: http://math.smsu.edu/~erik/software.php?name=gems
 Group: Applications/Mail

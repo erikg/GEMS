@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: snarf.c,v 1.15 2004/05/27 00:18:45 erik Exp $
+ * $Id: snarf.c,v 1.16 2004/05/31 13:07:41 erik Exp $
  */
 
 #include <stdio.h>
@@ -90,14 +90,15 @@ parse (char *buf, unsigned int size)
 	message *m;
 	int ins;
 
-	m = message_build_from_buffer (msg[i-1]);
+	m = message_build_from_buffer (msg[i - 1]);
 	if (m == NULL)
 	    continue;
-	mbox = rule_check (m); 
+	mbox = rule_check (m);
 	ins = db_insert_msg (mbox, m);	/* this sucks up time */
 	message_destroy (m);
-	printf ("\r%d/%d  (%.2f%%)%s",  i, msgcount,
-	    100.0 * (float)i / (float)msgcount,ins==GEMS_FALSE?"  FAILED\n":"");
+	printf ("\r%d/%d  (%.2f%%)%s", i, msgcount,
+	    100.0 * (float)i / (float)msgcount,
+	    ins == GEMS_FALSE ? "  FAILED\n" : "");
 	fflush (stdout);
     }
     printf ("\n");
@@ -112,7 +113,7 @@ face_run (int argc, char **argv)
     char *buf;
     rule *rules;
 
-    rules = (rule *) db_fetch_rules ((int *) &numrules);
+    rules = (rule *) db_fetch_rules ((int *)&numrules);
     if (rule_init (rules, numrules) == GEMS_FALSE)
     {
 	printf (_("Failed to initialize ruleset\n"));

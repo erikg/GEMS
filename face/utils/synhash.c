@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: synhash.c,v 1.2 2003/04/05 18:36:28 erik Exp $
+ * $Id: synhash.c,v 1.3 2004/05/31 13:07:41 erik Exp $
  */
 
 #include <stdio.h>
@@ -48,7 +49,7 @@ oops (char *a, char *b)
 int
 face_run (int argc, char **margv)
 {
-    db_syncharhash();
+    db_syncharhash ();
     printf ("\n");
     return GEMS_TRUE;
 }

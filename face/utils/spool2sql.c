@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: spool2sql.c,v 1.9 2004/05/27 00:18:45 erik Exp $
+ * $Id: spool2sql.c,v 1.10 2004/05/31 13:07:41 erik Exp $
  */
 
 #include <stdio.h>
@@ -63,7 +64,7 @@ face_run (int argc, char **margv)
      */
     spoolname = margv[1];
 
-    rules = (rule *) db_fetch_rules ((int *) &numrules);
+    rules = (rule *) db_fetch_rules ((int *)&numrules);
     if (rule_init (rules, numrules) == GEMS_FALSE)
     {
 	printf (_("Failed to initialize ruleset\n"));
@@ -105,6 +106,7 @@ face_run (int argc, char **margv)
      */
     if (close_spool () != GEMS_TRUE)
 	printf (_("Couldn't close the spool\n"));
+
 /*
 //    printf ("Normalizing\n");
 //    if (db_normalize () == GEMS_FALSE)

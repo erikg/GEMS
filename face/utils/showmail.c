@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: showmail.c,v 1.4 2003/04/05 18:36:28 erik Exp $
+ * $Id: showmail.c,v 1.5 2004/05/31 13:07:41 erik Exp $
  */
 
 #include <stdio.h>
@@ -66,7 +67,7 @@ face_run (int argc, char **argv)
 	mess = message_build_from_list (list);
 
 	printf (_("%s: %s -> %s Subject: %s\n%s\n"), mess->id,
-		mess->sender, mess->recipt, mess->subject, mess->body);
+	    mess->sender, mess->recipt, mess->subject, mess->body);
 
 	if (ll_clearlist (list) == GEMS_FALSE)
 	    printf (_("Couldn't flush list out of memory!\n"));

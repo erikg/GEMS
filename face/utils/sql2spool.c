@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: sql2spool.c,v 1.5 2004/05/31 13:07:26 erik Exp $
+ * $Id: sql2spool.c,v 1.6 2004/05/31 13:07:41 erik Exp $
  */
 
 #include <stdio.h>
@@ -75,7 +76,7 @@ face_run (int argc, char **margv)
     boxes = db_read_mboxlist ();
     while (boxes[i] != NULL)
     {
-	fprintf(stderr, "box: %s\n", boxes[i]->name);
+	fprintf (stderr, "box: %s\n", boxes[i]->name);
 	msgs = db_read_synopsis (boxes[i]->id, DB_ALL);
 	j = 0;
 	while (msgs[j] != NULL)

@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: cull.c,v 1.2 2003/04/19 18:08:13 erik Exp $
+ * $Id: cull.c,v 1.3 2004/05/31 13:07:41 erik Exp $
  */
 
 #include <stdio.h>
@@ -52,9 +53,9 @@ oops (char *a, char *b)
 int
 face_run (int argc, char **margv)
 {
-    printf("culling\n");
-    db_purge_empty();
-    
+    printf ("culling\n");
+    db_purge_empty ();
+
     printf ("Normalizing\n");
     if (db_normalize () == GEMS_FALSE)
 	printf (_("Failed to normalize the db"));

@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: test.c,v 1.4 2004/05/27 00:18:45 erik Exp $
+ * $Id: test.c,v 1.5 2004/05/31 13:07:41 erik Exp $
  */
 
 #include <stdio.h>
@@ -63,7 +64,7 @@ face_run (int argc, char **margv)
      * spool2sql -- <spool>\n\n",argv[0]);}
      */
 
-    rules = (rule *) db_fetch_rules ((int *) &numrules);
+    rules = (rule *) db_fetch_rules ((int *)&numrules);
     if (rule_init (rules, numrules) == GEMS_FALSE)
     {
 	printf (_("Failed to initialize ruleset\n"));

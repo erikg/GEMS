@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: spool2sqlfast.c,v 1.5 2004/05/27 00:18:45 erik Exp $
+ * $Id: spool2sqlfast.c,v 1.6 2004/05/31 13:07:41 erik Exp $
  */
 
 #include <stdio.h>
@@ -59,9 +60,9 @@ face_run (int argc, char **margv)
     rule *rules;
 
     spoolname = margv[1];
-    buf = (char *) malloc (BUFSIZ);
+    buf = (char *)malloc (BUFSIZ);
 
-    rules = (rule *) db_fetch_rules ((int *) &numrules);
+    rules = (rule *) db_fetch_rules ((int *)&numrules);
     if (rule_init (rules, numrules) == GEMS_FALSE)
     {
 	printf (_("Failed to initialize ruleset\n"));
@@ -105,4 +106,3 @@ face_run (int argc, char **margv)
     printf ("\n");
     return GEMS_TRUE;
 }
-

@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.5 2004/09/06 20:31:54 erik Exp $
+dnl $Id: configure.ac,v 1.6 2005/01/05 13:34:02 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -169,7 +169,7 @@ AC_CHECK_FUNCS(dlopen, [MY_LDADD=""], [
 
 
 MY_LDFLAGS="$LDFLAGS"
-dnl MY_LDADD="$LDADD"
+MY_LDADD="$LDADD"
 AC_SUBST(MY_LDFLAGS)
 AC_SUBST(MY_LDADD)
 

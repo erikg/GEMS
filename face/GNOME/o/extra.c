@@ -1,4 +1,3 @@
-
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -21,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: extra.c,v 1.9 2004/01/22 23:40:18 erik Exp $
+ * $Id: extra.c,v 1.10 2004/01/23 01:01:31 erik Exp $
  */
 
 #include <gnome.h>
@@ -57,26 +56,28 @@ putmail (GtkWidget * widget)
     char *shtuff;
 
     if (widget != NULL)
-    {
-	n = gtk_ctree_node_nth (GTK_CTREE (widget),
-	    (&(GTK_CTREE (widget)->clist))->focus_row);
-	s = (synopsis *) gtk_ctree_node_get_row_data (GTK_CTREE (widget), n);
-	if (s)
-	    shtuff = (char *)db_read_body (s->id);
-	else
-	{
-	    printf ("synopsis for row %d is NULL!\n", n);
-	    return FALSE;
-	}
-    } else
-    {
-	s = (synopsis *) malloc (sizeof (synopsis));
-	s->sender = strdup (" ");
-	s->subject = strdup (" ");
-	s->date = strdup (" ");
-	s->sender = strdup (" ");
-	shtuff = strdup (" ");
-    }
+      {
+	  n = gtk_ctree_node_nth (GTK_CTREE (widget),
+				  (&(GTK_CTREE (widget)->clist))->focus_row);
+	  s = (synopsis *) gtk_ctree_node_get_row_data (GTK_CTREE (widget),
+							n);
+	  if (s)
+	      shtuff = (char *) db_read_body (s->id);
+	  else
+	    {
+		printf ("synopsis for row %d is NULL!\n", n);
+		return FALSE;
+	    }
+      }
+    else
+      {
+	  s = (synopsis *) malloc (sizeof (synopsis));
+	  s->sender = strdup (" ");
+	  s->subject = strdup (" ");
+	  s->date = strdup (" ");
+	  s->sender = strdup (" ");
+	  shtuff = strdup (" ");
+      }
     from = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (gems), "entry1");
     date = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (gems), "entry2");
     subj = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (gems), "entry3");
@@ -89,14 +90,14 @@ putmail (GtkWidget * widget)
     gtk_text_freeze (GTK_TEXT (body));
     gtk_text_set_point (GTK_TEXT (body), 0);
     gtk_text_forward_delete (GTK_TEXT (body),
-	gtk_text_get_length (GTK_TEXT (body)));
+			     gtk_text_get_length (GTK_TEXT (body)));
     gtk_text_insert (GTK_TEXT (body), NULL, NULL, NULL, shtuff, -1);
     gtk_text_thaw (GTK_TEXT (body));
     if (widget == NULL)
-    {
-	free (s);
-	free (shtuff);
-    }
+      {
+	  free (s);
+	  free (shtuff);
+      }
     return TRUE;
 }
 
@@ -113,19 +114,19 @@ replyify (synopsis * syn, char *buf)
     snprintf (tbuf, strlen (syn->sender) + 8, "%s said:\n", syn->sender);
     ll_addnode (list, tbuf);
     while (x < len)
-    {
-	if (buf[x] == '\n')
-	{
-	    snprintf (tbuf, x - s + 4, "> %s\n", buf + s);
-	    ll_addnode (list, tbuf);
-	    memset (tbuf, 0, 1024);
-	    s = x + 1;
-	}
-	x++;
-    }
+      {
+	  if (buf[x] == '\n')
+	    {
+		snprintf (tbuf, x - s + 4, "> %s\n", buf + s);
+		ll_addnode (list, tbuf);
+		memset (tbuf, 0, 1024);
+		s = x + 1;
+	    }
+	  x++;
+      }
 
     snprintf (tbuf, strlen (getenv ("HOME")) + strlen ("/.signature") + 1,
-	"%s/.signature", getenv ("HOME"));
+	      "%s/.signature", getenv ("HOME"));
     printf ("tbuf: %s\n", tbuf);
     list = ll_append (list, read_file_to_list (tbuf));
     free (buf);

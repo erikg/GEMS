@@ -15,8 +15,6 @@
 int
 face_uses_X ()
 {
-printf("Yes, I use X!\n");
-fflush(stdout);
     return TRUE;
 }
 
@@ -32,11 +30,10 @@ face_run (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 #endif
 
-  gems = gnome_program_init (PACKAGE, VERSION, LIBGNOMEUI_MODULE,
+  gnome_program_init (PACKAGE, VERSION, LIBGNOMEUI_MODULE,
                       argc, argv,
                       GNOME_PARAM_APP_DATADIR, PACKAGE_DATA_DIR,
                       NULL);
-  gtk_widget_show(gems);
 
   gtk_main ();
   return 0;

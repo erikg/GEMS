@@ -1,4 +1,3 @@
-
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -21,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: main.c,v 1.19 2004/01/23 00:40:01 erik Exp $
+ * $Id: main.c,v 1.20 2004/01/23 01:01:31 erik Exp $
  */
 
 
@@ -70,11 +69,12 @@ update_mboxlist (gpointer nothing)
     gtk_clist_freeze (&GTK_CTREE (tree)->clist);
     x = 0;
     while (mboxlist[x] != NULL)
-    {
-	gtk_clist_set_foreground (&(tree->clist), x,
-	    (mboxlist[x]->hasunread > 0) ? color_magenta : color_black);
-	x++;
-    }
+      {
+	  gtk_clist_set_foreground (&(tree->clist), x,
+				    (mboxlist[x]->hasunread >
+				     0) ? color_magenta : color_black);
+	  x++;
+      }
     gtk_clist_thaw (&GTK_CTREE (tree)->clist);
     return 1;
 }
@@ -99,35 +99,36 @@ set_mboxlist ()
 
     x = 0;
     while (mboxlist[x] != NULL)
-    {
-	GtkCTreeNode *node, *n;
-	char *text;
+      {
+	  GtkCTreeNode *node, *n;
+	  char *text;
 
-	text = mboxlist[x]->name;
-	node =
-	    gtk_ctree_insert_node (tree, NULL, NULL, &text, 5, NULL,
-	    NULL, NULL, NULL, FALSE, FALSE);
-	gtk_ctree_node_set_row_data (tree, node,
-	    new_mboxview (mboxlist[x], default_mboxlistbehavior));
-	n = gtk_ctree_insert_node (tree, node, NULL, &all, 5, NULL, NULL,
-	    NULL, NULL, TRUE, TRUE);
-	gtk_ctree_node_set_row_data (tree, n,
-	    new_mboxview (mboxlist[x], DB_ALL));
-	n = gtk_ctree_insert_node (tree, node, NULL, &unread, 5, NULL, NULL,
-	    NULL, NULL, TRUE, TRUE);
-	gtk_ctree_node_set_row_data (tree, n,
-	    new_mboxview (mboxlist[x], DB_UNREAD));
-	n = gtk_ctree_insert_node (tree, node, NULL, &read, 5, NULL, NULL,
-	    NULL, NULL, TRUE, TRUE);
-	gtk_ctree_node_set_row_data (tree, n,
-	    new_mboxview (mboxlist[x], DB_READ));
-	n = gtk_ctree_insert_node (tree, node, NULL, &marked, 5, NULL, NULL,
-	    NULL, NULL, TRUE, TRUE);
-	gtk_ctree_node_set_row_data (tree, n,
-	    new_mboxview (mboxlist[x], DB_MARKED));
+	  text = mboxlist[x]->name;
+	  node =
+	      gtk_ctree_insert_node (tree, NULL, NULL, &text, 5, NULL,
+				     NULL, NULL, NULL, FALSE, FALSE);
+	  gtk_ctree_node_set_row_data (tree, node,
+				       new_mboxview (mboxlist[x],
+						     default_mboxlistbehavior));
+	  n = gtk_ctree_insert_node (tree, node, NULL, &all, 5, NULL, NULL,
+				     NULL, NULL, TRUE, TRUE);
+	  gtk_ctree_node_set_row_data (tree, n,
+				       new_mboxview (mboxlist[x], DB_ALL));
+	  n = gtk_ctree_insert_node (tree, node, NULL, &unread, 5, NULL, NULL,
+				     NULL, NULL, TRUE, TRUE);
+	  gtk_ctree_node_set_row_data (tree, n,
+				       new_mboxview (mboxlist[x], DB_UNREAD));
+	  n = gtk_ctree_insert_node (tree, node, NULL, &read, 5, NULL, NULL,
+				     NULL, NULL, TRUE, TRUE);
+	  gtk_ctree_node_set_row_data (tree, n,
+				       new_mboxview (mboxlist[x], DB_READ));
+	  n = gtk_ctree_insert_node (tree, node, NULL, &marked, 5, NULL, NULL,
+				     NULL, NULL, TRUE, TRUE);
+	  gtk_ctree_node_set_row_data (tree, n,
+				       new_mboxview (mboxlist[x], DB_MARKED));
 
-	x++;
-    }
+	  x++;
+      }
 
     /*
      * gtk_ctree_select(GTK_CTREE (tree), select_node);
@@ -138,10 +139,34 @@ set_mboxlist ()
     return;
 }
 
+
 void
 face_init ()
 {
-    return;
+printf("Opening up some libs\n");
+/* dlopen("libXpm.so", RTLD_LAZY); */
+/* dlopen("libjpeg.so", RTLD_LAZY); */
+dlopen("libgnomeui.so", RTLD_LAZY);
+/* dlopen("libart_lgpl.so", RTLD_LAZY); */
+/* dlopen("libgdk_imlib.so", RTLD_LAZY); */
+/* dlopen("libtiff.so", RTLD_LAZY); */
+/* dlopen("libungif.so", RTLD_LAZY); */
+/* dlopen("libpng.so", RTLD_LAZY); */
+/* dlopen("libSM.so", RTLD_LAZY); */
+/* dlopen("libICE.so", RTLD_LAZY); */
+dlopen("libgtk12.so", RTLD_LAZY);
+/* dlopen("libgdk12.so", RTLD_LAZY); */
+/* dlopen("libgmodule12.so", RTLD_LAZY); */
+/* dlopen("libXi.so", RTLD_LAZY); */
+/* dlopen("libXext.so", RTLD_LAZY); */
+/* dlopen("libX11.so", RTLD_LAZY); */
+/* dlopen("libgnome.so", RTLD_LAZY); */
+/* dlopen("libgnomesupport.so", RTLD_LAZY); */
+/* dlopen("libintl.so", RTLD_LAZY); */
+/* dlopen("libesd.so", RTLD_LAZY); */
+/* dlopen("libaudiofile.so", RTLD_LAZY); */
+/* dlopen("libglib12.so", RTLD_LAZY); */
+/* dlopen("libiconv.so", RTLD_LAZY); */
 }
 
 int
@@ -156,14 +181,14 @@ face_run (int argc, char *argv[])
     char *x;
     int a = 0, b = 0;
     GtkCList *c;
+printf("ding\n");fflush(stdout);
 
-    face_init ();
+    face_init();
 
 #ifdef ENABLE_NLS
     bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
     textdomain (PACKAGE);
 #endif
-
     gnome_init ("gems", VERSION, argc, argv);
     gems = create_gems ();
     gtk_widget_realize (gems);
@@ -184,31 +209,31 @@ face_run (int argc, char *argv[])
 
 
     set_mboxlist ();
-    if ((x = (char *)db_pref_get ("GNOME_o_hpaned_pos")) != NULL)
+    if ((x = (char *) db_pref_get ("GNOME_o_hpaned_pos")) != NULL)
 	gtk_paned_set_position (GTK_PANED (lookup_widget (gems, "hpaned1")),
-	    atoi (x));
+				atoi (x));
 
-    if ((x = (char *)db_pref_get ("GNOME_o_vpaned_pos")) != NULL)
+    if ((x = (char *) db_pref_get ("GNOME_o_vpaned_pos")) != NULL)
 	gtk_paned_set_position (GTK_PANED (lookup_widget (gems, "vpaned1")),
-	    atoi (x));
-    if ((x = (char *)db_pref_get ("GNOME_o_gems_width")) != NULL)
+				atoi (x));
+    if ((x = (char *) db_pref_get ("GNOME_o_gems_width")) != NULL)
 	a = atoi (x);
-    if ((x = (char *)db_pref_get ("GNOME_o_gems_height")) != NULL)
+    if ((x = (char *) db_pref_get ("GNOME_o_gems_height")) != NULL)
 	b = atoi (x);
     if (a != 0 || b != 0)
 	gtk_window_set_default_size (GTK_WINDOW (gems), a, b);
-    if ((x = (char *)db_pref_get ("GNOME_o_gems_xpos")) != NULL)
+    if ((x = (char *) db_pref_get ("GNOME_o_gems_xpos")) != NULL)
 	a = atoi (x);
-    if ((x = (char *)db_pref_get ("GNOME_o_gems_ypos")) != NULL)
+    if ((x = (char *) db_pref_get ("GNOME_o_gems_ypos")) != NULL)
 	b = atoi (x);
     if (a != 0 || b != 0)
 	gtk_window_reposition (GTK_WINDOW (gems), a, b);
-    if ((x = (char *)db_pref_get ("mboxdefaultaction")) != NULL)
+    if ((x = (char *) db_pref_get ("mboxdefaultaction")) != NULL)
 	default_mboxlistbehavior = atoi (x);
     c = GTK_CLIST (&((GTK_CTREE (lookup_widget (gems, "ctree1")))->clist));
-    if ((x = (char *)db_pref_get ("GNOME_o_maillist_col1")) != NULL)
+    if ((x = (char *) db_pref_get ("GNOME_o_maillist_col1")) != NULL)
 	c->column[0].width = atoi (x);
-    if ((x = (char *)db_pref_get ("GNOME_o_maillist_col2")) != NULL)
+    if ((x = (char *) db_pref_get ("GNOME_o_maillist_col2")) != NULL)
 	c->column[1].width = atoi (x);
 
     gtk_widget_show (gems);

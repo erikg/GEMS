@@ -1,4 +1,4 @@
-dnl $Id: configure.in,v 1.29 2004/02/01 16:00:09 erik Exp $
+dnl $Id: configure.in,v 1.30 2004/02/01 18:13:49 erik Exp $
 
 AC_INIT(README)
 AC_CANONICAL_TARGET
@@ -37,7 +37,7 @@ MYSQL_LIBADD="-L/usr/local/lib/mysql -L/usr/lib/mysql -lmysqlclient"
 AC_SUBST(MYSQL_LIBADD)
 
 POSTGRESQL=PostgreSQL
-POSTGRESQL_LIBADD="-L/usr/local/lib/ -lpgsql"
+POSTGRESQL_LIBADD="-L/usr/local/lib/ -lpq"
 AC_SUBST(POSTGRESQL_LIBADD)
 
 dnl **************************************************************************
@@ -146,7 +146,7 @@ AC_OUTPUT([
 	Makefile po/Makefile.in intl/Makefile common/Makefile db/Makefile face/Makefile
 	face/utils/Makefile shell/Makefile include/Makefile
 	receptor/Makefile transmitter/Makefile
-	db/MySQL/Makefile
+	db/MySQL/Makefile db/PostgreSQL/Makefile
 	face/GTK/Makefile face/GTK/e/Makefile
 	face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile
 	face/GNOME2/Makefile face/GNOME2/o/Makefile

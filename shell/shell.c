@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: shell.c,v 1.6 2003/04/05 18:36:30 erik Exp $
+ * $Id: shell.c,v 1.7 2004/02/01 15:52:46 erik Exp $
  */
 
 #include <stdio.h>
@@ -73,7 +74,7 @@ main (int argc, char **argv)
     margv = malloc (sizeof (void *) * argc);
     for (x = 0; x < argc; x++)
     {
-	margv[x] = (char *) malloc (strlen (argv[x]) + 1);
+	margv[x] = (char *)malloc (strlen (argv[x]) + 1);
 	strcpy (margv[x], argv[x]);
     }
 
@@ -84,28 +85,28 @@ main (int argc, char **argv)
     p = load_prefs (parm);
 
     commonname =
-	(char *) malloc (strlen (p->libdir) +
-			 strlen ("gems/libgemscommon.so."));
+	(char *)malloc (strlen (p->libdir) +
+	strlen ("/gems/libgemscommon.so."));
 
     dbifullname =
-	(char *) malloc (strlen (p->libdir) + strlen (p->dbiname) +
-			 strlen ("/gems/libgems_db..so.."));
+	(char *)malloc (strlen (p->libdir) + strlen (p->dbiname) +
+	strlen ("/gems/libgems_db..so.."));
     facefullname =
-	(char *) malloc (strlen (p->libdir) + strlen (p->facename) +
-			 strlen ("/gems/libgems_face..so.."));
+	(char *)malloc (strlen (p->libdir) + strlen (p->facename) +
+	strlen ("/gems/libgems_face..so.."));
 
     receptorname =
-	(char *) malloc (strlen (p->libdir) +
-			 strlen ("gems/libgemsreceptor.so."));
+	(char *)malloc (strlen (p->libdir) +
+	strlen ("/gems/libgemsreceptor.so."));
 
     if (p->libdir[0] != '\n' && p->libdir[0] != 0 && p->libdir[0] != '\r')
     {
 	sprintf (dbifullname, "%s/gems/libgems_db.%s.so", p->libdir,
-		 p->dbiname);
+	    p->dbiname);
 	sprintf (facefullname, "%s/gems/libgems_face.%s.so", p->libdir,
-		 p->facename);
-	sprintf (commonname, "%sgems/libgemscommon.so", p->libdir);
-	sprintf (receptorname, "%sgems/libgemsreceptor.so", p->libdir);
+	    p->facename);
+	sprintf (commonname, "%s/gems/libgemscommon.so", p->libdir);
+	sprintf (receptorname, "%s/gems/libgemsreceptor.so", p->libdir);
     } else
     {
 	sprintf (dbifullname, "gems/libgems_db.%s.so", p->dbiname);
@@ -122,7 +123,7 @@ main (int argc, char **argv)
     if ((common = dlopen (commonname, RTLD_LAZY | RTLD_GLOBAL)) == NULL)
     {
 	printf ("Unable to open common library %s\n%s\n", commonname,
-		dlerror ());
+	    dlerror ());
 	return EXIT_FAILURE;
     }
     free (commonname);
@@ -130,7 +131,7 @@ main (int argc, char **argv)
     if ((receptor = dlopen (receptorname, RTLD_LAZY | RTLD_GLOBAL)) == NULL)
     {
 	printf ("Unable to open receptor library %s\n%s\n", receptorname,
-		dlerror ());
+	    dlerror ());
 	return EXIT_FAILURE;
     }
     free (receptorname);

@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: parms.c,v 1.6 2003/11/11 15:30:42 erik Exp $
+ * $Id: parms.c,v 1.7 2004/02/01 15:52:46 erik Exp $
  */
 
 #include <stdio.h>
@@ -37,10 +38,10 @@ ver ()
 {
     printf
 	("%s version %s (C) Copyright 2000 Erik Greenwald <erik@smluc.org>\n",
-	 PACKAGE, VERSION);
+	PACKAGE, VERSION);
     printf
 	("%s comes with ABSOLUTELY NO WARRANTY; please refer to COPYING or the\n\tGNU GENERAL PUBLIC LICENSE version 2 (June 1991) for details\n",
-	 PACKAGE);
+	PACKAGE);
     return;
 }
 
@@ -118,7 +119,7 @@ load_parms (int *argc, char **margv)
 	    ll_deletenode (ll);
 	    if (ll_end (ll) == GEMS_TRUE)
 		help_exit (margv[0]);
-	    p->dbiuser = (char *) malloc (1 + strlen (ll_showline (ll)));
+	    p->dbiuser = (char *)malloc (1 + strlen (ll_showline (ll)));
 	    strcpy (p->dbiuser, ll_showline (ll));
 	    ll_deletenode (ll);
 	} else if (!strcmp ("-d", a) || !strcmp ("--dbms", a))
@@ -126,12 +127,12 @@ load_parms (int *argc, char **margv)
 	    ll_deletenode (ll);
 	    if (ll_end (ll) == GEMS_TRUE)
 		help_exit (margv[0]);
-	    p->dbiname = (char *) malloc (1 + strlen (ll_showline (ll)));
+	    p->dbiname = (char *)malloc (1 + strlen (ll_showline (ll)));
 	    strcpy (p->dbiname, ll_showline (ll));
 	    ll_deletenode (ll);
 	} else
 	{
-	    p->facename = (char *) malloc (strlen (a) + 1);
+	    p->facename = (char *)malloc (strlen (a) + 1);
 	    strcpy (p->facename, a);
 	    ll_deletenode (ll);
 	}

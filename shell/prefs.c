@@ -1,3 +1,4 @@
+
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
@@ -20,12 +21,15 @@
  *****************************************************************************/
 
 /*
- * $Id: prefs.c,v 1.3 2003/04/05 18:36:29 erik Exp $
+ * $Id: prefs.c,v 1.4 2004/02/01 15:52:46 erik Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 #include "prefs.h"
 
@@ -53,7 +57,7 @@ parse (prefs * p, char *in, parms * m)
 
     if (in == NULL)
 	return;
-    str = (char *) malloc (strlen (in));
+    str = (char *)malloc (strlen (in));
     strcpy (str, extract (in));
     len = strlen (str);
     if (!strncmp ("LIBDIR", in, 6))
@@ -63,7 +67,7 @@ parse (prefs * p, char *in, parms * m)
 	/*
 	 * if(p->libdir)free(p->libdir); 
 	 */
-	p->libdir = (char *) malloc (len + 2);
+	p->libdir = (char *)malloc (len + 2);
 	strcpy (p->libdir, str);
 	if (str[len] != '/' && strlen (str) > 0)
 	{
@@ -102,26 +106,59 @@ prefs *
 load_prefs (parms * m)
 {
     prefs *p;
-    char *in, *homedir, *rc;
+    char *in, *homedir, *rc, *orc;
     FILE *fp;
 
     if (m->rc == NULL)
     {
+	char *gemsconfigdir;
+	struct stat sb;
+
 	if ((homedir = getenv ("HOME")) == NULL)
 	{
 	    printf ("Couldn't find your home directory, please set $HOME\n");
 	    return NULL;
 	}
-	rc = (char *) malloc (strlen (homedir) + strlen ("/.gemsrc") + 1);
 
-	sprintf (rc, "%s/.gemsrc", homedir);
+	orc = (char *)malloc (strlen (homedir) + strlen ("/.gemsrc") + 1);
+	gemsconfigdir =
+	    (char *)malloc (strlen (homedir) + strlen ("/.gems") + 1);
+	rc = (char *)malloc (strlen (homedir) + strlen ("/.gems/gemsrc") + 1);
+
+	sprintf (orc, "%s/.gemsrc", homedir);
+	sprintf (gemsconfigdir, "%s/.gems", homedir);
+	sprintf (rc, "%s/.gems/gemsrc", homedir);
+
 	/*
-	 * free (homedir); 
+	 * if the .gems dir doesn't exist, create it 
 	 */
+	if (stat (gemsconfigdir, &sb) == -1)
+	    mkdir (gemsconfigdir, 0700);
+
+	if (stat (rc, &sb) == -1)
+	{
+	    if (stat (orc, &sb) == 0)
+	    {
+		printf ("Linking to %s the file %s\n", orc, rc);
+		if (link (orc, rc) == -1)
+		{
+		    printf ("Whoa, link failed! %d\n", errno);
+		    perror ("gems:link");
+		    exit (-1);
+		}
+		unlink (orc);
+		printf
+		    ("Old config file %s has been deleted. new file is %s\n",
+		    orc, rc);
+	    } else
+	    {
+		printf ("Must create an RC file\n");
+		exit (-1);
+	    }
+	}
+
     } else
-    {
 	rc = m->rc;
-    }
 
     if ((fp = fopen (rc, "r")) == NULL)
     {
@@ -132,7 +169,7 @@ load_prefs (parms * m)
     free (rc);
 
     p = (prefs *) malloc (sizeof (prefs));
-    in = (char *) malloc (MAXSTRING);
+    in = (char *)malloc (MAXSTRING);
 
     p->libdir = malloc (1);
     p->dbiname = malloc (1);
@@ -206,7 +243,7 @@ save_prefs (prefs * p)
     }
     fprintf (fp, "#this is a machine generated file\n\n");
     fprintf (fp,
-	     "#this is the full path to where the libgems_*.so libraries are\n");
+	"#this is the full path to where the libgems_*.so libraries are\n");
     fprintf (fp, "LIBDIR = %s\n\n", p->libdir);
     fprintf (fp, "\nname of the DBMS to use (mysql, postgresql, etc)\n");
     fprintf (fp, "DBINAME = %s\n", p->dbiname);

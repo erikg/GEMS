@@ -1,7 +1,7 @@
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
- *     Copyright (C) 2000-2003 Erik Greenwald <erik@smluc.org>               *
+ *     Copyright (C) 2000-2005 Erik Greenwald <erik@smluc.org>               *
  *                                                                           *
  *     This program is free software; you can redistribute it and/or modify  *
  *     it under the terms of the GNU General Public License as published by  *
@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: interface.c,v 1.3 2003/04/05 18:36:27 erik Exp $
+ * $Id: interface.c,v 1.4 2005/01/13 14:29:53 erik Exp $
  */
 
 /*
@@ -459,7 +459,7 @@ create_about2 (void)
     GtkWidget *about2;
 
     about2 = gnome_about_new ("gems", VERSION,
-			      _("Copyright (C) 2000 Erik Greenwald"),
+			      _("Copyright (C) 2000-2005 Erik Greenwald"),
 			      authors, _("mail system"), NULL);
     gtk_object_set_data (GTK_OBJECT (about2), "about2", about2);
     gtk_window_set_modal (GTK_WINDOW (about2), TRUE);

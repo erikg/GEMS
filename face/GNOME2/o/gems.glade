@@ -630,7 +630,7 @@
   <property name="border_width">5</property>
   <property name="visible">True</property>
   <property name="destroy_with_parent">False</property>
-  <property name="copyright" translatable="yes">(C) 2000-2003 Erik Greenwald</property>
+  <property name="copyright" translatable="yes">(C) 2000-2005 Erik Greenwald</property>
   <property name="comments" translatable="yes">GEMS E-Mail System</property>
   <property name="authors">Erik Greenwald</property>
   <property name="translator_credits" translatable="yes">translator_credits</property>

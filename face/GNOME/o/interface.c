@@ -561,7 +561,7 @@ create_about2 (void)
   GtkWidget *about2;
 
   about2 = gnome_about_new ("gems", VERSION,
-                        _("Copyright (C) 2000 Erik Greenwald"),
+                        _("Copyright (C) 2000-2005 Erik Greenwald"),
                         authors,
                         "",
                         NULL);

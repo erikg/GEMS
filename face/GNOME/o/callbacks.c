@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.20 2003/11/19 20:50:46 erik Exp $
+ * $Id: callbacks.c,v 1.21 2005/01/12 22:52:20 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -174,6 +174,9 @@ on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data)
     return FALSE;
 }
 
+/* a mailbox was clicked 
+ * TODO: this is called twice on keypress... up and down?
+ */
 void
 on_ctree2_tree_select_row (GtkCTree * ctree,
     GList * node, gint column, gpointer user_data)

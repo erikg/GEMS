@@ -10,6 +10,9 @@
 #define _(X) (X)
 #endif
 
+#undef BUFSIZ
+#define BUFSIZ (1024*1024)
+
 int
 face_uses_X ()
 {
@@ -42,30 +45,28 @@ face_run (int argc, char **margv)
 	printf (_("Failed to open spool %s\n"), spoolname);
 	exit (EXIT_FAILURE);
     }
-    fd = spool_fd();
-    s=BUFSIZ;
-    while (read(fd, buf,BUFSIZ)==BUFSIZ)
+    fd = spool_fd ();
+    s = BUFSIZ;
+    memset (buf, 0, BUFSIZ);
+    while (read (fd, buf, BUFSIZ) != 0)
     {
-	int ready=0;
-	while(i<s && i!=0 && buf[i]!='F' && strcmp(buf+i,"From: "))i++;
-	if(i==0)exit(-1);
-	j=i+1;
-	while(buf[i]!='F' && strcmp(buf+i,"From: "))i++;
-	mess = message_build_from_buf (buf);
+	int x = 0;
+
+	mess = message_build_from_buffer (buf);
+	if (mess == 0)
+	{
+	    printf ("Bad mssage\n");
+	    return -1;
+	}
 	if (mess->body == NULL)
 	    printf (_("\nNull body!\n"));
 	mbox = rule_check (mess);
 	db_insert_msg (mbox, mess);
-	if (dirty == GEMS_TRUE)
-	{
-	    s = BUFSIZ;
-	    buf = realloc (buf, s);
-	    dirty = GEMS_FALSE;
-	}
 	if (message_destroy (mess) == GEMS_FALSE)
 	    printf (_("Couldn't flush message out of memory!\n"));
 	printf (".");
-	fflush (0);
+	fflush (stdout);
+
     }
     if (rule_close () == GEMS_FALSE)
     {

@@ -125,7 +125,7 @@ message_build_from_buffer (char *buf)
 
     m = (message *) malloc (sizeof (message));
     memset (m, 0, sizeof (message));	/* fill out NULLs */
-    while (buf[x] != 0 && buf[x] != '\n' && buf[x + 1] != '\n')
+    while (!(buf[x] == 0 || (buf[x] == '\n' && buf[x + 1] == '\n')))
 	x++;
     if (buf[x] == 0)
 	return NULL;		/* bad message */
@@ -133,8 +133,8 @@ message_build_from_buffer (char *buf)
     m->header = strdup (buf);
     m->body = strdup (buf + x + 2);
     for (i = x; i; i--)
-	if (buf[i] == '\n')
-	    buf[i] = 0;
+	if (buf[i] == '\n' && buf[i + 1] == '\n')
+	    buf[i + 1] = 0;
     while (i < x)
     {
 	switch (tolower (buf[i]))

@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.6 2005/01/05 13:34:02 erik Exp $
+dnl $Id: configure.ac,v 1.7 2005/04/02 20:19:55 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -158,8 +158,9 @@ AM_CONDITIONAL(GNOME2,[test "x$have_gnome2"==xyes])
 dnl **************************************************************************
 
 #AC_CHECK_CURSES
-AM_CONDITIONAL(HAS_CURSES, [test "$has_curses" == true])
-#if [ "x$has_curses" == "xyes" ] ; then FACE="${FACE} CURSES"; fi
+has_curses=yes
+AM_CONDITIONAL(HAS_CURSES, [ test "$has_curses" == true ])
+if test "x$has_curses" == "xyes" ; then FACE="${FACE} CURSES"; fi
 
 dnl **************************************************************************
 
@@ -181,6 +182,7 @@ AC_CONFIG_FILES([
 	face/GTK/Makefile face/GTK/e/Makefile
 	face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile
 	face/GNOME2/Makefile face/GNOME2/o/Makefile
+	face/curses/Makefile face/curses/CURSES_p/Makefile
 	doc/Makefile gems.spec doc/doxygen.conf])
 AC_OUTPUT
 

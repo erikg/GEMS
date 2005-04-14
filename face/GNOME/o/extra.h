@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: extra.h,v 1.10 2005/04/14 01:17:53 erik Exp $
+ * $Id: extra.h,v 1.11 2005/04/14 02:23:44 erik Exp $
  */
 
 #ifndef __EXTRAS_H
@@ -44,5 +44,7 @@ int putmail (GtkWidget * widget);
 char *replyify (synopsis * syn, char *buf);
 gint update_mboxlist (gpointer nothing);
 void set_mboxlist ();
+int get_mboxlistbehavior(void);
+void set_mboxlistbehavior(int);
 
 #endif

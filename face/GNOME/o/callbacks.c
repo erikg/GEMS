@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.24 2005/04/14 01:17:53 erik Exp $
+ * $Id: callbacks.c,v 1.25 2005/04/14 02:23:44 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -155,7 +155,7 @@ on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data)
     db_pref_set ("GNOME_o_gems_xpos", x);
     sprintf (x, "%d", GTK_WIDGET (gems)->allocation.y);
     db_pref_set ("GNOME_o_gems_ypos", x);
-    sprintf (x, "%d", default_mboxlistbehavior);
+    sprintf (x, "%d", get_mboxlistbehavior());
     db_pref_set ("mboxdefaultaction", x);
     sprintf (x, "%d",
 	GTK_CLIST (&

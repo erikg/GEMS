@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: main.c,v 1.23 2005/04/14 01:17:53 erik Exp $
+ * $Id: main.c,v 1.24 2005/04/14 02:23:44 erik Exp $
  */
 
 
@@ -119,7 +119,7 @@ face_run (int argc, char *argv[])
     if (a != 0 || b != 0)
 	gtk_window_reposition (GTK_WINDOW (gems), a, b);
     if ((x = (char *) db_pref_get ("mboxdefaultaction")) != NULL)
-	default_mboxlistbehavior = atoi (x);
+	set_mboxlistbehavior(atoi (x));
     c = GTK_CLIST (&((GTK_CTREE (lookup_widget (gems, "ctree1")))->clist));
     if ((x = (char *) db_pref_get ("GNOME_o_maillist_col1")) != NULL)
 	c->column[0].width = atoi (x);

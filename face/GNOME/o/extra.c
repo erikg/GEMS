@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: extra.c,v 1.12 2005/04/14 01:17:53 erik Exp $
+ * $Id: extra.c,v 1.13 2005/04/14 02:23:44 erik Exp $
  */
 
 #include <gnome.h>
@@ -136,8 +136,6 @@ replyify (synopsis * syn, char *buf)
     return newbuf;
 }
 
-static int default_mboxlistbehavior = DB_UNREAD;
-
 gint
 update_mboxlist (gpointer nothing)
 {
@@ -159,6 +157,8 @@ update_mboxlist (gpointer nothing)
     gtk_clist_thaw (&GTK_CTREE (tree)->clist);
     return 1;
 }
+
+static int default_mboxlistbehavior = DB_UNREAD;
 
 void
 set_mboxlist ()
@@ -218,4 +218,17 @@ set_mboxlist ()
     free (mboxlist);
     update_mboxlist (NULL);
     return;
+}
+
+void
+set_mboxlistbehavior(int x)
+{
+    default_mboxlistbehavior = x;
+    return;
+}
+
+int
+get_mboxlistbehavior()
+{
+    return default_mboxlistbehavior;
 }

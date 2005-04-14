@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.23 2005/01/20 04:45:10 erik Exp $
+ * $Id: callbacks.c,v 1.24 2005/04/14 01:17:53 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -32,7 +32,7 @@
 
 #include "defs.h"		/* gems includes */
 #include "message.h"
-#include "../../../include/db.h"	/* ??? */
+#include "db.h"	/* ??? */
 
 #include "callbacks.h"		/* gnome/o includes */
 #include "interface.h"
@@ -45,7 +45,6 @@ extern GtkWidget *gems;		/* nasty. Must preceed extra.h */
 
 #define SORT_DIRECTION 128
 extern unsigned char sort;
-extern void update_mboxlist ();
 
 void
 on_new_file1_activate (GtkMenuItem * menuitem, gpointer user_data)
@@ -253,7 +252,7 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
     gtk_clist_set_sort_type (clist, GTK_SORT_ASCENDING);
     gtk_clist_sort (clist);
     gtk_clist_thaw (clist);
-    update_mboxlist ();
+    update_mboxlist (NULL);
     gnome_appbar_set_progress (GNOME_APPBAR (appbar), 0.0);
     gnome_appbar_pop (GNOME_APPBAR (stat));
 

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: extra.h,v 1.9 2005/01/13 14:29:53 erik Exp $
+ * $Id: extra.h,v 1.10 2005/04/14 01:17:53 erik Exp $
  */
 
 #ifndef __EXTRAS_H
@@ -40,9 +40,9 @@ typedef struct _mboxview
 mboxview;
 
 mboxview *new_mboxview (mboxs * mb, int status);
-
 int putmail (GtkWidget * widget);
-
 char *replyify (synopsis * syn, char *buf);
+gint update_mboxlist (gpointer nothing);
+void set_mboxlist ();
 
 #endif

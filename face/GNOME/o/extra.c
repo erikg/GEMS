@@ -20,11 +20,12 @@
  *****************************************************************************/
 
 /*
- * $Id: extra.c,v 1.11 2005/01/13 14:29:53 erik Exp $
+ * $Id: extra.c,v 1.12 2005/04/14 01:17:53 erik Exp $
  */
 
 #include <gnome.h>
 
+#include "db.h"
 #include "defs.h"
 #include "message.h"
 #include "extra.h"
@@ -133,4 +134,88 @@ replyify (synopsis * syn, char *buf)
     newbuf = stringinate (list);
     ll_clearlist (list);
     return newbuf;
+}
+
+static int default_mboxlistbehavior = DB_UNREAD;
+
+gint
+update_mboxlist (gpointer nothing)
+{
+    mboxs **mboxlist;
+    GtkCTree *tree;
+    int x = 0;
+
+    mboxlist = (mboxs **) db_read_mboxlist ();
+    tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
+    gtk_clist_freeze (&GTK_CTREE (tree)->clist);
+    x = 0;
+    while (mboxlist[x] != NULL)
+      {
+	  gtk_clist_set_foreground (&(tree->clist), x,
+				    (mboxlist[x]->hasunread >
+				     0) ? color_magenta : color_black);
+	  x++;
+      }
+    gtk_clist_thaw (&GTK_CTREE (tree)->clist);
+    return 1;
+}
+
+void
+set_mboxlist ()
+{
+    int x;
+    mboxs **mboxlist;
+    GtkCTree *tree;
+    char *read, *unread, *marked, *all;
+
+    mboxlist = (mboxs **) db_read_mboxlist ();
+    tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
+    all = strdup ("all");
+    read = strdup ("read");
+    unread = strdup ("unread");
+    marked = strdup ("marked");
+
+    gtk_clist_freeze (&GTK_CTREE (tree)->clist);
+    gtk_clist_clear (&GTK_CTREE (tree)->clist);
+
+    x = 0;
+    while (mboxlist[x] != NULL)
+      {
+	  GtkCTreeNode *node, *n;
+	  char *text;
+
+	  text = mboxlist[x]->name;
+	  node =
+	      gtk_ctree_insert_node (tree, NULL, NULL, &text, 5, NULL,
+				     NULL, NULL, NULL, FALSE, FALSE);
+	  gtk_ctree_node_set_row_data (tree, node,
+				       new_mboxview (mboxlist[x],
+						     default_mboxlistbehavior));
+	  n = gtk_ctree_insert_node (tree, node, NULL, &all, 5, NULL, NULL,
+				     NULL, NULL, TRUE, TRUE);
+	  gtk_ctree_node_set_row_data (tree, n,
+				       new_mboxview (mboxlist[x], DB_ALL));
+	  n = gtk_ctree_insert_node (tree, node, NULL, &unread, 5, NULL, NULL,
+				     NULL, NULL, TRUE, TRUE);
+	  gtk_ctree_node_set_row_data (tree, n,
+				       new_mboxview (mboxlist[x], DB_UNREAD));
+	  n = gtk_ctree_insert_node (tree, node, NULL, &read, 5, NULL, NULL,
+				     NULL, NULL, TRUE, TRUE);
+	  gtk_ctree_node_set_row_data (tree, n,
+				       new_mboxview (mboxlist[x], DB_READ));
+	  n = gtk_ctree_insert_node (tree, node, NULL, &marked, 5, NULL, NULL,
+				     NULL, NULL, TRUE, TRUE);
+	  gtk_ctree_node_set_row_data (tree, n,
+				       new_mboxview (mboxlist[x], DB_MARKED));
+
+	  x++;
+      }
+
+    /*
+     * gtk_ctree_select(GTK_CTREE (tree), select_node);
+     */
+    gtk_clist_thaw (&GTK_CTREE (tree)->clist);
+    free (mboxlist);
+    update_mboxlist (NULL);
+    return;
 }

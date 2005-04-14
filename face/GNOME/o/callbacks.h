@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.h,v 1.10 2005/01/13 14:29:53 erik Exp $
+ * $Id: callbacks.h,v 1.11 2005/04/14 02:55:40 erik Exp $
  */
 
 #include <gnome.h>
@@ -51,18 +51,18 @@ void on_preferences1_activate (GtkMenuItem * menuitem, gpointer user_data);
 void on_about1_activate (GtkMenuItem * menuitem, gpointer user_data);
 
 gboolean
-on_ctree1_event (GtkWidget * widget, GdkEvent * event, gpointer user_data);
+on_mailbox_event (GtkWidget * widget, GdkEvent * event, gpointer user_data);
 
 gboolean
 on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data);
 
 
 void
-on_ctree2_tree_select_row (GtkCTree * ctree,
+on_mailboxlist_tree_select_row (GtkCTree * ctree,
 			   GList * node, gint column, gpointer user_data);
 
 void
-on_ctree2_tree_select_row (GtkCTree * ctree,
+on_mailboxlist_tree_select_row (GtkCTree * ctree,
 			   GList * node, gint column, gpointer user_data);
 
 void on_toolbar_prev_clicked (GtkButton * button, gpointer user_data);
@@ -70,7 +70,7 @@ void on_toolbar_prev_clicked (GtkButton * button, gpointer user_data);
 void on_toolbar_next_clicked (GtkButton * button, gpointer user_data);
 
 gboolean
-on_ctree1_key_press_event (GtkWidget * widget,
+on_mailbox_key_press_event (GtkWidget * widget,
 			   GdkEventKey * event, gpointer user_data);
 
 void on_toolbar_compose_clicked (GtkButton * button, gpointer user_data);
@@ -80,7 +80,7 @@ void on_toolbar_reply_clicked (GtkButton * button, gpointer user_data);
 void on_toolbar_forward_clicked (GtkButton * button, gpointer user_data);
 
 void
-on_ctree1_click_column (GtkCList * clist, gint column, gpointer user_data);
+on_mailbox_click_column (GtkCList * clist, gint column, gpointer user_data);
 
 void on_create1_activate (GtkMenuItem * menuitem, gpointer user_data);
 

@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: extra.c,v 1.13 2005/04/14 02:23:44 erik Exp $
+ * $Id: extra.c,v 1.14 2005/04/14 02:55:40 erik Exp $
  */
 
 #include <gnome.h>
@@ -144,7 +144,7 @@ update_mboxlist (gpointer nothing)
     int x = 0;
 
     mboxlist = (mboxs **) db_read_mboxlist ();
-    tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
+    tree = GTK_CTREE (lookup_widget (gems, "mailboxlist"));
     gtk_clist_freeze (&GTK_CTREE (tree)->clist);
     x = 0;
     while (mboxlist[x] != NULL)
@@ -169,7 +169,7 @@ set_mboxlist ()
     char *read, *unread, *marked, *all;
 
     mboxlist = (mboxs **) db_read_mboxlist ();
-    tree = GTK_CTREE (lookup_widget (gems, "ctree2"));
+    tree = GTK_CTREE (lookup_widget (gems, "mailboxlist"));
     all = strdup ("all");
     read = strdup ("read");
     unread = strdup ("unread");

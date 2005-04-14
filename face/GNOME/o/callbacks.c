@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.25 2005/04/14 02:23:44 erik Exp $
+ * $Id: callbacks.c,v 1.26 2005/04/14 02:55:40 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -124,7 +124,7 @@ on_about1_activate (GtkMenuItem * menuitem, gpointer user_data)
 
 
 gboolean
-on_ctree1_event (GtkWidget * widget, GdkEvent * event, gpointer user_data)
+on_mailbox_event (GtkWidget * widget, GdkEvent * event, gpointer user_data)
 {
     if ((event) && (event->type == GDK_2BUTTON_PRESS))
     {
@@ -159,12 +159,12 @@ on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data)
     db_pref_set ("mboxdefaultaction", x);
     sprintf (x, "%d",
 	GTK_CLIST (&
-	    ((GTK_CTREE (lookup_widget (gems, "ctree1")))->
+	    ((GTK_CTREE (lookup_widget (gems, "mailbox")))->
 		clist))->column[0].width);
     db_pref_set ("GNOME_o_maillist_col1", x);
     sprintf (x, "%d",
 	GTK_CLIST (&
-	    ((GTK_CTREE (lookup_widget (gems, "ctree1")))->
+	    ((GTK_CTREE (lookup_widget (gems, "mailbox")))->
 		clist))->column[1].width);
     db_pref_set ("GNOME_o_maillist_col2", x);
 
@@ -177,10 +177,10 @@ on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data)
  * TODO: this is called twice on keypress... up and down?
  */
 void
-on_ctree2_tree_select_row (GtkCTree * ctree,
+on_mailboxlist_tree_select_row (GtkCTree * ctree,
     GList * node, gint column, gpointer user_data)
 {
-    GtkWidget *ctree1, *stat;
+    GtkWidget *mailbox, *stat;
     GtkCTreeNode *n;
     GtkCList *clist;
     GtkWidget *appbar;
@@ -198,7 +198,7 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
 	exit (-1);
     }
     stat = lookup_widget (gems, "appbar1");
-    ctree1 = lookup_widget (gems, "ctree1");
+    mailbox = lookup_widget (gems, "mailbox");
     appbar = lookup_widget (gems, "appbar1");
 
     /*** TODO *** clear the mail things */
@@ -213,7 +213,7 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
     while (gtk_events_pending ())
 	gtk_main_iteration ();
 
-    clist = &GTK_CTREE (ctree1)->clist;
+    clist = &GTK_CTREE (mailbox)->clist;
 
     gtk_clist_clear (clist);
     while (gtk_events_pending ())
@@ -233,9 +233,9 @@ on_ctree2_tree_select_row (GtkCTree * ctree,
 	text[1] = syn[x]->date;
 	text[2] = syn[x]->subject;
 
-	n = gtk_ctree_insert_node (GTK_CTREE (ctree1), NULL, NULL, text, 5,
+	n = gtk_ctree_insert_node (GTK_CTREE (mailbox), NULL, NULL, text, 5,
 	    NULL, NULL, NULL, NULL, TRUE, TRUE);
-	gtk_ctree_node_set_row_data (GTK_CTREE (ctree1), n, syn[x]);
+	gtk_ctree_node_set_row_data (GTK_CTREE (mailbox), n, syn[x]);
 
 	gnome_appbar_set_progress (GNOME_APPBAR (appbar),
 	    (float)x / (float)mboxcount);
@@ -269,7 +269,7 @@ on_toolbar_prev_clicked (GtkButton * button, gpointer user_data)
     gint row;
     GtkCTreeNode *n;
 
-    ctree = GTK_CTREE (lookup_widget (gems, "ctree1"));
+    ctree = GTK_CTREE (lookup_widget (gems, "mailbox"));
 
     if (ctree->clist.rows < 1)
 	return;
@@ -300,7 +300,7 @@ on_toolbar_next_clicked (GtkButton * button, gpointer user_data)
     gint row;
     GtkCTreeNode *n;
 
-    ctree = GTK_CTREE (lookup_widget (gems, "ctree1"));
+    ctree = GTK_CTREE (lookup_widget (gems, "mailbox"));
     if (ctree->clist.rows == 0)
 	return;
     n = gtk_ctree_node_nth (GTK_CTREE (ctree),
@@ -324,7 +324,7 @@ on_toolbar_next_clicked (GtkButton * button, gpointer user_data)
 
 
 gboolean
-on_ctree1_key_press_event (GtkWidget * widget,
+on_mailbox_key_press_event (GtkWidget * widget,
     GdkEventKey * event, gpointer user_data)
 {
     switch (event->keyval)
@@ -413,7 +413,7 @@ on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
     GtkWidget *from, *to, *subj, *date, *recipt, *body, *comp, *widget;
     char *shtuff, *shtuff2, buf[1024];
 
-    if ((widget = lookup_widget (gems, "ctree1")) == NULL)
+    if ((widget = lookup_widget (gems, "mailbox")) == NULL)
 	return;
     comp = create_compose ();
     from = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry1");
@@ -466,7 +466,7 @@ on_toolbar_forward_clicked (GtkButton * button, gpointer user_data)
 
 
 void
-on_ctree1_click_column (GtkCList * clist, gint column, gpointer user_data)
+on_mailbox_click_column (GtkCList * clist, gint column, gpointer user_data)
 {
     if ((sort & (~SORT_DIRECTION)) == column)
 	sort ^= SORT_DIRECTION;
@@ -501,7 +501,7 @@ on_delete1_activate (GtkMenuItem * menuitem, gpointer user_data)
     GtkCTreeNode *n;
     mboxs *m;
 
-    ctree = GTK_CTREE (lookup_widget (gems, "ctree2"));
+    ctree = GTK_CTREE (lookup_widget (gems, "mailboxlist"));
     n = gtk_ctree_node_nth (ctree, (&(ctree->clist))->focus_row);
     m = (mboxs *) gtk_ctree_node_get_row_data (ctree, n);
 
@@ -884,7 +884,7 @@ on_mboxlist_keyevent (GtkWidget * widget,
     case GDK_Return:
     case GDK_space:
 	/*
-	on_ctree2_tree_select_row (widget, NULL, 0, NULL);
+	on_mailboxlist_tree_select_row (widget, NULL, 0, NULL);
 	*/
 	break;
     case GDK_N:

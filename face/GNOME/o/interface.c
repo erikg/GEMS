@@ -87,11 +87,11 @@ create_gems (void)
   GtkWidget *toolbar_rule;
   GtkWidget *hpaned1;
   GtkWidget *scrolledwindow5;
-  GtkWidget *ctree2;
+  GtkWidget *mailboxlist;
   GtkWidget *label8;
   GtkWidget *vpaned1;
   GtkWidget *scrolledwindow1;
-  GtkWidget *ctree1;
+  GtkWidget *mailbox;
   GtkWidget *label1;
   GtkWidget *label2;
   GtkWidget *label3;
@@ -319,21 +319,21 @@ create_gems (void)
   gtk_paned_pack1 (GTK_PANED (hpaned1), scrolledwindow5, FALSE, FALSE);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow5), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
-  ctree2 = gtk_ctree_new (1, 0);
-  gtk_widget_ref (ctree2);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "ctree2", ctree2,
+  mailboxlist = gtk_ctree_new (1, 0);
+  gtk_widget_ref (mailboxlist);
+  gtk_object_set_data_full (GTK_OBJECT (gems), "mailboxlist", mailboxlist,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ctree2);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow5), ctree2);
-  gtk_clist_set_column_width (GTK_CLIST (ctree2), 0, 80);
-  gtk_clist_column_titles_hide (GTK_CLIST (ctree2));
+  gtk_widget_show (mailboxlist);
+  gtk_container_add (GTK_CONTAINER (scrolledwindow5), mailboxlist);
+  gtk_clist_set_column_width (GTK_CLIST (mailboxlist), 0, 80);
+  gtk_clist_column_titles_hide (GTK_CLIST (mailboxlist));
 
   label8 = gtk_label_new ("");
   gtk_widget_ref (label8);
   gtk_object_set_data_full (GTK_OBJECT (gems), "label8", label8,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label8);
-  gtk_clist_set_column_widget (GTK_CLIST (ctree2), 0, label8);
+  gtk_clist_set_column_widget (GTK_CLIST (mailboxlist), 0, label8);
 
   vpaned1 = gtk_vpaned_new ();
   gtk_widget_ref (vpaned1);
@@ -352,38 +352,38 @@ create_gems (void)
   gtk_widget_set_usize (scrolledwindow1, -2, 70);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow1), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
-  ctree1 = gtk_ctree_new (3, 0);
-  gtk_widget_ref (ctree1);
-  gtk_object_set_data_full (GTK_OBJECT (gems), "ctree1", ctree1,
+  mailbox = gtk_ctree_new (3, 0);
+  gtk_widget_ref (mailbox);
+  gtk_object_set_data_full (GTK_OBJECT (gems), "mailbox", mailbox,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (ctree1);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow1), ctree1);
-  gtk_clist_set_column_width (GTK_CLIST (ctree1), 0, 80);
-  gtk_clist_set_column_width (GTK_CLIST (ctree1), 1, 80);
-  gtk_clist_set_column_width (GTK_CLIST (ctree1), 2, 80);
-  gtk_clist_set_selection_mode (GTK_CLIST (ctree1), GTK_SELECTION_EXTENDED);
-  gtk_clist_column_titles_show (GTK_CLIST (ctree1));
+  gtk_widget_show (mailbox);
+  gtk_container_add (GTK_CONTAINER (scrolledwindow1), mailbox);
+  gtk_clist_set_column_width (GTK_CLIST (mailbox), 0, 80);
+  gtk_clist_set_column_width (GTK_CLIST (mailbox), 1, 80);
+  gtk_clist_set_column_width (GTK_CLIST (mailbox), 2, 80);
+  gtk_clist_set_selection_mode (GTK_CLIST (mailbox), GTK_SELECTION_EXTENDED);
+  gtk_clist_column_titles_show (GTK_CLIST (mailbox));
 
   label1 = gtk_label_new (_("Sender"));
   gtk_widget_ref (label1);
   gtk_object_set_data_full (GTK_OBJECT (gems), "label1", label1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label1);
-  gtk_clist_set_column_widget (GTK_CLIST (ctree1), 0, label1);
+  gtk_clist_set_column_widget (GTK_CLIST (mailbox), 0, label1);
 
   label2 = gtk_label_new (_("Date"));
   gtk_widget_ref (label2);
   gtk_object_set_data_full (GTK_OBJECT (gems), "label2", label2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label2);
-  gtk_clist_set_column_widget (GTK_CLIST (ctree1), 1, label2);
+  gtk_clist_set_column_widget (GTK_CLIST (mailbox), 1, label2);
 
   label3 = gtk_label_new (_("Subject"));
   gtk_widget_ref (label3);
   gtk_object_set_data_full (GTK_OBJECT (gems), "label3", label3,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label3);
-  gtk_clist_set_column_widget (GTK_CLIST (ctree1), 2, label3);
+  gtk_clist_set_column_widget (GTK_CLIST (mailbox), 2, label3);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_widget_ref (vbox1);
@@ -529,23 +529,23 @@ create_gems (void)
   gtk_signal_connect (GTK_OBJECT (toolbar_rule), "clicked",
                       GTK_SIGNAL_FUNC (on_toolbar_rule_clicked),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (ctree2), "tree_select_row",
-                      GTK_SIGNAL_FUNC (on_ctree2_tree_select_row),
+  gtk_signal_connect (GTK_OBJECT (mailboxlist), "tree_select_row",
+                      GTK_SIGNAL_FUNC (on_mailboxlist_tree_select_row),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (ctree2), "event",
+  gtk_signal_connect (GTK_OBJECT (mailboxlist), "event",
                       GTK_SIGNAL_FUNC (on_mboxlist_event),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (ctree2), "key_press_event",
+  gtk_signal_connect (GTK_OBJECT (mailboxlist), "key_press_event",
                       GTK_SIGNAL_FUNC (on_mboxlist_keyevent),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (ctree1), "event",
-                      GTK_SIGNAL_FUNC (on_ctree1_event),
+  gtk_signal_connect (GTK_OBJECT (mailbox), "event",
+                      GTK_SIGNAL_FUNC (on_mailbox_event),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (ctree1), "key_press_event",
-                      GTK_SIGNAL_FUNC (on_ctree1_key_press_event),
+  gtk_signal_connect (GTK_OBJECT (mailbox), "key_press_event",
+                      GTK_SIGNAL_FUNC (on_mailbox_key_press_event),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (ctree1), "click_column",
-                      GTK_SIGNAL_FUNC (on_ctree1_click_column),
+  gtk_signal_connect (GTK_OBJECT (mailbox), "click_column",
+                      GTK_SIGNAL_FUNC (on_mailbox_click_column),
                       NULL);
 
   return gems;

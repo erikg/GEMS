@@ -189,6 +189,7 @@ create_gems (void)
   mboxlist = gtk_tree_view_new ();
   gtk_widget_show (mboxlist);
   gtk_container_add (GTK_CONTAINER (scrolledwindow1), mboxlist);
+  gtk_widget_set_size_request (mboxlist, 300, -1);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (mboxlist), FALSE);
 
   vpaned1 = gtk_vpaned_new ();
@@ -204,6 +205,7 @@ create_gems (void)
   mbox = gtk_tree_view_new ();
   gtk_widget_show (mbox);
   gtk_container_add (GTK_CONTAINER (scrolledwindow2), mbox);
+  gtk_widget_set_size_request (mbox, -1, 175);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (vbox1);

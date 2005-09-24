@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.43 2005/01/13 14:29:53 erik Exp $
+ * $Id: db.mysql.c,v 1.44 2005/09/24 13:52:31 erik Exp $
  */
 
 #include <stdio.h>
@@ -76,25 +76,25 @@ int
 db_init_firstrun ()
 {
     mysql_query (con,
-	"CREATE TABLE attachments ( id int(10) unsigned NOT NULL default '0', attachment longtext NOT NULL) TYPE=MyISAM");
+	"CREATE TABLE attachments ( id int(10) unsigned NOT NULL default '0', attachment longtext NOT NULL) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE body ( id int(10) unsigned NOT NULL default '0', body longtext NOT NULL, compressed enum('true','false') NOT NULL default 'false', PRIMARY KEY  (id)) TYPE=MyISAM");
+	"CREATE TABLE body ( id int(10) unsigned NOT NULL default '0', body longtext NOT NULL, compressed enum('true','false') NOT NULL default 'false', PRIMARY KEY  (id)) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE header ( id int(10) unsigned NOT NULL auto_increment, header text NOT NULL, compressed enum('true','false') NOT NULL default 'false', PRIMARY KEY  (id)) TYPE=MyISAM");
+	"CREATE TABLE header ( id int(10) unsigned NOT NULL auto_increment, header text NOT NULL, compressed enum('true','false') NOT NULL default 'false', PRIMARY KEY  (id)) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE mmbox ( mbox int(11) NOT NULL auto_increment, mboxname text NOT NULL, query text, PRIMARY KEY  (mbox)) TYPE=MyISAM");
+	"CREATE TABLE mmbox ( mbox int(11) NOT NULL auto_increment, mboxname text NOT NULL, query text, PRIMARY KEY  (mbox)) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE preferences ( name text NOT NULL, value text NOT NULL) TYPE=MyISAM");
+	"CREATE TABLE preferences ( name text NOT NULL, value text NOT NULL) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE recipt ( id int(10) unsigned NOT NULL default '0', recipt text NOT NULL, type tinytext NOT NULL) TYPE=MyISAM");
+	"CREATE TABLE recipt ( id int(10) unsigned NOT NULL default '0', recipt text NOT NULL, type tinytext NOT NULL) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE refs ( id int(10) unsigned NOT NULL default '0', refs text, childof int(10) unsigned default NULL) TYPE=MyISAM");
+	"CREATE TABLE refs ( id int(10) unsigned NOT NULL default '0', refs text, childof int(10) unsigned default NULL) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE replyto ( id int(10) unsigned NOT NULL default '0', replyto text NOT NULL) TYPE=MyISAM");
+	"CREATE TABLE replyto ( id int(10) unsigned NOT NULL default '0', replyto text NOT NULL) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE rules ( sort int(10) unsigned NOT NULL default '0', name text, regex text, mbox text, peice enum('Message','Body','Header','Subject','From','Recipients','Sender') default NULL) TYPE=MyISAM");
+	"CREATE TABLE rules ( sort int(10) unsigned NOT NULL default '0', name text, regex text, mbox text, peice enum('Message','Body','Header','Subject','From','Recipients','Sender') default NULL) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE synopsis ( id int(10) unsigned NOT NULL default '0', mbox int(11) NOT NULL default '0', status set('read','marked') NOT NULL default '', senddate datetime NOT NULL default '0000-00-00 00:00:00', sender text NOT NULL, subject text NOT NULL, charid text NOT NULL, PRIMARY KEY  (id)) TYPE=MyISAM");
+	"CREATE TABLE synopsis ( id int(10) unsigned NOT NULL default '0', mbox int(11) NOT NULL default '0', status set('read','marked') NOT NULL default '', senddate datetime NOT NULL default '0000-00-00 00:00:00', sender text NOT NULL, subject text NOT NULL, charid text NOT NULL, PRIMARY KEY  (id)) TYPE=InnoDB");
     return GEMS_TRUE;
 }
 
@@ -401,7 +401,9 @@ db_read_synopsis (int mbox, int status)
     result = mysql_store_result (con);
     row = mysql_fetch_row (result);
     if (row[0] != NULL)
+    {
 	sprintf (q, "%s", row[0]);
+    }
     else
 	switch (status)
 	{
@@ -496,10 +498,12 @@ db_read_mboxlist (void)
 
     while ((row = mysql_fetch_row (result)) != NULL)
     {
+	int v;
 	y = atoi (row[0]) - 1;
+	v = atoi(row[1]);
 
 	if (mboxlist[y] != NULL)
-	    mboxlist[y]->hasunread = atoi (row[1]);
+	    mboxlist[y]->hasunread = v;
     }
     mysql_free_result (result);
 
@@ -1039,3 +1043,4 @@ db_purge_empty ()
     printf ("%d entries removed\n", i);
     return;
 }
+

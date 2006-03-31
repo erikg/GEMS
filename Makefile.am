@@ -1,10 +1,10 @@
-# $Id: Makefile.am,v 1.11 2005/04/02 20:20:27 erik Exp $
+# $Id: Makefile.am,v 1.12 2006/03/31 19:09:10 erik Exp $
 
-if INTL
-intl = intl
-endif
+#if INTL
+#intl = intl
+#endif
 
-SUBDIRS = $(intl) include common receptor transmitter db face shell doc
+SUBDIRS = include common receptor transmitter db face shell doc
 
 EXTRA_DIST=ChangeLog $(PACKAGE).spec
 

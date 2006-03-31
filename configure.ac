@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.8 2005/04/02 20:54:44 erik Exp $
+dnl $Id: configure.ac,v 1.9 2006/03/31 19:09:10 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -27,15 +27,16 @@ then
 	LDADD="${LDADD} -L/usr/local/lib"
 fi
 
-dnl AM_GNU_GETTEXT([external])
+#AM_GNU_GETTEXT_VERSION(0.11.5)
+#AM_GNU_GETTEXT([external])
 dnl AM_GNU_GETTEXT()
-dnl GETTEXT_PACKAGE=gems
-dnl AC_SUBST(GETTEXT_PACKAGE)
-dnl AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package?])
-dnl AM_GLIB_GNU_GETTEXT
+#GETTEXT_PACKAGE=gems
+#AC_SUBST(GETTEXT_PACKAGE)
+#AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package?])
+#AM_GLIB_GNU_GETTEXT
 #intl=
 #AC_SUBST(intl)
-AM_CONDITIONAL(INTL, false)
+#AM_CONDITIONAL(INTL, false)
 
 dnl **************************************************************************
 dnl ********************************* DBIs ***********************************
@@ -146,14 +147,14 @@ AM_CONDITIONAL(GNOME,[test "x$have_gnome"==xyes])
 
 dnl **************************************************************************
 
-pkg_modules="libgnomeui-2.0"
-PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
-GNOME2_CFLAGS=$PACKAGE_CFLAGS
-GNOME2_LIBS=$PACKAGE_LIBS
-AC_SUBST(GNOME2_CFLAGS)
-AC_SUBST(GNOME2_LIBS)
-AM_CONDITIONAL(GNOME2,[test "x$have_gnome2"==xyes])
-#if [ "x$have_gnome2" == xyes ] ; then FACE="${FACE} GNOME2" ; fi
+#pkg_modules="libgnomeui-2.0"
+#PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+#GNOME2_CFLAGS=$PACKAGE_CFLAGS
+#GNOME2_LIBS=$PACKAGE_LIBS
+#AC_SUBST(GNOME2_CFLAGS)
+#AC_SUBST(GNOME2_LIBS)
+#AM_CONDITIONAL(GNOME2,[test "x$have_gnome2"==xyes])
+##if [ "x$have_gnome2" == xyes ] ; then FACE="${FACE} GNOME2" ; fi
 
 dnl **************************************************************************
 
@@ -177,7 +178,7 @@ AC_SUBST(MY_LDADD)
 AC_CONFIG_FILES([
 	Makefile common/Makefile receptor/Makefile transmitter/Makefile shell/Makefile include/Makefile
 	gems.spec doc/Makefile doc/doxygen.conf
-	po/Makefile.in intl/Makefile 
+	po/Makefile.in
 	db/Makefile db/MySQL/Makefile db/PostgreSQL/Makefile
 	face/Makefile face/utils/Makefile
 	face/GTK/Makefile face/GTK/e/Makefile

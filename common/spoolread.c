@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: spoolread.c,v 1.8 2005/01/13 14:29:53 erik Exp $
+ * $Id: spoolread.c,v 1.9 2006/03/31 19:09:26 erik Exp $
  */
 
 #include <stdio.h>
@@ -71,7 +71,7 @@ open_spool (char *spoolname)
 	oops ("Spoolread\nUnable to open mail spool", spoolname);
 	return (EXIT_FAILURE);
     }
-    line = (char *)malloc (1024);
+    line = (char *)malloc (65536);
     if (line == NULL)
     {
 	oops ("Spoolread", "Failed malloc");

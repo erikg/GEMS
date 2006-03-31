@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: snarf.c,v 1.20 2005/04/02 15:57:23 erik Exp $
+ * $Id: snarf.c,v 1.21 2006/03/31 19:10:10 erik Exp $
  */
 
 #include <stdio.h>
@@ -36,7 +36,7 @@
 #define MEGS *1024*1024
 
 /* 8 megs */
-#define BIGBUFSIZ (8 MEGS)
+#define BIGBUFSIZ (32 MEGS)
 
 #ifndef _
 #define _(X) (X)
@@ -62,7 +62,7 @@ parse (char *buf, unsigned int size)
     char **line, *walk, **msg, *mbox;
 
     msgcount = linecount = 0;
-    msgcountsize = linecountsize = 1024;
+    msgcountsize = linecountsize = 2048;
     line = malloc (sizeof (char *) * linecountsize);
     msg = malloc (sizeof (char *) * msgcountsize);
 

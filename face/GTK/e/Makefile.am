@@ -1,4 +1,4 @@
-# $Id: Makefile.am,v 1.4 2004/05/20 12:24:55 erik Exp $
+# $Id: Makefile.am,v 1.5 2006/04/05 13:21:02 erik Exp $
 
 gemslibdir = $(libdir)/gems
 
@@ -10,6 +10,6 @@ noinst_HEADERS = callbacks.h  interface.h  support.h
 
  
 AM_INCLUDES =  @GTK_CFLAGS@ -I$(toplevel_dir)/intl -DLOCALEDIR=\"$(localedir)\" -DPACKAGE_LOCALE_DIR=\"$(localedir)\"
-LDFLAGS  = -rdynamic @GTK_LIBS@
+AM_LDFLAGS  = -rdynamic @GTK_LIBS@
 AM_LDDADD   = @INTLLIBS@
 localedir= $(datadir)/locale

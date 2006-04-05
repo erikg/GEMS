@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.9 2006/03/31 19:09:10 erik Exp $
+dnl $Id: configure.ac,v 1.10 2006/04/05 13:19:49 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -147,14 +147,14 @@ AM_CONDITIONAL(GNOME,[test "x$have_gnome"==xyes])
 
 dnl **************************************************************************
 
-#pkg_modules="libgnomeui-2.0"
-#PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
-#GNOME2_CFLAGS=$PACKAGE_CFLAGS
-#GNOME2_LIBS=$PACKAGE_LIBS
-#AC_SUBST(GNOME2_CFLAGS)
-#AC_SUBST(GNOME2_LIBS)
-#AM_CONDITIONAL(GNOME2,[test "x$have_gnome2"==xyes])
-##if [ "x$have_gnome2" == xyes ] ; then FACE="${FACE} GNOME2" ; fi
+pkg_modules="libgnomeui-2.0"
+PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+GNOME2_CFLAGS=$PACKAGE_CFLAGS
+GNOME2_LIBS=$PACKAGE_LIBS
+AC_SUBST(GNOME2_CFLAGS)
+AC_SUBST(GNOME2_LIBS)
+AM_CONDITIONAL(GNOME2,[test "x$have_gnome2"==xyes])
+if [ "x$have_gnome2" == xyes ] ; then FACE="${FACE} GNOME2" ; fi
 
 dnl **************************************************************************
 

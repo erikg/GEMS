@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.10 2006/04/05 13:19:49 erik Exp $
+dnl $Id: configure.ac,v 1.11 2006/07/04 17:56:31 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -154,7 +154,7 @@ GNOME2_LIBS=$PACKAGE_LIBS
 AC_SUBST(GNOME2_CFLAGS)
 AC_SUBST(GNOME2_LIBS)
 AM_CONDITIONAL(GNOME2,[test "x$have_gnome2"==xyes])
-if [ "x$have_gnome2" == xyes ] ; then FACE="${FACE} GNOME2" ; fi
+if test "x$have_gnome2" == "xyes" ; then FACE="${FACE} GNOME2" ; fi
 
 dnl **************************************************************************
 

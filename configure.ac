@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.11 2006/07/04 17:56:31 erik Exp $
+dnl $Id: configure.ac,v 1.12 2006/07/16 19:46:38 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -24,7 +24,7 @@ CPPFLAGS="${CPPFLAGS}"' -I${top_srcdir}'/include
 if test -d /usr/local
 then
 	CPPFLAGS="${CPPFLAGS} -I/usr/local/include"
-	LDADD="${LDADD} -L/usr/local/lib"
+	LDFLAGS="${LDFLAGS} -L/usr/local/lib"
 fi
 
 #AM_GNU_GETTEXT_VERSION(0.11.5)
@@ -69,8 +69,8 @@ AM_CONDITIONAL(POSTGRESQL, [test "x$have_postgresql" == xyes])
 if test "x$have_postgresql" == xyes
 then
 	AC_MSG_RESULT([Yes])
-	POSTGRESQL_LIBADD="-lpg"
-	DB="${DB} PostgreSQL"
+	POSTGRESQL_LIBADD="${LDFLAGS} -lpq"
+	DB="${DB} PostGreSQL"
 else
 	AC_MSG_RESULT([No])
 fi
@@ -179,7 +179,7 @@ AC_CONFIG_FILES([
 	Makefile common/Makefile receptor/Makefile transmitter/Makefile shell/Makefile include/Makefile
 	gems.spec doc/Makefile doc/doxygen.conf
 	po/Makefile.in
-	db/Makefile db/MySQL/Makefile db/PostgreSQL/Makefile
+	db/Makefile db/MySQL/Makefile db/PostGreSQL/Makefile
 	face/Makefile face/utils/Makefile
 	face/GTK/Makefile face/GTK/e/Makefile
 	face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile

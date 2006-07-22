@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.pgsql.c,v 1.7 2005/01/13 14:29:53 erik Exp $
+ * $Id: db.pgsql.c,v 1.8 2006/07/22 11:40:27 erik Exp $
  */
 
 #include <libpq-fe.h>
@@ -95,7 +95,7 @@ db_init_firstrun ()
 int
 db_insert_msg (char *mbox, message * m)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
 
@@ -103,14 +103,14 @@ db_insert_msg (char *mbox, message * m)
 int
 db_addmbox (char *mbox)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
 
 int
 db_addmbox_view (char *mbox, char *query)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
 
@@ -155,14 +155,14 @@ db_close ()
 synopsis **
 db_read_synopsis (int mbox, int status)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
 
 synopsis **
 db_read_synopsis_raw (char *query)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
 
@@ -170,7 +170,7 @@ db_read_synopsis_raw (char *query)
 mboxs **
 db_read_mboxlist (void)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
 
@@ -178,7 +178,7 @@ db_read_mboxlist (void)
 char *
 db_read_body (int id)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
 
@@ -187,7 +187,7 @@ db_read_body (int id)
 message *
 db_read_message (int id)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
 
@@ -195,7 +195,7 @@ db_read_message (int id)
 int
 db_normalize ()
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
 
@@ -203,7 +203,7 @@ db_normalize ()
 int
 db_is_child_of (int msg)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
 
@@ -211,7 +211,7 @@ db_is_child_of (int msg)
 rule *
 db_fetch_rules (int *i)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
 
@@ -219,7 +219,7 @@ db_fetch_rules (int *i)
 int
 db_set_rules (rule ** r)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
 
@@ -227,7 +227,7 @@ db_set_rules (rule ** r)
 int
 db_pref_set (char *pref, char *val)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
 
@@ -235,14 +235,14 @@ db_pref_set (char *pref, char *val)
 char *
 db_pref_get (char *pref)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
 
 void
 db_syncharhash (void)
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return;
 }
 
@@ -250,6 +250,6 @@ db_syncharhash (void)
 void
 db_purge_empty ()
 {
-    oops("not implemented",__FUNCTION__);
+    oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }

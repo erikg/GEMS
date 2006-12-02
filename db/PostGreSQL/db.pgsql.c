@@ -21,9 +21,10 @@
  *****************************************************************************/
 
 /*
- * $Id: db.pgsql.c,v 1.8 2006/07/22 11:40:27 erik Exp $
+ * $Id: db.pgsql.c,v 1.9 2006/12/02 14:03:57 erik Exp $
  */
 
+#include <string.h>
 #include <libpq-fe.h>
 
 #include "defs.h"
@@ -32,6 +33,9 @@
 #include "rules.h"
 #include "face.h"		/* for oops() */
 
+#define QSIZ 40000000
+static char q[QSIZ];
+#define QEX(m, args...) snprintf(q, QSIZ, m, ##args); PQexec(conn, q)
 struct table_s {
     char *name, *vals;
 };
@@ -39,7 +43,7 @@ struct table_s {
 struct table_s table[] = {
     {"attachments", "id int, attachment text"},
     {"body", "id int, body text"},
-    {"header", "id int, header text"},
+    {"header", "id serial, header text"},
     {"mbox", "name text"},
     {"prefs", "pref text, val text"},
     {"recipt", "id int, recipt text"},
@@ -95,6 +99,9 @@ db_init_firstrun ()
 int
 db_insert_msg (char *mbox, message * m)
 {
+    if(mbox==NULL || m==NULL) return GEMS_FALSE;
+    QEX("INSERT INTO header VALUES (DEFAULT, '%s')", m->header);
+//    QEX("INSERT INTO synopsis VALUES (DEFAULT,(SELECT mbox FROM mmbox WHERE mboxname='%s'),)");
     oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
@@ -209,10 +216,28 @@ db_is_child_of (int msg)
 
 /** return an array of rules */
 rule *
-db_fetch_rules (int *i)
+db_fetch_rules (int *numrows)
 {
-    oops("not implemented: ",__FUNCTION__);
-    return NULL;
+    PGresult *r;
+    rule *rules;
+    int nr, x;
+
+    r = PQexec(conn, "select name,sort,regex,mbox,piece from rules order by sort");
+    if(r==NULL || (nr = PQntuples(r)) == 0) {
+	oops ("failed to read rule set\n", "");
+	exit(0);
+    }
+    rules = (rule *)malloc (sizeof(rule) * nr);
+    for(x=0;x<nr;x++) {
+	rules[x].name  = strdup(PQgetvalue(r,x,0));
+	rules[x].order = atoi(PQgetvalue(r,x,1));
+	rules[x].regex = strdup(PQgetvalue(r,x,2));
+	rules[x].mbox  = strdup(PQgetvalue(r,x,3));
+	rules[x].peice = strdup(PQgetvalue(r,x,4));
+    }
+    PQclear(r);
+    *numrows = nr;
+    return rules;
 }
 
 /** set the rules (erasing the old ones)*/
@@ -251,5 +276,5 @@ void
 db_purge_empty ()
 {
     oops("not implemented: ",__FUNCTION__);
-    return GEMS_FALSE;
+    return;
 }

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: rules.c,v 1.19 2005/01/13 14:29:53 erik Exp $
+ * $Id: rules.c,v 1.20 2006/12/02 14:04:29 erik Exp $
  */
 
 #include "rules.h"
@@ -46,6 +46,8 @@ rule_init (rule * r, int nr)
     int x;
 
     numrules = nr;
+    if(nr == 0 || r == NULL)
+	return GEMS_FALSE;
     rules = (rule *) r;
     preg = (void *)malloc (sizeof (regex_t) * (numrules + 1));
     memset (preg, 0, sizeof (regex_t) * (numrules + 1));

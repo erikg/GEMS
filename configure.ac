@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.12 2006/07/16 19:46:38 erik Exp $
+dnl $Id: configure.ac,v 1.13 2007/01/22 21:52:34 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -99,7 +99,7 @@ AC_MSG_CHECKING([GTK1])
 have_gtk=no
 AC_ARG_ENABLE(gtk,
 [  --enable-gtk            Use GTK (default=yes)],use_gtk=no,use_gtk=yes)
-if test "$use_gtk" = "yes"
+if test "$use_gtk" == "yes"
 then
     AM_PATH_GTK(1.1.0,have_gtk=yes)
 fi
@@ -123,13 +123,13 @@ AC_ARG_WITH(gnome-libs,
         gnome_prefix=$withval
         ])
 
-have_gnome=no
-AC_ARG_ENABLE(gnome,
-[  --enable-gnome          Use GNOME [default=yes]], use_gnome=no, use_gnome=yes)
+AC_MSG_CHECKING([GNOME1])
+AC_ARG_ENABLE(gnome, [  --enable-gnome          Use GNOME [default=yes]], use_gnome=yes, use_gnome=no)
 if test "x$use_gnome" = xyes; then
         AC_PATH_PROG(GNOME_CONFIG,gnome-config)
         AC_MSG_CHECKING(for GNOME)
-        if $GNOME_CONFIG --libs-only-l gnome >/dev/null 2>&1; then
+        if $GNOME_CONFIG --libs-only-l gnome >/dev/null 2>&1 
+	then
 		have_gnome=yes
 		FACE="${FACE} GNOME"
                 GNOME_CFLAGS=`gnome-config --cflags gnomeui`
@@ -141,7 +141,7 @@ if test "x$use_gnome" = xyes; then
                 AC_MSG_RESULT(no)
         fi
 else
-                AC_MSG_RESULT(no)
+	AC_MSG_RESULT(no)
 fi
 AM_CONDITIONAL(GNOME,[test "x$have_gnome"==xyes])
 

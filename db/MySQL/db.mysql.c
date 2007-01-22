@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.44 2005/09/24 13:52:31 erik Exp $
+ * $Id: db.mysql.c,v 1.45 2007/01/22 22:39:12 erik Exp $
  */
 
 #include <stdio.h>
@@ -159,10 +159,10 @@ db_insert_msg (char *mboxname, message * m)
     /*
      * check if it's a redundant entry
      */
-    sprintf (q, "select * from synopsis where charid='%s'", m->id);
+    sprintf (q, "select * from synopsis where charid='%s'", spawn_escape_string(m->id, 0));
     if (mysql_query (con, q) != 0)
     {
-	oops ("failed to check for dup", NULL);
+	oops ("failed to check for dup", mysql_error(con));
 	exit (0);
     }
     result = mysql_store_result (con);

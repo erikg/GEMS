@@ -2,7 +2,7 @@
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
- *     Copyright (C) 2006-2006 Erik Greenwald <erik@smluc.org>               *
+ *     Copyright (C) 2006-2007 Erik Greenwald <erik@smluc.org>               *
  *                                                                           *
  *     This program is free software; you can redistribute it and/or modify  *
  *     it under the terms of the GNU General Public License as published by  *
@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Header: /mnt/fenris/usr/cvs/devel/gems/face/utils/put.c,v 1.1 2006/04/05 13:19:28 erik Exp $
+ * $Header: /mnt/fenris/usr/cvs/devel/gems/face/utils/put.c,v 1.2 2007/02/12 19:26:33 erik Exp $
  */
 
 #include <stdio.h>

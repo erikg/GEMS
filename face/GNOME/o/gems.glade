@@ -802,7 +802,7 @@
   <class>GnomeAbout</class>
   <name>about2</name>
   <modal>True</modal>
-  <copyright>Copyright (C) 2000-2005 Erik Greenwald</copyright>
+  <copyright>Copyright (C) 2000-2007 Erik Greenwald</copyright>
   <authors>Erik Greenwald &lt;erik@smluc.org&gt;
 </authors>
   <comments></comments>

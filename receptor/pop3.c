@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: pop3.c,v 1.8 2007/02/12 19:26:33 erik Exp $
+ * $Id: pop3.c,v 1.9 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -100,10 +100,8 @@ _pop3_passwd (int s, char *password)
 int
 receive_pop3 (char *hostname, int port, char *username, char *password)
 {
-    int x, n, s, last, max;
+    int x, s, last, max;
     void *list;
-    message *mess;
-    char *mbox, stat[5];
 
     s = socket_open (hostname, port);
     if (_pop3_user (s, username) == GEMS_FALSE)

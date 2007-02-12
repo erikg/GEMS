@@ -20,15 +20,15 @@
  *****************************************************************************/
 
 /*
- * $Id: sendmail.c,v 1.6 2007/02/12 19:26:33 erik Exp $
- */
-
-
-/*
- * $Id: sendmail.c,v 1.6 2007/02/12 19:26:33 erik Exp $
+ * $Id: sendmail.c,v 1.7 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#include "face.h"
 #include "transmitter.h"
 
 static char *cmd[] = { "/usr/sbin/sendmail", "-oi", "-t", NULL };
@@ -36,6 +36,7 @@ static char *cmd[] = { "/usr/sbin/sendmail", "-oi", "-t", NULL };
 int transmit_sendmail (message *m)
 {
 	int pid;
+	printf("This is not done. %x\n", (unsigned int) m);
 	pid = fork();
 	switch(pid)
 	{
@@ -44,7 +45,7 @@ int transmit_sendmail (message *m)
 			return -1;
 			break;
 		case 0:		/* child */
-			execve(cmd);
+			execve(*cmd, &cmd[1], NULL);
 			break;
 		default:	/* parent */	
 

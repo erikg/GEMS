@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: parms.c,v 1.9 2007/02/12 19:26:33 erik Exp $
+ * $Id: parms.c,v 1.10 2007/02/12 21:17:53 erik Exp $
  */
 
 #include <stdio.h>
@@ -64,7 +64,7 @@ parms *
 load_parms (int *argc, char **margv)
 {
     parms *p;
-    int x = 0, y;
+    int x = 0;
     void *ll;
 
     ll = ll_newlist ();

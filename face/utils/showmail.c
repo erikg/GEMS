@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: showmail.c,v 1.7 2007/02/12 19:26:33 erik Exp $
+ * $Id: showmail.c,v 1.8 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -54,6 +54,8 @@ face_run (int argc, char **argv)
 {
     void *list;
     message *mess;
+
+    printf("%d %s\n", argc, *argv);
 
     if (open_spool (argv[1]) == GEMS_FALSE)
     {

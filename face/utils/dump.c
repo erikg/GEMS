@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: dump.c,v 1.3 2007/02/12 19:26:33 erik Exp $
+ * $Id: dump.c,v 1.4 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -52,13 +52,13 @@ oops (char *a, char *b)
 }
 
 int
-face_run (int argc, char **margv)
+face_run (int argc, char **argv)
 {
-    void *list;
     message *mess;
     mboxs **mb;
     int i = 0, j = 0;
 
+    printf("%d %s\n", argc, *argv);
     mb =  db_read_mboxlist();
 
     for( j = 0; mb[j]; ++j)

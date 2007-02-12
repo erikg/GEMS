@@ -21,12 +21,14 @@
  *****************************************************************************/
 
 /*
- * $Id: spool2sqlfast.c,v 1.8 2007/02/12 19:26:33 erik Exp $
+ * $Id: spool2sqlfast.c,v 1.9 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
+
 #include "defs.h"
 #include "spoolread.h"
 #include "message.h"
@@ -52,14 +54,16 @@ oops (char *a, char *b)
 }
 
 int
-face_run (int argc, char **margv)
+face_run (int argc, char **argv)
 {
     message *mess;
     char *spoolname, *mbox, *buf;
-    int numrules, dirty = GEMS_FALSE, fd, i, j, s;
+    int numrules, fd, s;
     rule *rules;
 
-    spoolname = margv[1];
+    printf("%d %s\n", argc, *argv);
+
+    spoolname = argv[1];
     buf = (char *)malloc (BUFSIZ);
 
     rules = (rule *) db_fetch_rules ((int *)&numrules);
@@ -78,8 +82,6 @@ face_run (int argc, char **margv)
     memset (buf, 0, BUFSIZ);
     while (read (fd, buf, BUFSIZ) != 0)
     {
-	int x = 0;
-
 	mess = message_build_from_buffer (buf);
 	if (mess == 0)
 	{

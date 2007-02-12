@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: spoolread.c,v 1.10 2007/02/12 19:26:33 erik Exp $
+ * $Id: spoolread.c,v 1.11 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -132,7 +132,8 @@ read_message ()
 void *
 read_message_quickly ()
 {
-
+    fprintf(stderr, "Unimplemented function: %s (%s:%d)\n", __FUNCTION__, __FILE__, __LINE__);
+    return NULL;
 }
 
 int

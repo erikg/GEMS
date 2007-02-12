@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: synhash.c,v 1.5 2007/02/12 19:26:33 erik Exp $
+ * $Id: synhash.c,v 1.6 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -47,8 +47,9 @@ oops (char *a, char *b)
 }
 
 int
-face_run (int argc, char **margv)
+face_run (int argc, char **argv)
 {
+    printf("%d %s\n", argc, *argv);
     db_syncharhash ();
     printf ("\n");
     return GEMS_TRUE;

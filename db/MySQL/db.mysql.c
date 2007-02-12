@@ -21,15 +21,17 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.46 2007/02/12 19:26:33 erik Exp $
+ * $Id: db.mysql.c,v 1.47 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>		/* strcasecmp() */
 #include <ctype.h>
+#include <time.h>
 #include <dlfcn.h>
 #include <mysql/mysql.h>
+
 #include "defs.h"
 #include "message.h"
 #include "db.h"
@@ -48,7 +50,7 @@ static char monthlist[12][4] =
 };
 
 static char *
-stuff (MYSQL_RES * result, MYSQL_ROW row, int x, int box)
+stuff (MYSQL_RES * result, MYSQL_ROW row, int x)
 {
     char *a = NULL;
 
@@ -145,7 +147,7 @@ parse_date (char *in)
 int
 db_insert_msg (char *mboxname, message * m)
 {
-    long int id, mbox = 0, x, count;
+    long int id, mbox = 0;
     char *a, *b, *c, *d;
     MYSQL_RES *result;
     MYSQL_ROW row;
@@ -544,7 +546,7 @@ db_read_body (int id)
 	exit (EXIT_FAILURE);
     }
     row = mysql_fetch_row (result);
-    body = stuff (result, row, 0, 0);
+    body = stuff (result, row, 0);
     mysql_free_result (result);
 
     sprintf (q, "update synopsis set status = 'read' where id='%d'", id);
@@ -625,12 +627,12 @@ db_read_message (int id)
 	exit (EXIT_FAILURE);
     }
     row = mysql_fetch_row (result);
-    m->mbox = stuff (result, row, 0, 0);
-    m->status = stuff (result, row, 1, 1);
-    m->senddate = stuff (result, row, 2, 2);
-    m->sender = stuff (result, row, 3, 3);
-    m->subject = stuff (result, row, 4, 4);
-    m->id = stuff (result, row, 5, 5);
+    m->mbox = stuff (result, row, 0);
+    m->status = stuff (result, row, 1);
+    m->senddate = stuff (result, row, 2);
+    m->sender = stuff (result, row, 3);
+    m->subject = stuff (result, row, 4);
+    m->id = stuff (result, row, 5);
     mysql_free_result (result);
 
     /*
@@ -651,7 +653,8 @@ db_read_message (int id)
     row = mysql_fetch_row (result);
     if (row)
     {
-	m->recipt = (char *)malloc (mysql_fetch_lengths (result) + 1);
+	unsigned long *l = mysql_fetch_lengths (result);
+	m->recipt = (char *)malloc ( *l + 1);
 	sprintf (m->recipt, "%s", row[0]);
     }
     mysql_free_result (result);
@@ -672,7 +675,7 @@ db_read_message (int id)
 	exit (EXIT_FAILURE);
     }
     row = mysql_fetch_row (result);
-    m->references = stuff (result, row, 0, 6);
+    m->references = stuff (result, row, 0);
     mysql_free_result (result);
 
     /*
@@ -858,15 +861,13 @@ db_pref_set (char *pref, char *val)
 char *
 db_pref_get (char *pref)
 {
-    char *a;
     MYSQL_RES *res;
     MYSQL_ROW row;
+    char *a = NULL;
 
     sprintf (q, "select value from preferences where name='%s'", pref);
     if (mysql_query (con, q) != 0)
-    {
 	return NULL;
-    }
     res = mysql_store_result (con);
     row = mysql_fetch_row (res);
     if (row != NULL && row[0] != NULL)
@@ -916,7 +917,7 @@ db_syncharhash (void)
 	row2 = mysql_fetch_row (res2);
 	frac = (float)i / (float)max;
 	t = start + max * (now - start) / i;
-	printf ("\r%d/%d (%.2f%%) %ds elapsed, ~%d left, ETA: %s", i, max, 100.0 * frac, now - start, /* elapsed */ (float)max * (float)(now - start) / (float)i, /* left */ ctime (&t));	/* ETA */
+	printf ("\r%d/%d (%.2f%%) %ds elapsed, ~%f left, ETA: %s", i, max, 100.0 * frac, now - start, /* elapsed */ (float)max * (float)(now - start) / (float)i, /* left */ ctime (&t));	/* ETA */
 	++i;
 	fflush (stdout);
 	if (row2 == NULL)
@@ -932,8 +933,8 @@ void
 db_purge_empty ()
 {
     MYSQL_RES *res1, *res2;
-    MYSQL_ROW row1, row2;
-    int max, i = 0, j;
+    MYSQL_ROW row1;
+    int i = 0;
 
     if (mysql_query (con, "select id from body where body is NULL or body=''")
 	!= 0)

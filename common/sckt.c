@@ -21,11 +21,12 @@
  *****************************************************************************/
 
 /*
- * $Id: sckt.c,v 1.7 2007/02/12 19:26:33 erik Exp $
+ * $Id: sckt.c,v 1.8 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <signal.h>
 #include <sys/types.h>
@@ -33,6 +34,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+
 #include "sckt.h"
 
 int

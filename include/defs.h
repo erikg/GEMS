@@ -20,11 +20,13 @@
  *****************************************************************************/
 
 /*
- * $Id: defs.h,v 1.5 2007/02/12 19:26:33 erik Exp $
+ * $Id: defs.h,v 1.6 2007/02/12 21:15:03 erik Exp $
  */
 
 #ifndef __DEFS_H
 #define __DEFS_H
+
+#define UNUSED(x) (x)__attribute((unused))
 
 #ifndef GEMS_TRUE
 #define GEMS_TRUE 1
@@ -32,4 +34,5 @@
 #ifndef GEMS_FALSE
 #define GEMS_FALSE 0
 #endif				/* GEMS_FALSE */
+
 #endif

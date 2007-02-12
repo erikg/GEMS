@@ -21,11 +21,12 @@
  *****************************************************************************/
 
 /*
- * $Id: ll.c,v 1.10 2007/02/12 19:26:33 erik Exp $
+ * $Id: ll.c,v 1.11 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>		/* for NULL */
 #include <stdlib.h>
+#include <string.h>
 #include "defs.h"
 #include "ll.h"
 #include "../include/face.h"	/* for oops() */

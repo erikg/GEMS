@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: face.h,v 1.6 2007/02/12 19:26:33 erik Exp $
+ * $Id: face.h,v 1.7 2007/02/12 21:15:03 erik Exp $
  */
 
 
@@ -35,4 +35,4 @@ int face_run (int argc, char **argv);
 	 * gems_err refers to the component error (dbi, shell, etc)
 	 * subsystem_err is what the component could find out (mysql_error, etc)
 	 */
-void oops (char *gems_err, char *subsystem_err);
+void oops (const char *gems_err, const char *subsystem_err);

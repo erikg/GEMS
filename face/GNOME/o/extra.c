@@ -20,16 +20,18 @@
  *****************************************************************************/
 
 /*
- * $Id: extra.c,v 1.15 2007/02/12 19:26:33 erik Exp $
+ * $Id: extra.c,v 1.16 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <gnome.h>
 
 #include "db.h"
 #include "defs.h"
-#include "message.h"
 #include "extra.h"
 #include "ll.h"
+#include "message.h"
+#include "stringinate.h"
+#include "support.h"
 
 extern GtkWidget *gems;
 
@@ -66,7 +68,7 @@ putmail (GtkWidget * widget)
 	      shtuff = (char *) db_read_body (s->id);
 	  else
 	    {
-		printf ("synopsis for row %d is NULL!\n", n);
+		printf ("synopsis for row %d is NULL!\n", (&(GTK_CTREE (widget)->clist))->focus_row);
 		return FALSE;
 	    }
       }
@@ -137,7 +139,7 @@ replyify (synopsis * syn, char *buf)
 }
 
 gint
-update_mboxlist (gpointer nothing)
+update_mboxlist (gpointer UNUSED(nothing))
 {
     mboxs **mboxlist;
     GtkCTree *tree;
@@ -158,7 +160,7 @@ update_mboxlist (gpointer nothing)
     return 1;
 }
 
-static int default_mboxlistbehavior = DB_UNREAD;
+int default_mboxlistbehavior = DB_UNREAD;
 
 void
 set_mboxlist ()

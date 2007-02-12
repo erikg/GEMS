@@ -21,17 +21,18 @@
  *****************************************************************************/
 
 /*
- * $Id: rules.c,v 1.21 2007/02/12 19:26:33 erik Exp $
+ * $Id: rules.c,v 1.22 2007/02/12 21:15:03 erik Exp $
  */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <regex.h>
 
 #include "rules.h"
 #include "message.h"
 #include "db.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <regex.h>
 
 static char inbox[] = "inbox";
 
@@ -125,5 +126,6 @@ rule_get ()
 int
 rule_set (rule ** r)
 {
+    fprintf(stderr, "Unimplemnted function: %s(%x) (%s:%d)\n", __FUNCTION__, (unsigned int)r, __FILE__, __LINE__);
     return GEMS_FALSE;
 }

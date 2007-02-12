@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: test.c,v 1.7 2007/02/12 19:26:33 erik Exp $
+ * $Id: test.c,v 1.8 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -51,13 +51,12 @@ oops (char *a, char *b)
 }
 
 int
-face_run (int argc, char **margv)
+face_run (int argc, char **argv)
 {
-    void *list;
-    message *mess;
-    char *spoolname, *mbox;
     rule *rules;
     int numrules;
+
+    printf("%d %s\n", argc, *argv);
 
     /*
      * if(argc!=2){printf("this face requires the name of a spool\n%s

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: spool2sql.c,v 1.12 2007/02/12 19:26:33 erik Exp $
+ * $Id: spool2sql.c,v 1.13 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -50,7 +50,7 @@ oops (char *a, char *b)
 }
 
 int
-face_run (int argc, char **margv)
+face_run (int argc, char **argv)
 {
     void *list;
     message *mess;
@@ -58,11 +58,13 @@ face_run (int argc, char **margv)
     rule *rules;
     int numrules;
 
+    printf("%d %s\n", argc, *argv);
+
     /*
      * if(argc!=2){printf("this face requires the name of a spool\n%s
      * spool2sql -- <spool>\n\n",argv[0]);}
      */
-    spoolname = margv[1];
+    spoolname = argv[1];
 
     rules = (rule *) db_fetch_rules ((int *)&numrules);
     if (rule_init (rules, numrules) == GEMS_FALSE)

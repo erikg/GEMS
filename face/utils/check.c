@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: check.c,v 1.4 2007/02/12 19:26:33 erik Exp $
+ * $Id: check.c,v 1.5 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -52,10 +52,9 @@ oops (char *a, char *b)
 }
 
 int
-face_run (int argc, char **margv)
+face_run (int argc, char **argv)
 {
-    void *list;
-    message *mess;
+    printf("Huh, %d %s\n", argc, *argv);
 
 /*
     if (close_spool () != GEMS_TRUE)

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Header: /mnt/fenris/usr/cvs/devel/gems/face/utils/put.c,v 1.2 2007/02/12 19:26:33 erik Exp $
+ * $Header: /mnt/fenris/usr/cvs/devel/gems/face/utils/put.c,v 1.3 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -61,6 +61,7 @@ add (char *buf, unsigned int size)
     char *mbox;
     message *m;
 
+    printf("size: %d\n", size);
     m = message_build_from_buffer (buf);
     if (m == NULL)
 	return -1;
@@ -74,7 +75,7 @@ add (char *buf, unsigned int size)
 int
 face_run (int argc, char **argv)
 {
-    int fd, numrules;
+    int numrules;
     unsigned int size;
     char *buf;
     rule *rules;

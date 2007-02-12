@@ -21,13 +21,14 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.27 2007/02/12 19:26:33 erik Exp $
+ * $Id: callbacks.c,v 1.28 2007/02/12 21:15:03 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
+#include <ctype.h>
 #include <gnome.h>
 
 #include "defs.h"		/* gems includes */
@@ -47,84 +48,43 @@ extern GtkWidget *gems;		/* nasty. Must preceed extra.h */
 extern unsigned char sort;
 
 void
-on_new_file1_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
+on_new_file1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_open1_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
+on_open1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_save1_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
+on_save1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_save_as1_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
+on_save_as1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_cut1_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
+on_cut1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_copy1_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
+on_copy1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_paste1_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
+on_paste1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_clear1_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
+on_clear1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_properties1_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
+on_properties1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_preferences1_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
+on_preferences1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_about1_activate (GtkMenuItem * menuitem, gpointer user_data)
+on_about1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data))
 {
     gtk_widget_show (create_about2 ());
 }
 
-
 gboolean
-on_mailbox_event (GtkWidget * widget, GdkEvent * event, gpointer user_data)
+on_mailbox_event (GtkWidget * widget, GdkEvent * event, gpointer UNUSED(user_data))
 {
     if ((event) && (event->type == GDK_2BUTTON_PRESS))
     {
@@ -134,9 +94,8 @@ on_mailbox_event (GtkWidget * widget, GdkEvent * event, gpointer user_data)
     return FALSE;
 }
 
-
 gboolean
-on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data)
+on_gems_quit (GtkWidget * UNUSED(widget), GdkEvent * UNUSED(event), gpointer UNUSED(user_data))
 {
     char *x;
 
@@ -178,7 +137,7 @@ on_gems_quit (GtkWidget * widget, GdkEvent * event, gpointer user_data)
  */
 void
 on_mailboxlist_tree_select_row (GtkCTree * ctree,
-    GList * node, gint column, gpointer user_data)
+    GList * UNUSED(node), gint UNUSED(column), gpointer UNUSED(user_data))
 {
     GtkWidget *mailbox, *stat;
     GtkCTreeNode *n;
@@ -263,10 +222,9 @@ on_mailboxlist_tree_select_row (GtkCTree * ctree,
 }
 
 void
-on_toolbar_prev_clicked (GtkButton * button, gpointer user_data)
+on_toolbar_prev_clicked (GtkButton * UNUSED(button), gpointer UNUSED(user_data))
 {
     GtkCTree *ctree;
-    gint row;
     GtkCTreeNode *n;
 
     ctree = GTK_CTREE (lookup_widget (gems, "mailbox"));
@@ -292,12 +250,10 @@ on_toolbar_prev_clicked (GtkButton * button, gpointer user_data)
     return;
 }
 
-
 void
-on_toolbar_next_clicked (GtkButton * button, gpointer user_data)
+on_toolbar_next_clicked (GtkButton * UNUSED(button), gpointer UNUSED(user_data))
 {
     GtkCTree *ctree;
-    gint row;
     GtkCTreeNode *n;
 
     ctree = GTK_CTREE (lookup_widget (gems, "mailbox"));
@@ -322,10 +278,9 @@ on_toolbar_next_clicked (GtkButton * button, gpointer user_data)
     return;
 }
 
-
 gboolean
 on_mailbox_key_press_event (GtkWidget * widget,
-    GdkEventKey * event, gpointer user_data)
+    GdkEventKey * event, gpointer UNUSED(user_data))
 {
     switch (event->keyval)
     {
@@ -395,7 +350,7 @@ on_mailbox_key_press_event (GtkWidget * widget,
 }
 
 void
-on_toolbar_compose_clicked (GtkButton * button, gpointer user_data)
+on_toolbar_compose_clicked (GtkButton * UNUSED(button), gpointer UNUSED(user_data))
 {
     GtkWidget *w;
 
@@ -404,20 +359,19 @@ on_toolbar_compose_clicked (GtkButton * button, gpointer user_data)
     gtk_widget_show (w);
 }
 
-
 void
-on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
+on_toolbar_reply_clicked (GtkButton * UNUSED(button), gpointer UNUSED(user_data))
 {
     synopsis *s;
     GtkCTreeNode *n;
-    GtkWidget *from, *to, *subj, *date, *recipt, *body, *comp, *widget;
-    char *shtuff, *shtuff2, buf[1024];
+    GtkWidget *from, *subj, *date, *recipt, *body, *comp, *widget;
+    char *shtuff, buf[1024];
 
     if ((widget = lookup_widget (gems, "mailbox")) == NULL)
 	return;
     comp = create_compose ();
     from = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry1");
-    // to = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry5");
+    /* to = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry5"); */
     date = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry2");
     subj = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry6");
     recipt = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (comp), "entry4");
@@ -457,16 +411,11 @@ on_toolbar_reply_clicked (GtkButton * button, gpointer user_data)
     return;
 }
 
+void
+on_toolbar_forward_clicked (GtkButton * UNUSED(button), gpointer UNUSED(user_data)) {}
 
 void
-on_toolbar_forward_clicked (GtkButton * button, gpointer user_data)
-{
-
-}
-
-
-void
-on_mailbox_click_column (GtkCList * clist, gint column, gpointer user_data)
+on_mailbox_click_column (GtkCList * clist, gint column, gpointer UNUSED(user_data))
 {
     if ((sort & (~SORT_DIRECTION)) == column)
 	sort ^= SORT_DIRECTION;
@@ -478,23 +427,17 @@ on_mailbox_click_column (GtkCList * clist, gint column, gpointer user_data)
     gtk_clist_sort (clist);
 }
 
-
 void
-on_create1_activate (GtkMenuItem * menuitem, gpointer user_data)
+on_create1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data))
 {
     gtk_widget_show (create_create_mbox ());
 }
 
+void
+on_open2_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data)) {}
 
 void
-on_open2_activate (GtkMenuItem * menuitem, gpointer user_data)
-{
-
-}
-
-
-void
-on_delete1_activate (GtkMenuItem * menuitem, gpointer user_data)
+on_delete1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data))
 {
     GtkWidget *w;
     GtkCTree *ctree;
@@ -513,7 +456,7 @@ on_delete1_activate (GtkMenuItem * menuitem, gpointer user_data)
 
 
 gboolean
-on_mboxlist_event (GtkWidget * widget, GdkEvent * event, gpointer user_data)
+on_mboxlist_event (GtkWidget * UNUSED(widget), GdkEvent * event, gpointer UNUSED(user_data))
 {
     GtkMenu *m;
 
@@ -528,12 +471,12 @@ on_mboxlist_event (GtkWidget * widget, GdkEvent * event, gpointer user_data)
 }
 
 void
-on_mailboxdeleteok_clicked (GtkButton * button, gpointer user_data)
+on_mailboxdeleteok_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     char *m;
 
     m = ((mboxs *)
-	gtk_object_get_user_data (GTK_OBJECT
+	gtk_object_get_user_data(GTK_OBJECT
 	    (lookup_widget (GTK_WIDGET (button), "delete_mbox"))))->name;
     db_dropmbox (m);
     gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "delete_mbox"));
@@ -541,14 +484,14 @@ on_mailboxdeleteok_clicked (GtkButton * button, gpointer user_data)
 }
 
 void
-on_mailboxdeletecancel_clicked (GtkButton * button, gpointer user_data)
+on_mailboxdeletecancel_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "delete_mbox"));
 }
 
 
 void
-on_mailboxcreateok_clicked (GtkButton * button, gpointer user_data)
+on_mailboxcreateok_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     db_addmbox (gtk_entry_get_text
 	(GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "entry7"))));
@@ -558,7 +501,7 @@ on_mailboxcreateok_clicked (GtkButton * button, gpointer user_data)
 
 
 void
-on_mailboxcreateapply_clicked (GtkButton * button, gpointer user_data)
+on_mailboxcreateapply_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     db_addmbox (gtk_entry_get_text
 	(GTK_ENTRY (lookup_widget (GTK_WIDGET (button), "entry7"))));
@@ -567,7 +510,7 @@ on_mailboxcreateapply_clicked (GtkButton * button, gpointer user_data)
 
 
 void
-on_mailboxcreatecancel_clicked (GtkButton * button, gpointer user_data)
+on_mailboxcreatecancel_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     GtkWidget *w;
 
@@ -599,7 +542,6 @@ void
 face_gnome_o_rule_setpeice (GtkWidget * w, gpointer * trash)
 {
     rule *r;
-    GtkMenuItem *mi;
 
     r = (rule *)
 	gtk_clist_get_row_data (GTK_CLIST (lookup_widget (w, "clist1")),
@@ -609,7 +551,7 @@ face_gnome_o_rule_setpeice (GtkWidget * w, gpointer * trash)
 }
 
 void
-on_toolbar_rule_clicked (GtkButton * button, gpointer user_data)
+on_toolbar_rule_clicked (GtkButton * UNUSED(button), gpointer UNUSED(user_data))
 {
     GtkWidget *r;
     GList *gl = NULL;
@@ -635,7 +577,7 @@ on_toolbar_rule_clicked (GtkButton * button, gpointer user_data)
 
 void
 on_rule_list_select_row (GtkCList * clist,
-    gint row, gint column, GdkEvent * event, gpointer user_data)
+    gint row, gint UNUSED(column), GdkEvent * UNUSED(event), gpointer UNUSED(user_data))
 {
     rule *r;
     GtkCombo *c2;
@@ -715,18 +657,10 @@ on_rule_list_select_row (GtkCList * clist,
 
 
 void
-on_rule_up_clicked (GtkButton * button, gpointer user_data)
-{
-
-}
-
+on_rule_up_clicked (GtkButton * UNUSED(button), gpointer UNUSED(user_data)) {}
 
 void
-on_rule_down_clicked (GtkButton * button, gpointer user_data)
-{
-
-}
-
+on_rule_down_clicked (GtkButton * UNUSED(button), gpointer UNUSED(user_data)) {}
 
 void
 on_rule_ok_clicked (GtkButton * button, gpointer user_data)
@@ -735,9 +669,8 @@ on_rule_ok_clicked (GtkButton * button, gpointer user_data)
     on_rule_cancel_clicked (button, user_data);
 }
 
-
 void
-on_rule_apply_clicked (GtkButton * button, gpointer user_data)
+on_rule_apply_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     rule **rulelist;
     GtkCList *clist;
@@ -748,9 +681,7 @@ on_rule_apply_clicked (GtkButton * button, gpointer user_data)
     rulelist = (void *)malloc (sizeof (void *) * length);
 
     for (x = 0; x < length; x++)
-    {
 	rulelist[x] = gtk_clist_get_row_data (clist, x);
-    }
 
     db_set_rules (rulelist);
     free (rulelist);
@@ -759,15 +690,14 @@ on_rule_apply_clicked (GtkButton * button, gpointer user_data)
     return;
 }
 
-
 void
-on_rule_cancel_clicked (GtkButton * button, gpointer user_data)
+on_rule_cancel_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "Rules"));
 }
 
 void
-on_rule_name_changed (GtkEditable * editable, gpointer user_data)
+on_rule_name_changed (GtkEditable * editable, gpointer UNUSED(user_data))
 {
     rule *r;
 
@@ -781,9 +711,8 @@ on_rule_name_changed (GtkEditable * editable, gpointer user_data)
 	rule_row_current, 0, r->name);
 }
 
-
 void
-on_rule_mbox_changed (GtkEditable * editable, gpointer user_data)
+on_rule_mbox_changed (GtkEditable * editable, gpointer UNUSED(user_data))
 {
     rule *r;
 
@@ -800,9 +729,8 @@ on_rule_mbox_changed (GtkEditable * editable, gpointer user_data)
 		(lookup_widget (GTK_WIDGET (editable), "combo2"))->entry)));
 }
 
-
 void
-on_rule_regex_changed (GtkEditable * editable, gpointer user_data)
+on_rule_regex_changed (GtkEditable * editable, gpointer UNUSED(user_data))
 {
     free (((rule *)
 	    gtk_clist_get_row_data (GTK_CLIST
@@ -817,9 +745,8 @@ on_rule_regex_changed (GtkEditable * editable, gpointer user_data)
 	g_strdup (gtk_editable_get_chars (editable, 0, -1));
 }
 
-
 void
-on_rule_new_rule_clicked (GtkButton * button, gpointer user_data)
+on_rule_new_rule_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     rule *r;
     int x;
@@ -838,14 +765,13 @@ on_rule_new_rule_clicked (GtkButton * button, gpointer user_data)
 }
 
 void
-on_custom1_activate (GtkMenuItem * menuitem, gpointer user_data)
+on_custom1_activate (GtkMenuItem * UNUSED(menuitem), gpointer UNUSED(user_data))
 {
     gtk_widget_show (create_custom_mbox ());
 }
 
-
 void
-on_mboxcustomok_clicked (GtkButton * button, gpointer user_data)
+on_mboxcustomok_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     db_addmbox_view (gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET
 		    (button), "mbox_create_custom_name"))),
@@ -855,9 +781,8 @@ on_mboxcustomok_clicked (GtkButton * button, gpointer user_data)
     set_mboxlist ();
 }
 
-
 void
-on_mboxcustomapply_clicked (GtkButton * button, gpointer user_data)
+on_mboxcustomapply_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     db_addmbox_view (gtk_entry_get_text (GTK_ENTRY (lookup_widget (GTK_WIDGET
 		    (button), "mbox_create_custom_name"))),
@@ -866,17 +791,15 @@ on_mboxcustomapply_clicked (GtkButton * button, gpointer user_data)
     set_mboxlist ();
 }
 
-
 void
-on_mboxcustomcancel_clicked (GtkButton * button, gpointer user_data)
+on_mboxcustomcancel_clicked (GtkButton * button, gpointer UNUSED(user_data))
 {
     gtk_widget_destroy (lookup_widget (GTK_WIDGET (button), "custom_mbox"));
 }
-
 
 gboolean
-on_mboxlist_keyevent (GtkWidget * widget,
-    GdkEventKey * event, gpointer user_data)
+on_mboxlist_keyevent (GtkWidget * UNUSED(widget),
+    GdkEventKey * event, gpointer UNUSED(user_data))
 {
     switch (event->keyval)
     {

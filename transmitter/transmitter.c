@@ -20,8 +20,10 @@
  *****************************************************************************/
 
 /*
- * $Id: transmitter.c,v 1.5 2007/02/12 19:26:33 erik Exp $
+ * $Id: transmitter.c,v 1.6 2007/02/12 21:15:03 erik Exp $
  */
+
+#include <stdio.h>
 
 #include "message.h"
 #include "transmitter.h"
@@ -30,5 +32,6 @@ int transmit_sendmail (message *);
 
 int transmit_message (message * m, int agent)
 {
-	return transmit_sendmail (m);
+    printf("mehhhh %x %d\n", (unsigned int)m, agent);
+    return transmit_sendmail (m);
 }

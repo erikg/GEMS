@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: main.c,v 1.26 2007/02/12 19:26:33 erik Exp $
+ * $Id: main.c,v 1.27 2007/02/12 21:15:03 erik Exp $
  */
 
 
@@ -50,7 +50,7 @@ GtkWidget *gems;		/* global. ick. */
 #include "extra.h"
 
 void
-oops (char *a, char *b)
+oops (const char *a, const char *b)
 {
     printf ("%s: %s\n", a, b);
 }

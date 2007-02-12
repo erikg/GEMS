@@ -21,11 +21,12 @@
  *****************************************************************************/
 
 /*
- * $Id: shell.c,v 1.9 2007/02/12 19:26:33 erik Exp $
+ * $Id: shell.c,v 1.10 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <getopt.h>
 #include <dlfcn.h>
 

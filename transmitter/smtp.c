@@ -20,16 +20,14 @@
  *****************************************************************************/
 
 /*
- * $Id: smtp.c,v 1.6 2007/02/12 19:26:33 erik Exp $
- */
-
-/*
- * 
+ * $Id: smtp.c,v 1.7 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>		/* for NULL */
 #include <stdlib.h>		/* getenv */
+
 #include "defs.h"
+#include "face.h"
 #include "transmitter.h"
 
 /*
@@ -61,6 +59,7 @@ int
 smtp_send (message * m, char *server, int port, char *username,
 	   char *password)
 {
+    printf("smtp_send: %x %s %d %s %s\n", (unsigned int)m, server, port, username, password);
     smtp_send_line ("HELO %s\r\n", getenv ("HOSTNAME"));
     if (smtp_get_response () == SMTP_ERROR)
     {

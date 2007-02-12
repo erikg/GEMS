@@ -21,13 +21,15 @@
  *****************************************************************************/
 
 /*
- * $Id: message.c,v 1.20 2007/02/12 19:26:33 erik Exp $
+ * $Id: message.c,v 1.21 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <ctype.h>
+
 #include "defs.h"
 #include "spoolread.h"
 #include "stringinate.h"

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: sql2spool.c,v 1.8 2007/02/12 19:26:33 erik Exp $
+ * $Id: sql2spool.c,v 1.9 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -51,15 +51,15 @@ oops (char *a, char *b)
 }
 
 int
-face_run (int argc, char **margv)
+face_run (int argc, char **argv)
 {
     FILE *fp;
-    char *spoolname;
     mboxs **boxes;
     synopsis **msgs;
     message *m;
-    int status = DB_ALL;
     int i = 0, j = 0;
+
+    printf("%d %s\n", argc, *argv);
 
     /*
      * if(argc==1)

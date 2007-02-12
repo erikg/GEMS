@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: cleantables.c,v 1.6 2007/02/12 19:26:33 erik Exp $
+ * $Id: cleantables.c,v 1.7 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -49,6 +49,8 @@ face_run (char *trash)
     /*
      * assume the db is already set up 
      */
+
+    printf("trash: %s\n", trash);
 
     db_flush ("attachments");
     putchar ('.');

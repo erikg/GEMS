@@ -21,9 +21,11 @@
  *****************************************************************************/
 
 /*
- * $Id: db.pgsql.c,v 1.10 2007/02/12 19:26:33 erik Exp $
+ * $Id: db.pgsql.c,v 1.11 2007/02/12 21:15:03 erik Exp $
  */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <libpq-fe.h>
 
@@ -51,7 +53,7 @@ struct table_s table[] = {
     {"replyto", "id int, replyto text"},
     {"rules", "sort int, name text, regex text, mbox text, piece enum('Message','Body','Header','Subject','From','Recipients','Sender')"},
     {"synopsis", "id int, mbox text, status set('read','marked') NOT NULL default '', senddate timestamp with timezone NOT NULL, sender text NOT NULL, subject text, charid text, PRIMARY KEY  (id)"},
-    NULL
+    {NULL,NULL}
 };
 
 PGconn *conn;
@@ -101,7 +103,7 @@ db_insert_msg (char *mbox, message * m)
 {
     if(mbox==NULL || m==NULL) return GEMS_FALSE;
     QEX("INSERT INTO header VALUES (DEFAULT, '%s')", m->header);
-//    QEX("INSERT INTO synopsis VALUES (DEFAULT,(SELECT mbox FROM mmbox WHERE mboxname='%s'),)");
+/*   QEX("INSERT INTO synopsis VALUES (DEFAULT,(SELECT mbox FROM mmbox WHERE mboxname='%s'),)"); */
     oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
@@ -110,6 +112,7 @@ db_insert_msg (char *mbox, message * m)
 int
 db_addmbox (char *mbox)
 {
+    mbox=mbox;
     oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
@@ -117,6 +120,7 @@ db_addmbox (char *mbox)
 int
 db_addmbox_view (char *mbox, char *query)
 {
+    mbox=query;
     oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
@@ -162,6 +166,7 @@ db_close ()
 synopsis **
 db_read_synopsis (int mbox, int status)
 {
+    mbox=status;
     oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
@@ -169,6 +174,7 @@ db_read_synopsis (int mbox, int status)
 synopsis **
 db_read_synopsis_raw (char *query)
 {
+    query=NULL;
     oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
@@ -185,6 +191,7 @@ db_read_mboxlist (void)
 char *
 db_read_body (int id)
 {
+    id=0;
     oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
@@ -194,6 +201,7 @@ db_read_body (int id)
 message *
 db_read_message (int id)
 {
+    id=0;
     oops("not implemented: ",__FUNCTION__);
     return NULL;
 }
@@ -210,6 +218,7 @@ db_normalize ()
 int
 db_is_child_of (int msg)
 {
+    msg=0;
     oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
@@ -244,6 +253,7 @@ db_fetch_rules (int *numrows)
 int
 db_set_rules (rule ** r)
 {
+    r=NULL;
     oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
@@ -252,6 +262,7 @@ db_set_rules (rule ** r)
 int
 db_pref_set (char *pref, char *val)
 {
+    pref=val;
     oops("not implemented: ",__FUNCTION__);
     return GEMS_FALSE;
 }
@@ -260,6 +271,7 @@ db_pref_set (char *pref, char *val)
 char *
 db_pref_get (char *pref)
 {
+    pref=NULL;
     oops("not implemented: ",__FUNCTION__);
     return NULL;
 }

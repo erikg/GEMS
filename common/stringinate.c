@@ -21,13 +21,14 @@
  *****************************************************************************/
 
 /*
- * $Id: stringinate.c,v 1.8 2007/02/12 19:26:33 erik Exp $
+ * $Id: stringinate.c,v 1.9 2007/02/12 21:15:03 erik Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <unistd.h>
 #include <sys/stat.h>
 
 #include "defs.h"

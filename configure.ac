@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.13 2007/01/22 21:52:34 erik Exp $
+dnl $Id: configure.ac,v 1.14 2007/09/06 13:59:48 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -11,7 +11,7 @@ AM_CONFIG_HEADER([include/config.h])
 ALL_LINGUAS=""
 
 AC_PROG_CC
-AM_PROG_LIBTOOL
+AC_PROG_LIBTOOL
 AC_PROG_INSTALL
 AC_ISC_POSIX
 

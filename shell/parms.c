@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: parms.c,v 1.10 2007/02/12 21:17:53 erik Exp $
+ * $Id: parms.c,v 1.11 2008/01/15 05:10:52 erik Exp $
  */
 
 #include <stdio.h>
@@ -119,21 +119,18 @@ load_parms (int *argc, char **margv)
 	    ll_deletenode (ll);
 	    if (ll_end (ll) == GEMS_TRUE)
 		help_exit (margv[0]);
-	    p->dbiuser = (char *)malloc (1 + strlen (ll_showline (ll)));
-	    strcpy (p->dbiuser, ll_showline (ll));
+	    p->dbiuser = strdup (ll_showline (ll));
 	    ll_deletenode (ll);
 	} else if (!strcmp ("-d", a) || !strcmp ("--dbms", a))
 	{
 	    ll_deletenode (ll);
 	    if (ll_end (ll) == GEMS_TRUE)
 		help_exit (margv[0]);
-	    p->dbiname = (char *)malloc (1 + strlen (ll_showline (ll)));
-	    strcpy (p->dbiname, ll_showline (ll));
+	    p->dbiname = strdup (ll_showline (ll));
 	    ll_deletenode (ll);
 	} else
 	{
-	    p->facename = (char *)malloc (strlen (a) + 1);
-	    strcpy (p->facename, a);
+	    p->facename = strdup (a);
 	    ll_deletenode (ll);
 	}
     }
@@ -150,8 +147,7 @@ load_parms (int *argc, char **margv)
 	char *a;
 
 	a = ll_showline (ll);
-	margv[*argc] = malloc (strlen (a) + 1);
-	strcpy (margv[*argc], a);
+	margv[*argc] = strdup (a);
 	*argc = (*argc) + 1;
 	ll_next (ll);
     }

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: prefs.c,v 1.6 2007/02/12 19:26:33 erik Exp $
+ * $Id: prefs.c,v 1.7 2008/01/15 05:12:03 erik Exp $
  */
 
 #include <stdio.h>
@@ -57,8 +57,7 @@ parse (prefs * p, char *in, parms * m)
 
     if (in == NULL)
 	return;
-    str = (char *)malloc (strlen (in));
-    strcpy (str, extract (in));
+    str = strdup (extract (in));
     len = strlen (str);
     if (!strncmp ("LIBDIR", in, 6))
     {
@@ -68,7 +67,7 @@ parse (prefs * p, char *in, parms * m)
 	 * if(p->libdir)free(p->libdir); 
 	 */
 	p->libdir = (char *)malloc (len + 2);
-	strcpy (p->libdir, str);
+	strncpy (p->libdir, str, len + 2);
 	if (str[len] != '/' && strlen (str) > 0)
 	{
 	    p->libdir[len + 1] = '/';
@@ -108,6 +107,7 @@ load_prefs (parms * m)
     prefs *p;
     char *in, *homedir, *rc, *orc;
     FILE *fp;
+    int len;
 
     if (m->rc == NULL)
     {
@@ -120,14 +120,15 @@ load_prefs (parms * m)
 	    return NULL;
 	}
 
-	orc = (char *)malloc (strlen (homedir) + strlen ("/.gemsrc") + 1);
+	len = strlen(homedir);
+	orc = (char *)malloc (len + strlen ("/.gemsrc") + 1);
 	gemsconfigdir =
-	    (char *)malloc (strlen (homedir) + strlen ("/.gems") + 1);
-	rc = (char *)malloc (strlen (homedir) + strlen ("/.gems/gemsrc") + 1);
+	    (char *)malloc (len + strlen ("/.gems") + 1);
+	rc = (char *)malloc (len + strlen ("/.gems/gemsrc") + 1);
 
-	sprintf (orc, "%s/.gemsrc", homedir);
-	sprintf (gemsconfigdir, "%s/.gems", homedir);
-	sprintf (rc, "%s/.gems/gemsrc", homedir);
+	snprintf (orc, len+strlen("/.gemsrc"), "%s/.gemsrc", homedir);
+	snprintf (gemsconfigdir, len+strlen("/.gems"), "%s/.gems", homedir);
+	snprintf (rc, len+strlen("/.gems/gemsrc"), "%s/.gems/gemsrc", homedir);
 
 	/*
 	 * if the .gems dir doesn't exist, create it 
@@ -223,7 +224,7 @@ void
 save_prefs (prefs * p)
 {
     FILE *fp;
-    char *rc;
+    char rc[BUFSIZ];
     char *homedir;
 
     homedir = getenv ("HOME");
@@ -232,10 +233,9 @@ save_prefs (prefs * p)
 	printf ("Couldn't find your home directory, please set $HOME\n");
 	return;
     }
-    sprintf (rc, "%s/.gemsrc", homedir);
+    snprintf (rc, BUFSIZ, "%s/.gemsrc", homedir);
     free (homedir);
     fp = fopen (rc, "w");
-    free (rc);
     if (fp == NULL)
     {
 	printf ("Couldn't open %s for writing\n", rc);

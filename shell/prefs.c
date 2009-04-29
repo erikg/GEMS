@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: prefs.c,v 1.7 2008/01/15 05:12:03 erik Exp $
+ * $Id: prefs.c,v 1.8 2009/04/29 00:06:42 erik Exp $
  */
 
 #include <stdio.h>
@@ -120,7 +120,7 @@ load_prefs (parms * m)
 	    return NULL;
 	}
 
-	len = strlen(homedir);
+	len = strlen(homedir) + 1;
 	orc = (char *)malloc (len + strlen ("/.gemsrc") + 1);
 	gemsconfigdir =
 	    (char *)malloc (len + strlen ("/.gems") + 1);

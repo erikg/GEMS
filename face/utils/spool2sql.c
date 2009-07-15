@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: spool2sql.c,v 1.13 2007/02/12 21:15:03 erik Exp $
+ * $Id: spool2sql.c,v 1.14 2009/07/15 00:18:00 erik Exp $
  */
 
 #include <stdio.h>
@@ -57,8 +57,6 @@ face_run (int argc, char **argv)
     char *spoolname, *mbox;
     rule *rules;
     int numrules;
-
-    printf("%d %s\n", argc, *argv);
 
     /*
      * if(argc!=2){printf("this face requires the name of a spool\n%s

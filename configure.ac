@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.15 2009/04/29 00:07:05 erik Exp $
+dnl $Id: configure.ac,v 1.16 2009/08/30 18:15:40 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -45,15 +45,13 @@ dnl **************************************************************************
 DB=""
 
 AC_MSG_CHECKING([MySQL])
-have_mysql=no
 have_mysql=yes
 MYSQL_LIBADD="-L/usr/local/lib/mysql -L/usr/lib/mysql -lmysqlclient"
 MYSQL_CFLAGS="-I/usr/local/include"
 AC_SUBST(MYSQL_CFLAGS)
 AC_SUBST(MYSQL_LIBADD)
-AM_CONDITIONAL(MYSQL, [test "x$have_mysql" == xyes])
-AM_CONDITIONAL(POSTGRESQL, [test "x$have_mysql" == xyes])
-if test "x$have_mysql" == xyes
+AM_CONDITIONAL(MYSQL, [test "x$have_mysql" == "xyes"])
+if test "x$have_mysql" == "xyes"
 then
 	AC_MSG_RESULT([Yes])
 	DB="${DB} MySQL"
@@ -99,12 +97,12 @@ AC_MSG_CHECKING([GTK1])
 have_gtk=no
 AC_ARG_ENABLE(gtk,
 [  --enable-gtk            Use GTK (default=yes)],use_gtk=no,use_gtk=yes)
-if test "$use_gtk" == "yes"
+if test "x$use_gtk" == "xyes"
 then
     AM_PATH_GTK(1.1.0,have_gtk=yes)
 fi
-AM_CONDITIONAL(GTK1, [test "x$have_gtk" == xyes])
-if test "x$have_gtk" == xyes
+AM_CONDITIONAL(GTK1, [test "x$have_gtk" == "xyes"])
+if test "x$have_gtk" == "xyes"
 then 
 	FACE="${FACE} GTK1"
 fi
@@ -125,7 +123,8 @@ AC_ARG_WITH(gnome-libs,
 
 AC_MSG_CHECKING([GNOME1])
 AC_ARG_ENABLE(gnome, [  --enable-gnome          Use GNOME [default=yes]], use_gnome=yes, use_gnome=no)
-if test "x$use_gnome" = xyes; then
+if test "x$use_gnome" = "xyes"
+then
         AC_PATH_PROG(GNOME_CONFIG,gnome-config)
         AC_MSG_CHECKING(for GNOME)
         if $GNOME_CONFIG --libs-only-l gnome >/dev/null 2>&1 

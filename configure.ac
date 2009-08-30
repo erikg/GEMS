@@ -1,10 +1,12 @@
-dnl $Id: configure.ac,v 1.16 2009/08/30 18:15:40 erik Exp $
+dnl $Id: configure.ac,v 1.17 2009/08/30 20:21:29 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE(gems, 0.1)
 #AM_MAINTAINER_MODE
+
+AC_CONFIG_MACRO_DIR([m4])
 
 AM_CONFIG_HEADER([include/config.h])
 
@@ -50,8 +52,8 @@ MYSQL_LIBADD="-L/usr/local/lib/mysql -L/usr/lib/mysql -lmysqlclient"
 MYSQL_CFLAGS="-I/usr/local/include"
 AC_SUBST(MYSQL_CFLAGS)
 AC_SUBST(MYSQL_LIBADD)
-AM_CONDITIONAL(MYSQL, [test "x$have_mysql" == "xyes"])
-if test "x$have_mysql" == "xyes"
+AM_CONDITIONAL(MYSQL, [ test "x$have_mysql" = "xyes" ])
+if test x$have_mysql = xyes
 then
 	AC_MSG_RESULT([Yes])
 	DB="${DB} MySQL"
@@ -63,8 +65,8 @@ AC_MSG_CHECKING([PostgreSQL])
 have_postgresql=no
 POSTGRESQL_LIBADD=""
 AC_CHECK_LIB(pq, PQconnectdb, have_postgresql="yes")
-AM_CONDITIONAL(POSTGRESQL, [test "x$have_postgresql" == xyes])
-if test "x$have_postgresql" == xyes
+AM_CONDITIONAL(POSTGRESQL, [test "x$have_postgresql" = xyes])
+if test "x$have_postgresql" = xyes
 then
 	AC_MSG_RESULT([Yes])
 	POSTGRESQL_LIBADD="${LDFLAGS} -lpq"
@@ -97,12 +99,12 @@ AC_MSG_CHECKING([GTK1])
 have_gtk=no
 AC_ARG_ENABLE(gtk,
 [  --enable-gtk            Use GTK (default=yes)],use_gtk=no,use_gtk=yes)
-if test "x$use_gtk" == "xyes"
+if test "x$use_gtk" = "xyes"
 then
     AM_PATH_GTK(1.1.0,have_gtk=yes)
 fi
-AM_CONDITIONAL(GTK1, [test "x$have_gtk" == "xyes"])
-if test "x$have_gtk" == "xyes"
+AM_CONDITIONAL(GTK1, [test "x$have_gtk" = "xyes"])
+if test "x$have_gtk" = "xyes"
 then 
 	FACE="${FACE} GTK1"
 fi
@@ -125,9 +127,10 @@ AC_MSG_CHECKING([GNOME1])
 AC_ARG_ENABLE(gnome, [  --enable-gnome          Use GNOME [default=yes]], use_gnome=yes, use_gnome=no)
 if test "x$use_gnome" = "xyes"
 then
+	echo "Trying to get ngome"
         AC_PATH_PROG(GNOME_CONFIG,gnome-config)
         AC_MSG_CHECKING(for GNOME)
-        if $GNOME_CONFIG --libs-only-l gnome >/dev/null 2>&1 
+        if [ $GNOME_CONFIG --libs-only-l gnome >/dev/null 2>&1 ]
 	then
 		have_gnome=yes
 		FACE="${FACE} GNOME"
@@ -140,9 +143,12 @@ then
                 AC_MSG_RESULT(no)
         fi
 else
+	echo "Not asked for gnome"
 	AC_MSG_RESULT(no)
 fi
-AM_CONDITIONAL(GNOME,[test "x$have_gnome" == xyes])
+echo "I can has gome? $have_gnome"
+AM_CONDITIONAL(GNOME,[test "x$have_gnome" = xyes])
+echo "All done"
 
 dnl **************************************************************************
 
@@ -152,15 +158,15 @@ GNOME2_CFLAGS=$PACKAGE_CFLAGS
 GNOME2_LIBS=$PACKAGE_LIBS
 AC_SUBST(GNOME2_CFLAGS)
 AC_SUBST(GNOME2_LIBS)
-AM_CONDITIONAL(GNOME2,[test "x$have_gnome2" == xyes])
-if test "x$have_gnome2" == "xyes" ; then FACE="${FACE} GNOME2" ; fi
+AM_CONDITIONAL(GNOME2,[test "x$have_gnome2" = xyes])
+if test "x$have_gnome2" = "xyes" ; then FACE="${FACE} GNOME2" ; fi
 
 dnl **************************************************************************
 
 #AC_CHECK_CURSES
 has_curses=yes
-AM_CONDITIONAL(HAS_CURSES, [ test "$has_curses" == true ])
-if test "x$has_curses" == "xyes" ; then FACE="${FACE} CURSES"; fi
+AM_CONDITIONAL(HAS_CURSES, [ test "$has_curses" = true ])
+if test "x$has_curses" = "xyes" ; then FACE="${FACE} CURSES"; fi
 
 dnl **************************************************************************
 

@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.18 2009/08/31 13:56:58 erik Exp $
+dnl $Id: configure.ac,v 1.19 2009/08/31 14:07:13 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -7,6 +7,7 @@ AM_INIT_AUTOMAKE(gems, 0.1)
 #AM_MAINTAINER_MODE
 
 AC_CONFIG_MACRO_DIR([m4])
+#ACLOCAL_AMFLAGS = -I m4
 
 AM_CONFIG_HEADER([include/config.h])
 
@@ -48,8 +49,8 @@ DB=""
 
 AC_MSG_CHECKING([MySQL])
 have_mysql=yes
-MYSQL_LIBADD="-L/usr/local/lib/mysql -L/usr/lib/mysql -lmysqlclient"
-MYSQL_CFLAGS="-I/usr/local/include"
+MYSQL_LIBADD="`mysql_config --libs`"
+MYSQL_CFLAGS="`mysql_config --cflags`"
 AC_SUBST(MYSQL_CFLAGS)
 AC_SUBST(MYSQL_LIBADD)
 AM_CONDITIONAL(MYSQL, [ test "x$have_mysql" = "xyes" ])

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.48 2009/08/31 13:45:28 erik Exp $
+ * $Id: db.mysql.c,v 1.49 2009/08/31 14:07:13 erik Exp $
  */
 
 #include <stdio.h>
@@ -30,7 +30,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <dlfcn.h>
-#include <mysql/mysql.h>
+#include <mysql.h>
 
 #include "defs.h"
 #include "message.h"

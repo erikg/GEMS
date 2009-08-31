@@ -2,7 +2,7 @@
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
- *     Copyright (C) 2000-2007 Erik Greenwald <erik@smluc.org>               *
+ *     Copyright (C) 2000-2009 Erik Greenwald <erik@smluc.org>               *
  *                                                                           *
  *     This program is free software; you can redistribute it and/or modify  *
  *     it under the terms of the GNU General Public License as published by  *
@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: spool2sql.c,v 1.14 2009/07/15 00:18:00 erik Exp $
+ * $Id: spool2sql.c,v 1.15 2009/08/31 13:45:31 erik Exp $
  */
 
 #include <stdio.h>

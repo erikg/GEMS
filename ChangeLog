@@ -1,3 +1,6 @@
+20090831:
+	* copyright update
+
 20050402:
 	* fixed snarfs output numbers
 
@@ -178,5 +181,5 @@
 
 	
 
-$Id: ChangeLog,v 1.6 2005/04/02 20:20:22 erik Exp $
+$Id: ChangeLog,v 1.7 2009/08/31 13:46:01 erik Exp $
 

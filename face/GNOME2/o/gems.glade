@@ -731,7 +731,7 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="copyright" translatable="yes">(C) 2000-2007 Erik Greenwald</property>
+  <property name="copyright" translatable="yes">(C) 2000-2009 Erik Greenwald</property>
   <property name="comments" translatable="yes">GEMS E-Mail System</property>
   <property name="authors">Erik Greenwald</property>
   <property name="translator_credits" translatable="yes">translator_credits</property>

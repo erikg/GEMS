@@ -2,7 +2,7 @@
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
- *     Copyright (C) 2000-2007 Erik Greenwald <erik@smluc.org>               *
+ *     Copyright (C) 2000-2009 Erik Greenwald <erik@smluc.org>               *
  *                                                                           *
  *     This program is free software; you can redistribute it and/or modify  *
  *     it under the terms of the GNU General Public License as published by  *
@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: parms.h,v 1.7 2007/02/12 19:26:33 erik Exp $
+ * $Id: parms.h,v 1.8 2009/08/31 13:45:33 erik Exp $
  */
 
 #ifndef __PARMS_H

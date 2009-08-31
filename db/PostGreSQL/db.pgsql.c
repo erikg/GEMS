@@ -2,7 +2,7 @@
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
- *     Copyright (C) 2004-2007 Erik Greenwald <erik@smluc.org>               *
+ *     Copyright (C) 2004-2009 Erik Greenwald <erik@smluc.org>               *
  *                                                                           *
  *     This program is free software; you can redistribute it and/or modify  *
  *     it under the terms of the GNU General Public License as published by  *
@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.pgsql.c,v 1.11 2007/02/12 21:15:03 erik Exp $
+ * $Id: db.pgsql.c,v 1.12 2009/08/31 13:45:28 erik Exp $
  */
 
 #include <stdio.h>

@@ -366,7 +366,7 @@ create_about (void)
   if (!strcmp (translators, "translator_credits"))
     translators = NULL;
   about = gnome_about_new ("gems", VERSION,
-                        _("(C) 2000-2007 Erik Greenwald"),
+                        _("(C) 2000-2009 Erik Greenwald"),
                         _("GEMS E-Mail System"),
                         authors,
                         documenters,

@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.17 2009/08/30 20:21:29 erik Exp $
+dnl $Id: configure.ac,v 1.18 2009/08/31 13:56:58 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -127,7 +127,6 @@ AC_MSG_CHECKING([GNOME1])
 AC_ARG_ENABLE(gnome, [  --enable-gnome          Use GNOME [default=yes]], use_gnome=yes, use_gnome=no)
 if test "x$use_gnome" = "xyes"
 then
-	echo "Trying to get ngome"
         AC_PATH_PROG(GNOME_CONFIG,gnome-config)
         AC_MSG_CHECKING(for GNOME)
         if [ $GNOME_CONFIG --libs-only-l gnome >/dev/null 2>&1 ]
@@ -143,17 +142,14 @@ then
                 AC_MSG_RESULT(no)
         fi
 else
-	echo "Not asked for gnome"
 	AC_MSG_RESULT(no)
 fi
-echo "I can has gome? $have_gnome"
 AM_CONDITIONAL(GNOME,[test "x$have_gnome" = xyes])
-echo "All done"
 
 dnl **************************************************************************
 
 pkg_modules="libgnomeui-2.0"
-PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+PKG_CHECK_MODULES(PACKAGE, [$pkg_modules], have_gnome2=yes, have_gnome2=no)
 GNOME2_CFLAGS=$PACKAGE_CFLAGS
 GNOME2_LIBS=$PACKAGE_LIBS
 AC_SUBST(GNOME2_CFLAGS)

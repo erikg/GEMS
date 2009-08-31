@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: shell.c,v 1.11 2009/08/31 13:45:33 erik Exp $
+ * $Id: shell.c,v 1.12 2009/08/31 14:17:18 erik Exp $
  */
 
 #include <stdio.h>
@@ -37,6 +37,8 @@
 #include "parms.h"
 
 #define FACEDEC 40
+
+#define SONAME "dylib"
 
 prefs *p;
 parms *parm;
@@ -87,33 +89,33 @@ main (int argc, char **argv)
 
     commonname =
 	(char *)malloc (strlen (p->libdir) +
-	strlen ("/gems/libgemscommon.so."));
+	strlen ("/gems/libgemscommon.so.") + strlen(SONAME));
 
     dbifullname =
 	(char *)malloc (strlen (p->libdir) + strlen (p->dbiname) +
-	strlen ("/gems/libgems_db..so.."));
+	strlen ("/gems/libgems_db...") + strlen(SONAME));
     facefullname =
 	(char *)malloc (strlen (p->libdir) + strlen (p->facename) +
-	strlen ("/gems/libgems_face..so.."));
+	strlen ("/gems/libgems_face...") + strlen(SONAME));
 
     receptorname =
 	(char *)malloc (strlen (p->libdir) +
-	strlen ("/gems/libgemsreceptor.so."));
+	strlen ("/gems/libgemsreceptor.") + strlen(SONAME));
 
     if (p->libdir[0] != '\n' && p->libdir[0] != 0 && p->libdir[0] != '\r')
     {
-	sprintf (dbifullname, "%s/gems/libgems_db.%s.so", p->libdir,
+	sprintf (dbifullname, "%s/gems/libgems_db.%s."SONAME, p->libdir,
 	    p->dbiname);
-	sprintf (facefullname, "%s/gems/libgems_face.%s.so", p->libdir,
+	sprintf (facefullname, "%s/gems/libgems_face.%s."SONAME, p->libdir,
 	    p->facename);
-	sprintf (commonname, "%s/gems/libgemscommon.so", p->libdir);
-	sprintf (receptorname, "%s/gems/libgemsreceptor.so", p->libdir);
+	sprintf (commonname, "%s/gems/libgemscommon."SONAME, p->libdir);
+	sprintf (receptorname, "%s/gems/libgemsreceptor."SONAME, p->libdir);
     } else
     {
-	sprintf (dbifullname, "gems/libgems_db.%s.so", p->dbiname);
-	sprintf (facefullname, "gems/libgems_face.%s.so", p->facename);
-	sprintf (commonname, "gems/libgemscommon.so");
-	sprintf (receptorname, "gems/libgemsreceptor.so");
+	sprintf (dbifullname, "gems/libgems_db.%s."SONAME, p->dbiname);
+	sprintf (facefullname, "gems/libgems_face.%s."SONAME, p->facename);
+	sprintf (commonname, "gems/libgemscommon."SONAME);
+	sprintf (receptorname, "gems/libgemsreceptor."SONAME);
     }
 
     if (p == NULL)

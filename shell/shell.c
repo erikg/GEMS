@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: shell.c,v 1.12 2009/08/31 14:17:18 erik Exp $
+ * $Id: shell.c,v 1.13 2009/08/31 15:33:50 erik Exp $
  */
 
 #include <stdio.h>
@@ -38,7 +38,11 @@
 
 #define FACEDEC 40
 
-#define SONAME "dylib"
+#ifdef __APPLE__
+# define SONAME "dylib"
+#else
+# define SONAME "so"
+#endif
 
 prefs *p;
 parms *parm;

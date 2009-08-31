@@ -1,4 +1,6 @@
-# $Id: Makefile.am,v 1.12 2006/03/31 19:09:10 erik Exp $
+# $Id: Makefile.am,v 1.13 2009/08/31 17:55:03 erik Exp $
+
+ACLOCAL_AMFLAGS = -I m4
 
 #if INTL
 #intl = intl

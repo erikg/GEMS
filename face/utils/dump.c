@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: dump.c,v 1.5 2009/08/31 13:45:31 erik Exp $
+ * $Id: dump.c,v 1.6 2009/08/31 15:37:21 erik Exp $
  */
 
 #include <stdio.h>
@@ -58,7 +58,6 @@ face_run (int argc, char **argv)
     mboxs **mb;
     int i = 0, j = 0;
 
-    printf("%d %s\n", argc, *argv);
     mb =  db_read_mboxlist();
 
     for( j = 0; mb[j]; ++j)

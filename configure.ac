@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.19 2009/08/31 14:07:13 erik Exp $
+dnl $Id: configure.ac,v 1.20 2009/09/07 16:56:35 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -181,7 +181,7 @@ AC_CONFIG_FILES([
 	Makefile common/Makefile receptor/Makefile transmitter/Makefile shell/Makefile include/Makefile
 	gems.spec doc/Makefile doc/doxygen.conf
 	po/Makefile.in
-	db/Makefile db/MySQL/Makefile db/PostGreSQL/Makefile
+	db/Makefile db/sqlite/Makefile db/MySQL/Makefile db/PostGreSQL/Makefile
 	face/Makefile face/utils/Makefile
 	face/GTK/Makefile face/GTK/e/Makefile
 	face/GNOME/Makefile face/GNOME/e/Makefile face/GNOME/o/Makefile face/GNOME/xf/Makefile

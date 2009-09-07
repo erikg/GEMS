@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.49 2009/08/31 14:07:13 erik Exp $
+ * $Id: db.mysql.c,v 1.50 2009/09/07 15:27:31 erik Exp $
  */
 
 #include <stdio.h>
@@ -96,7 +96,7 @@ db_init_firstrun ()
     mysql_query (con,
 	"CREATE TABLE rules ( sort int(10) unsigned NOT NULL default '0', name text, regex text, mbox text, peice enum('Message','Body','Header','Subject','From','Recipients','Sender') default NULL) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE synopsis ( id int(10) unsigned NOT NULL default '0', mbox int(11) NOT NULL default '0', status set('read','marked') NOT NULL default '', senddate datetime NOT NULL default '0000-00-00 00:00:00', sender text NOT NULL, subject text NOT NULL, charid text NOT NULL, PRIMARY KEY  (id)) TYPE=InnoDB");
+	"CREATE TABLE synopsis ( id int(10) unsigned NOT NULL default '0', mbox int(11) NOT NULL default '0', status set('read','marked') NOT NULL default '', senddate datetime NOT NULL default '0000-00-00 00:00:00', sender text NOT NULL, subject text NOT NULL, charid text NOT NULL UNIQUE, PRIMARY KEY  (id)) TYPE=InnoDB");
     return GEMS_TRUE;
 }
 
@@ -158,9 +158,14 @@ db_insert_msg (char *mboxname, message * m)
 	return GEMS_FALSE;
     }
 
+    if (mysql_query (con, "start transaction") != 0) {
+	oops ("Failed to start transaction", mysql_error(con));
+	exit(-1);
+    }
     /*
      * check if it's a redundant entry
      */
+#if 0
     sprintf (q, "select * from synopsis where charid='%s'", spawn_escape_string(m->id, 0));
     if (mysql_query (con, q) != 0)
     {
@@ -175,7 +180,7 @@ db_insert_msg (char *mboxname, message * m)
 	return GEMS_TRUE;
     }
     mysql_free_result (result);
-
+#endif
     /*
      * this can be table-ized or fixed in the db...
      */
@@ -197,6 +202,7 @@ db_insert_msg (char *mboxname, message * m)
     if (mysql_query (con, q) != 0)
     {
 	oops ("failed to insert header", NULL);
+	mysql_query (con, "rollback");
 	exit (0);
     }
     mysql_query (con, "select last_insert_id()");
@@ -215,7 +221,7 @@ db_insert_msg (char *mboxname, message * m)
 
 	oops ("failed to insert body", NULL);
 
-	dump = fopen ("/tmp/dump", "a");
+	dump = fopen ("/tmp/gems.dump", "a");
 	fprintf (dump, "%s\n%s\n", m->header, m->body);
 	fclose (dump);
     }
@@ -235,8 +241,14 @@ db_insert_msg (char *mboxname, message * m)
 
     if (mysql_query (con, q) != 0)
     {
+	/*
 	oops ("failed to insert synopsis", mysql_error (con));
+	*/
+	mysql_query (con, "rollback");
+	return GEMS_TRUE;
+	/*
 	exit (0);
+	*/
     }
     if (m->recipt == NULL)
 	oops ("NULL recipt", NULL);
@@ -280,6 +292,10 @@ db_insert_msg (char *mboxname, message * m)
 	}
     }
 #endif
+    if (mysql_query (con, "commit") != 0) {
+	oops ("Failed to commit transaction", mysql_error(con));
+	exit(-1);
+    }
     isnormal = GEMS_FALSE;
     return GEMS_TRUE;
 }

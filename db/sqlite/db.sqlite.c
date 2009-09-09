@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.sqlite.c,v 1.1 2009/09/07 16:56:35 erik Exp $
+ * $Id: db.sqlite.c,v 1.2 2009/09/09 19:30:58 erik Exp $
  */
 
 #include <stdio.h>
@@ -36,86 +36,122 @@
 #include "rules.h"
 #include "face.h"		/* for oops() */
 
-int
+int /* TODO */
 db_init (char *host, char *db, char *user, char *pass) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
 int
 db_init_firstrun () {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
 int
 db_insert_msg (char *mboxname, message * m) {
-}
-
-int
-db_addmbox (char *mbox) {
-}
-
-int
-db_addmbox_view (char *mbox, char *query) {
-}
-
-int
-db_dropmbox (char *mbox) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
 int
 db_flush (char *table) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
-int
+int /* TODO */
+db_addmbox (char *mbox) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
+}
+
+int /* TODO */
+db_addmbox_view (char *mbox, char *query) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
+}
+
+int /* TODO */
+db_dropmbox (char *mbox) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
+}
+
+int /* TODO */
 db_close () {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
-synopsis **
-db_read_synopsis_raw (char *query) {
-}
-
-synopsis **
+synopsis ** /* TODO */
 db_read_synopsis (int mbox, int status) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
-mboxs **
+mboxs **    /* TODO */
 db_read_mboxlist (void) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
-char *
+char *	/* TODO */
 db_read_body (int id) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
 message *
 db_read_message (int id) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
 int
 db_normalize () {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
 int
 db_is_child_of (int msg) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
-rule *
+rule * /* TODO */
 db_fetch_rules (int *numrows) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
-int
+int /* TODO */
 db_set_rules (rule ** rulelist) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
-int
+int /* TODO */
 db_pref_set (char *pref, char *val) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
-char *
+char *	/* TODO */
 db_pref_get (char *pref) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
 void
 db_syncharhash (void) {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }
 
 void
 db_purge_empty () {
+	oops(__FILE__,__FUNCTION__);
+	exit(-1);
 }

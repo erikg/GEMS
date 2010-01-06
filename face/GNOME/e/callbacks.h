@@ -1,7 +1,7 @@
 /*****************************************************************************
  *    GEMS Email Client                                                      *
  *                                                                           *
- *     Copyright (C) 2000-2009 Erik Greenwald <erik@smluc.org>               *
+ *     Copyright (C) 2000-2010 Erik Greenwald <erik@smluc.org>               *
  *                                                                           *
  *     This program is free software; you can redistribute it and/or modify  *
  *     it under the terms of the GNU General Public License as published by  *
@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.h,v 1.6 2009/08/31 13:45:29 erik Exp $
+ * $Id: callbacks.h,v 1.7 2010/01/06 00:47:29 erik Exp $
  */
 
 #include <gnome.h>

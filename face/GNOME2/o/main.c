@@ -4,7 +4,7 @@
  */
 
 /*
- * $Id: main.c,v 1.7 2005/01/20 05:00:37 erik Exp $
+ * $Id: main.c,v 1.8 2010/04/23 20:48:51 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -25,19 +25,32 @@ face_uses_X ()
 int
 face_run (int argc, char *argv[])
 {
+    GtkWidget *top, *mboxlist;
+    GtkCellRenderer *renderer;
+
 #ifdef ENABLE_NLS
-  bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-  textdomain (GETTEXT_PACKAGE);
+    bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+    bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+    textdomain (GETTEXT_PACKAGE);
 #endif
 
-  gnome_program_init (PACKAGE, VERSION, LIBGNOMEUI_MODULE,
-                      argc, argv,
-                      GNOME_PARAM_APP_DATADIR, PACKAGE_DATA_DIR,
-                      NULL);
+    gnome_program_init (PACKAGE, VERSION, LIBGNOMEUI_MODULE,
+	    argc, argv,
+	    GNOME_PARAM_APP_DATADIR, PACKAGE_DATA_DIR,
+	    NULL);
 
-  gtk_widget_show(create_gems());
-  gtk_main ();
-  return 0;
+    top = create_gems();
+    mboxlist = lookup_widget(top, "mboxlist");
+
+    renderer = gtk_cell_renderer_text_new ();
+    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (mboxlist), -1, "Name", renderer, "text", 0, NULL);
+    renderer = gtk_cell_renderer_text_new ();
+    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (mboxlist), -1, "Unread", renderer, "text", 1, NULL);
+
+    gtk_widget_show(top);
+
+    set_mboxlist(top);
+    gtk_main ();
+    return 0;
 }
 

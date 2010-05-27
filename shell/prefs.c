@@ -21,11 +21,12 @@
  *****************************************************************************/
 
 /*
- * $Id: prefs.c,v 1.10 2010/01/06 00:47:32 erik Exp $
+ * $Id: prefs.c,v 1.11 2010/05/27 23:32:47 erik Exp $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -184,7 +185,7 @@ load_prefs (parms * m)
 
     while (!feof (fp))
     {
-	int x;
+	size_t x;
 
 	in[0] = 0;
 	fgets (in, MAXSTRING, fp);

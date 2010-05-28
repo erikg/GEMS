@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: dump.c,v 1.7 2010/01/06 00:47:31 erik Exp $
+ * $Id: dump.c,v 1.8 2010/05/28 00:18:13 erik Exp $
  */
 
 #include <stdio.h>
@@ -57,6 +57,10 @@ face_run (int argc, char **argv)
     message *mess;
     mboxs **mb;
     int i = 0, j = 0;
+    FILE *ofd = stdout;
+
+    if(argc >= 2)
+	ofd = fopen(argv[1], "w");
 
     mb =  db_read_mboxlist();
 
@@ -66,7 +70,7 @@ face_run (int argc, char **argv)
 	for(i=0; s[i] ; ++i)
 	{
 	    mess = db_read_message(s[i]->id);
-	    printf("%s\n\n%s\n\n", mess->header, mess->body);
+	    fprintf(ofd, "%s\n\n%s\n\n", mess->header, mess->body);
 	}
     }
 
@@ -75,7 +79,8 @@ face_run (int argc, char **argv)
 	printf (_("Couldn't close the spool\n"));
 */
 
-    printf ("\n");
+    fprintf (ofd, "\n");
+    fclose(ofd);
 
     return GEMS_TRUE;
 }

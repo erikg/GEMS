@@ -4,7 +4,7 @@
  */
 
 /*
- * $Id: main.c,v 1.8 2010/04/23 20:48:51 erik Exp $
+ * $Id: main.c,v 1.9 2010/05/28 00:20:05 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -12,9 +12,6 @@
 #endif
 
 #include <gnome.h>
-
-#include "interface.h"
-#include "support.h"
 
 int
 face_uses_X ()

@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.51 2010/01/06 00:47:29 erik Exp $
+ * $Id: db.mysql.c,v 1.52 2010/08/06 17:26:28 erik Exp $
  */
 
 #include <stdio.h>
@@ -224,6 +224,8 @@ db_insert_msg (char *mboxname, message * m)
 	dump = fopen ("/tmp/gems.dump", "a");
 	fprintf (dump, "%s\n%s\n", m->header, m->body);
 	fclose (dump);
+	mysql_query(con, "rollback");
+	return GEMS_FALSE;
     }
     if (m->sender == NULL)
 	oops ("NULL sender", NULL);
@@ -294,7 +296,7 @@ db_insert_msg (char *mboxname, message * m)
 #endif
     if (mysql_query (con, "commit") != 0) {
 	oops ("Failed to commit transaction", mysql_error(con));
-	exit(-1);
+	return GEMS_FALSE;
     }
     isnormal = GEMS_FALSE;
     return GEMS_TRUE;

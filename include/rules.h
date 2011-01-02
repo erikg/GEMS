@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: rules.h,v 1.9 2010/01/06 00:47:31 erik Exp $
+ * $Id: rules.h,v 1.10 2011/01/02 17:40:37 erik Exp $
  */
 
 #ifndef __RULES_H
@@ -38,7 +38,7 @@ typedef struct _rule {
     char *name;
     char *regex;
     char *mbox;
-    char *peice;
+    char *piece;
     int order;
 } rule;
 

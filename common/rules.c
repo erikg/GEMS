@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: rules.c,v 1.24 2010/01/06 00:47:29 erik Exp $
+ * $Id: rules.c,v 1.25 2011/01/02 17:40:37 erik Exp $
  */
 
 #include <stdio.h>
@@ -63,7 +63,7 @@ rule_concern (rule * r, message * m)
 {
     char *c;
 
-    c = r->peice;
+    c = r->piece;
 
     if (!strcmp (c, "Body"))
 	return m->body;
@@ -79,7 +79,7 @@ rule_concern (rule * r, message * m)
 	return m->header;
     if (!strcmp (c, "From"))
 	return m->sender;
-    printf ("No peice!!@~!@~!@!@\n");
+    printf ("No piece!!@~!@~!@!@\n");
     return NULL;
 }
 

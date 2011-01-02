@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.mysql.c,v 1.52 2010/08/06 17:26:28 erik Exp $
+ * $Id: db.mysql.c,v 1.53 2011/01/02 17:40:37 erik Exp $
  */
 
 #include <stdio.h>
@@ -94,7 +94,7 @@ db_init_firstrun ()
     mysql_query (con,
 	"CREATE TABLE replyto ( id int(10) unsigned NOT NULL default '0', replyto text NOT NULL) TYPE=InnoDB");
     mysql_query (con,
-	"CREATE TABLE rules ( sort int(10) unsigned NOT NULL default '0', name text, regex text, mbox text, peice enum('Message','Body','Header','Subject','From','Recipients','Sender') default NULL) TYPE=InnoDB");
+	"CREATE TABLE rules ( sort int(10) unsigned NOT NULL default '0', name text, regex text, mbox text, piece enum('Message','Body','Header','Subject','From','Recipients','Sender') default NULL) TYPE=InnoDB");
     mysql_query (con,
 	"CREATE TABLE synopsis ( id int(10) unsigned NOT NULL default '0', mbox int(11) NOT NULL default '0', status set('read','marked') NOT NULL default '', senddate datetime NOT NULL default '0000-00-00 00:00:00', sender text NOT NULL, subject text NOT NULL, charid text NOT NULL UNIQUE, PRIMARY KEY  (id)) TYPE=InnoDB");
     return GEMS_TRUE;
@@ -812,7 +812,7 @@ db_fetch_rules (int *numrows)
     rule *r;
 
     if (mysql_query (con,
-	    "select name,sort,regex,mbox,peice from rules order by sort") != 0)
+	    "select name,sort,regex,mbox,piece from rules order by sort") != 0)
     {
 	oops ("failed to read rule set\n", "");
 	exit (0);
@@ -835,8 +835,8 @@ db_fetch_rules (int *numrows)
 	sprintf (r[x].regex, row[2]);
 	r[x].mbox = (char *)malloc (strlen (row[3]) + 1);
 	sprintf (r[x].mbox, row[3]);
-	r[x].peice = (char *)malloc (strlen (row[4]) + 1);
-	sprintf (r[x].peice, row[4]);
+	r[x].piece = (char *)malloc (strlen (row[4]) + 1);
+	sprintf (r[x].piece, row[4]);
     }
     *numrows = nr;
     return r;
@@ -854,7 +854,7 @@ db_set_rules (rule ** rulelist)
     {
 	sprintf (q, "insert into rules values (%d,'%s','%s','%s','%s')", x,
 	    rulelist[x]->name, rulelist[x]->regex, rulelist[x]->mbox,
-	    rulelist[x]->peice);
+	    rulelist[x]->piece);
 	if (mysql_query (con, q) != 0)
 	    rval = GEMS_FALSE;
 	x++;

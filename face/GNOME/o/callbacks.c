@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.30 2010/01/06 00:47:29 erik Exp $
+ * $Id: callbacks.c,v 1.31 2011/01/02 17:40:37 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -539,15 +539,15 @@ gnome_o_put_the_damn_rules_in_the_box (GtkWidget * w)
 int rule_row_current;
 
 void
-face_gnome_o_rule_setpeice (GtkWidget * w, gpointer * trash)
+face_gnome_o_rule_setpiece (GtkWidget * w, gpointer * trash)
 {
     rule *r;
 
     r = (rule *)
 	gtk_clist_get_row_data (GTK_CLIST (lookup_widget (w, "clist1")),
 	rule_row_current);
-    free (r->peice);
-    r->peice = g_strdup ((gchar *) trash);
+    free (r->piece);
+    r->piece = g_strdup ((gchar *) trash);
 }
 
 void
@@ -572,7 +572,7 @@ on_toolbar_rule_clicked (GtkButton * UNUSED(button), gpointer UNUSED(user_data))
 	(gtk_option_menu_get_menu
 	    (GTK_OPTION_MENU
 		(lookup_widget (r, "optionmenu2")))),
-	"focus_out_event", face_gnome_o_rule_setpeice, NULL);
+	"focus_out_event", face_gnome_o_rule_setpiece, NULL);
 }
 
 void
@@ -601,53 +601,53 @@ on_rule_list_select_row (GtkCList * clist,
     gtk_option_menu_remove_menu (om);
     menu = GTK_MENU (gtk_menu_new ());
 
-    if (!strcmp (r->peice, "Message"))
+    if (!strcmp (r->piece, "Message"))
 	x = 0;
     mi = gtk_menu_item_new_with_label ("Message");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Message");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpiece), (gpointer) "Message");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
-    if (!strcmp (r->peice, "Header"))
+    if (!strcmp (r->piece, "Header"))
 	x = 1;
     mi = gtk_menu_item_new_with_label ("Header");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Header");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpiece), (gpointer) "Header");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
-    if (!strcmp (r->peice, "Subject"))
+    if (!strcmp (r->piece, "Subject"))
 	x = 2;
     mi = gtk_menu_item_new_with_label ("Subject");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Subject");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpiece), (gpointer) "Subject");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
-    if (!strcmp (r->peice, "From"))
+    if (!strcmp (r->piece, "From"))
 	x = 3;
     mi = gtk_menu_item_new_with_label ("From");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "From");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpiece), (gpointer) "From");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
-    if (!strcmp (r->peice, "Recipients"))
+    if (!strcmp (r->piece, "Recipients"))
 	x = 4;
     mi = gtk_menu_item_new_with_label ("Recipients");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Recipients");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpiece), (gpointer) "Recipients");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
-    if (!strcmp (r->peice, "Sender"))
+    if (!strcmp (r->piece, "Sender"))
 	x = 5;
     mi = gtk_menu_item_new_with_label ("Sender");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Sender");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpiece), (gpointer) "Sender");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
-    if (!strcmp (r->peice, "Body"))
+    if (!strcmp (r->piece, "Body"))
 	x = 6;
     mi = gtk_menu_item_new_with_label ("Body");
     gtk_signal_connect (GTK_OBJECT (mi), "activate",
-	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpeice), (gpointer) "Body");
+	GTK_SIGNAL_FUNC (face_gnome_o_rule_setpiece), (gpointer) "Body");
     gtk_menu_append (menu, mi);
     gtk_widget_show (mi);
 
@@ -756,7 +756,7 @@ on_rule_new_rule_clicked (GtkButton * button, gpointer UNUSED(user_data))
     r->regex = g_strdup ("");
     r->mbox = g_strdup ("Inbox");
     r->name = g_strdup ("New rule");
-    r->peice = g_strdup ("Header");
+    r->piece = g_strdup ("Header");
     clist = GTK_CLIST (lookup_widget (GTK_WIDGET (button), "clist1"));
     x = clist->rows;
     gtk_clist_insert (clist, x, &(r->name));

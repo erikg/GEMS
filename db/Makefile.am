@@ -1,4 +1,4 @@
-# $Id: Makefile.am,v 1.5 2009/09/07 16:56:35 erik Exp $
+# $Id: Makefile.am,v 1.6 2011/01/02 16:37:58 erik Exp $
 
 if MYSQL
 MYSQLDIR = MySQL
@@ -8,5 +8,9 @@ if POSTGRESQL
 PGSQLDIR = PostGreSQL
 endif
 
-SUBDIRS= sqlite $(MYSQLDIR) $(PGSQLDIR)
+if SQLITE3
+SQLITE3DIR = sqlite
+endif
+
+SUBDIRS= $(SQLITE3DIR) $(MYSQLDIR) $(PGSQLDIR)
 

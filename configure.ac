@@ -1,4 +1,4 @@
-dnl $Id: configure.ac,v 1.20 2009/09/07 16:56:35 erik Exp $
+dnl $Id: configure.ac,v 1.21 2011/01/02 16:37:58 erik Exp $
 
 AC_INIT
 AC_CONFIG_SRCDIR([README])
@@ -14,6 +14,7 @@ AM_CONFIG_HEADER([include/config.h])
 ALL_LINGUAS=""
 
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_LIBTOOL
 AC_PROG_INSTALL
 AC_ISC_POSIX
@@ -62,21 +63,27 @@ else
 	AC_MSG_RESULT([No])
 fi
 
-AC_MSG_CHECKING([PostgreSQL])
 have_postgresql=no
 POSTGRESQL_LIBADD=""
 AC_CHECK_LIB(pq, PQconnectdb, have_postgresql="yes")
 AM_CONDITIONAL(POSTGRESQL, [test "x$have_postgresql" = xyes])
 if test "x$have_postgresql" = xyes
 then
-	AC_MSG_RESULT([Yes])
 	POSTGRESQL_LIBADD="${LDFLAGS} -lpq"
 	DB="${DB} PostGreSQL"
-else
-	AC_MSG_RESULT([No])
 fi
 AC_SUBST(POSTGRESQL_LIBADD)
 
+have_sqlite=no
+AX_LIB_SQLITE3()
+if test "x$SQLITE3_VERSION" != x
+then
+	have_sqlite=yes
+	DB="${DB} SQLite3"
+fi
+AM_CONDITIONAL(SQLITE3, [ test "x$have_sqlite" = "xyes" ])
+AC_SUBST(SQLITE3_CFLAGS)
+AC_SUBST(SQLITE3_LDFLAGS)
 
 dnl **************************************************************************
 
@@ -109,7 +116,6 @@ if test "x$have_gtk" = "xyes"
 then 
 	FACE="${FACE} GTK1"
 fi
-AC_MSG_RESULT($have_gtk)
 
 dnl **************************************************************************
 

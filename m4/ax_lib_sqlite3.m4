@@ -137,7 +137,7 @@ AC_DEFUN([AX_LIB_SQLITE3],
             AC_SUBST(SQLITE3_CFLAGS)
             AC_SUBST(SQLITE3_LDFLAGS)
             AC_SUBST(SQLITE3_VERSION)
-            AC_DEFINE(HAVE_SQLITE3)
         fi
+	AC_DEFINE([HAVE_SQLITE3], ["$success" = "yes"], [SQLite3])
     fi
 ])

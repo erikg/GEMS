@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.sqlite.c,v 1.3 2010/01/06 00:47:29 erik Exp $
+ * $Id: db.sqlite.c,v 1.4 2011/01/02 17:39:14 erik Exp $
  */
 
 #include <stdio.h>
@@ -30,22 +30,42 @@
 #include <ctype.h>
 #include <time.h>
 
+#include <sqlite3.h>
+
 #include "defs.h"
 #include "message.h"
 #include "db.h"
 #include "rules.h"
 #include "face.h"		/* for oops() */
 
+#define MAXRULES 1024
+
+static sqlite3 *sqldb;
+
 int /* TODO */
 db_init (char *host, char *db, char *user, char *pass) {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    if(sqlite3_open(host, &sqldb) == SQLITE_OK) {
+	return GEMS_TRUE;
+    }
+    oops("sqlite3 init", sqlite3_errmsg(sqldb));
+    return GEMS_FALSE;
 }
 
 int
 db_init_firstrun () {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    char *errmsg = NULL;
+#define TRYEXEC(STMT) if(sqlite3_exec(sqldb, STMT, NULL, NULL, &errmsg) != SQLITE_OK) { fprintf(stderr, "SQL Error doing \"%s\": %s\n", STMT, sqlite3_errmsg(sqldb)); }
+TRYEXEC("CREATE TABLE attachments ( id int(10) NOT NULL default '0', attachment longtext NOT NULL)");
+TRYEXEC("CREATE TABLE body ( id int(10) NOT NULL default '0', body longtext NOT NULL, compressed varchar NOT NULL default 'false', PRIMARY KEY  (id))");
+TRYEXEC("CREATE TABLE header ( id serial, header text NOT NULL, compressed varchar NOT NULL default 'false', PRIMARY KEY  (id))");
+TRYEXEC("CREATE TABLE mmbox ( mbox serial, mboxname text NOT NULL, query text, PRIMARY KEY  (mbox))");
+TRYEXEC("CREATE TABLE preferences ( name text NOT NULL, value text NOT NULL)");
+TRYEXEC("CREATE TABLE recipt ( id int(10) NOT NULL default '0', recipt text NOT NULL, type tinytext NOT NULL)");
+TRYEXEC("CREATE TABLE refs ( id int(10) NOT NULL default '0', refs text, childof int(10) default NULL)");
+TRYEXEC("CREATE TABLE replyto ( id int(10) NOT NULL default '0', replyto text NOT NULL)");
+TRYEXEC("CREATE TABLE rules ( sort int(10) NOT NULL default '0', name text, regex text, mbox text, piece varchar default NULL)");
+TRYEXEC("CREATE TABLE synopsis ( id int(10) NOT NULL default '0', mbox int(11) NOT NULL default '0', status set('read','marked') NOT NULL default '', senddate datetime NOT NULL default '0000-00-00 00:00:00', sender text NOT NULL, subject text NOT NULL, charid text NOT NULL UNIQUE, PRIMARY KEY  (id))");
+#undef TRYEXEC
 }
 
 int
@@ -80,8 +100,11 @@ db_dropmbox (char *mbox) {
 
 int /* TODO */
 db_close () {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    if(sqlite3_close(sqldb) != SQLITE_OK) {
+	oops("Closing db: ", sqlite3_errmsg(sqldb));
+	return GEMS_FALSE;
+    }
+    return GEMS_TRUE;
 }
 
 synopsis ** /* TODO */
@@ -120,10 +143,42 @@ db_is_child_of (int msg) {
 	exit(-1);
 }
 
+static int fetchruleidnumber = 0;
+static int fetch_rule_cb(void *usr, int argc, char **argv, char **colname) {
+    rule *r = ((rule *)usr) + fetchruleidnumber;
+
+    printf("Boom!\n");
+    if(argc != 5) {
+	oops("Bad rule while fetching", sqlite3_errmsg(sqldb));
+	return -1;
+    }
+    r->name = strdup(argv[0]);
+    r->order = atoi(argv[1]);
+    r->regex = strdup(argv[2]);
+    r->mbox = strdup(argv[3]);
+    r->piece = strdup(argv[4]);
+    return 0;
+}
+
 rule * /* TODO */
 db_fetch_rules (int *numrows) {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    char buf[BUFSIZ];
+    void *l;
+    int i;
+    rule *r;
+
+    r = malloc(sizeof(rule) * MAXRULES);
+    /* LOCK */
+    fetchruleidnumber = 0;
+printf("Ayup\n");
+    sqlite3_exec(sqldb, "select name,sort,regex,mbox,piece from rules order by sort", fetch_rule_cb, r, &buf);
+    printf("Here we go\n");
+
+    r = (rule *)realloc(r, sizeof(rule) * fetchruleidnumber+1);
+    fetchruleidnumber = 0;
+    /* UNLOCK */
+
+    return r;
 }
 
 int /* TODO */

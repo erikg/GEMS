@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: initdb.c,v 1.5 2010/01/06 00:47:31 erik Exp $
+ * $Id: initdb.c,v 1.6 2011/01/02 17:40:23 erik Exp $
  */
 
 #include <stdio.h>
@@ -49,6 +49,5 @@ oops (char *a, char *b)
 int
 face_run (int argc, char **argv)
 {
-    printf("%d %s\n", argc, *argv);
-    return GEMS_TRUE;
+    return db_init_firstrun();
 }

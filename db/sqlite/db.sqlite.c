@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.sqlite.c,v 1.6 2011/01/03 00:08:22 erik Exp $
+ * $Id: db.sqlite.c,v 1.7 2011/01/03 14:39:02 erik Exp $
  */
 
 #include <stdio.h>
@@ -216,6 +216,7 @@ db_read_mboxlist (void) {
     mboxs **mboxlist;
 
     mboxlist = (mboxs **)malloc(sizeof(mboxs *) * MAXRULES);
+    memset(mboxlist, 0, sizeof(mboxs *) * MAXRULES);
     snprintf(buf, BUFSIZ, "select mboxname,mbox from mmbox order by mbox;");
     if(sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail) != SQLITE_OK) {
 	oops("Problem generating statement to fetch rules", sqlite3_errmsg(sqldb));
@@ -228,6 +229,7 @@ db_read_mboxlist (void) {
 	mboxlist[i]->id = sqlite3_column_int(stmt, 1);
 	mboxlist[i]->hasunread = 0;
 	i++;
+	mboxlist[i] = NULL;
     }
     sqlite3_finalize(stmt);
     mboxlist[i] = NULL;

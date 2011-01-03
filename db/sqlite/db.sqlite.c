@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.sqlite.c,v 1.5 2011/01/02 20:27:29 erik Exp $
+ * $Id: db.sqlite.c,v 1.6 2011/01/03 00:08:22 erik Exp $
  */
 
 #include <stdio.h>
@@ -38,6 +38,7 @@
 #include "face.h"		/* for oops() */
 
 #define MAXRULES 1024
+#define MBUFSIZ 1024*1024
 
 static sqlite3 *sqldb;
 
@@ -69,8 +70,60 @@ TRYEXEC("CREATE TABLE synopsis (id INTEGER PRIMARY KEY, mbox INTEGER NOT NULL de
 
 int
 db_insert_msg (char *mboxname, message * m) {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    char buf[MBUFSIZ], *err;
+    sqlite3_stmt *stmt;
+    const char **results = NULL, **colnames = NULL, **pzTail = NULL;
+    int mbox;
+    sqlite3_int64 rowid;
+
+    if(m->body == NULL) {
+	printf("Got a null body!\n");
+	printf("%s\n", m->header);
+	return GEMS_FALSE;
+    }
+
+    snprintf(buf, MBUFSIZ, "select mbox from mmbox where mboxname=\"%s\";", mboxname);
+    if(sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail) != SQLITE_OK) {
+	oops("Unable to get mbox", sqlite3_errmsg(sqldb));
+	return GEMS_FALSE;
+    }
+    sqlite3_step(stmt);
+    mbox = sqlite3_column_int(stmt,0);
+    sqlite3_finalize(stmt);
+
+    if(sqlite3_exec(sqldb, "BEGIN TRANSACTION;", NULL, NULL, &err) != SQLITE_OK) {
+	oops("transaction wasn't able to start", sqlite3_errmsg(sqldb));
+	return GEMS_FALSE;
+    }
+
+    sqlite3_snprintf(MBUFSIZ, buf, "insert into synopsis values(NULL,%d,'unread',%Q,%Q,%Q,%Q);", mbox, m->sender, m->subject, m->senddate, m->id);
+    if(sqlite3_exec(sqldb, buf, NULL, NULL, &err) != SQLITE_OK) {
+	oops("failed insert synopsis", sqlite3_errmsg(sqldb));
+	sqlite3_exec(sqldb, "ROLLBACK;", NULL, NULL, &err);
+	return GEMS_FALSE;
+    }
+
+    rowid = sqlite3_last_insert_rowid(sqldb);
+
+    sqlite3_snprintf(MBUFSIZ, buf, "insert into body values(%d,%Q,'false');", (int)rowid, m->body);
+    if(sqlite3_exec(sqldb, buf, NULL, NULL, &err) != SQLITE_OK) {
+	oops("failed insert body", sqlite3_errmsg(sqldb));
+	sqlite3_exec(sqldb, "ROLLBACK;", NULL, NULL, &err);
+	return GEMS_FALSE;
+    }
+
+    sqlite3_snprintf(MBUFSIZ, buf, "insert into header values(%d,%Q,'false');", (int)rowid, m->header);
+    if(sqlite3_exec(sqldb, buf, NULL, NULL, &err) != SQLITE_OK) {
+	oops("failed insert header", sqlite3_errmsg(sqldb));
+	sqlite3_exec(sqldb, "ROLLBACK;", NULL, NULL, &err);
+	return GEMS_FALSE;
+    }
+
+    if(sqlite3_exec(sqldb, "COMMIT;", NULL, NULL, &err) != SQLITE_OK) {
+	oops("transaction wasn't able to commit", sqlite3_errmsg(sqldb));
+	return GEMS_FALSE;
+    }
+    return GEMS_TRUE;
 }
 
 int
@@ -79,10 +132,15 @@ db_flush (char *table) {
 	exit(-1);
 }
 
-int /* TODO */
+int
 db_addmbox (char *mbox) {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    char buf[BUFSIZ], *err;
+    snprintf(buf, BUFSIZ, "insert into mmbox values(NULL, \"%s\", NULL);", mbox);
+    if(sqlite3_exec(sqldb, buf, NULL, NULL, &err) != SQLITE_OK) {
+	oops("Failed to add mbox", sqlite3_errmsg(sqldb));
+	return GEMS_FALSE;
+    }
+    return GEMS_TRUE;
 }
 
 int /* TODO */
@@ -91,13 +149,18 @@ db_addmbox_view (char *mbox, char *query) {
 	exit(-1);
 }
 
-int /* TODO */
+int
 db_dropmbox (char *mbox) {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    char buf[BUFSIZ], *err;
+    snprintf(buf, BUFSIZ, "delete from mmbox where mbox=\"%s\";", mbox);
+    if(sqlite3_exec(sqldb, buf, NULL, NULL, &err) != SQLITE_OK) {
+	oops("Failed to add mbox", sqlite3_errmsg(sqldb));
+	return GEMS_FALSE;
+    }
+    return GEMS_TRUE;
 }
 
-int /* TODO */
+int
 db_close () {
     if(sqlite3_close(sqldb) != SQLITE_OK) {
 	oops("Closing db: ", sqlite3_errmsg(sqldb));
@@ -106,22 +169,100 @@ db_close () {
     return GEMS_TRUE;
 }
 
-synopsis ** /* TODO */
+synopsis **
 db_read_synopsis (int mbox, int status) {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    char buf[BUFSIZ], *stat;
+    const char **pzTail = NULL;
+    sqlite3_stmt *stmt;
+    int i = 0, rval;
+    synopsis **syn;
+    
+    switch(status) {
+	case DB_ALL: snprintf(buf, BUFSIZ, "select id,sender,senddate,subject from synopsis where mbox=%d;", mbox); break;
+	case DB_MARKED: snprintf(buf, BUFSIZ, "select id,sender,senddate,subject from synopsis where mbox=%d and status='marked';", mbox); break;
+	case DB_READ: snprintf(buf, BUFSIZ, "select id,sender,senddate,subject from synopsis where mbox=%d and status='read';", mbox); break;
+	case DB_UNREAD: snprintf(buf, BUFSIZ, "select id,sender,senddate,subject from synopsis where mbox=%d and status!='read';", mbox); break;
+	default: return NULL;
+    };
+    
+    syn = (synopsis **)malloc(sizeof(synopsis *)*1024);
+    printf("query: %s\n", buf);
+    if(sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail) != SQLITE_OK) {
+	oops("Problem generating statement to fetch rules", sqlite3_errmsg(sqldb));
+	return NULL;
+    }
+    while((rval=sqlite3_step(stmt)) != SQLITE_DONE) {
+	syn[i] = (synopsis *)malloc(sizeof(synopsis));
+	syn[i]->id = sqlite3_column_int(stmt, 0);
+	syn[i]->sender = strdup(sqlite3_column_text(stmt, 1));
+	syn[i]->date = strdup(sqlite3_column_text(stmt, 2));
+	syn[i]->subject = strdup(sqlite3_column_text(stmt, 3));
+	i++;
+    }
+    sqlite3_finalize(stmt);
+    printf("Read synopsis (%d,%d), %d\n", mbox, status, i);
+    syn[i] = NULL;
+    syn = (synopsis **)realloc(syn, sizeof(synopsis *) * i+1);
+    return syn;
 }
 
-mboxs **    /* TODO */
+mboxs **
 db_read_mboxlist (void) {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    sqlite3_stmt *stmt;
+    const char **results = NULL, **colnames = NULL, **pzTail = NULL;
+    rule *rules, *r;
+    int rval, i;
+    char buf[BUFSIZ];
+    mboxs **mboxlist;
+
+    mboxlist = (mboxs **)malloc(sizeof(mboxs *) * MAXRULES);
+    snprintf(buf, BUFSIZ, "select mboxname,mbox from mmbox order by mbox;");
+    if(sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail) != SQLITE_OK) {
+	oops("Problem generating statement to fetch rules", sqlite3_errmsg(sqldb));
+	return NULL;
+    }
+    i=0;
+    while((rval=sqlite3_step(stmt)) != SQLITE_DONE) {
+	mboxlist[i] = (mboxs *)malloc(sizeof(mboxs));
+	mboxlist[i]->name = strdup(sqlite3_column_text(stmt, 0));
+	mboxlist[i]->id = sqlite3_column_int(stmt, 1);
+	mboxlist[i]->hasunread = 0;
+	i++;
+    }
+    sqlite3_finalize(stmt);
+    mboxlist[i] = NULL;
+    mboxlist = (mboxs **)realloc(mboxlist, sizeof(mboxs *) * i+1);
+    while(i--) {
+	snprintf(buf, BUFSIZ, "select count(*) from synopsis where status='unread' and mbox=%d", mboxlist[i]->id);
+	if(sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail) != SQLITE_OK) {
+	    oops("Problem getting unread count", sqlite3_errmsg(sqldb));
+	    return NULL;
+	}
+	sqlite3_step(stmt);
+	mboxlist[i]->hasunread = sqlite3_column_int(stmt,0);
+	sqlite3_finalize(stmt);
+    }
+
+    return mboxlist;
 }
 
 char *	/* TODO */
 db_read_body (int id) {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    char buf[BUFSIZ], *body, **err;
+    const char **pzTail;
+    sqlite3_stmt *stmt;
+
+    snprintf(buf, BUFSIZ, "select body from body where id=%d;", id);
+    if(sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail) != SQLITE_OK) {
+	oops("Problem getting unread count", sqlite3_errmsg(sqldb));
+	return NULL;
+    }
+    sqlite3_step(stmt);
+    body = strdup(sqlite3_column_text(stmt,0));
+    sqlite3_finalize(stmt);
+    snprintf(buf, BUFSIZ, "update synopsis set status='read' where id=%d", id);
+    sqlite3_exec(sqldb, buf, NULL, NULL, err);
+    return body;
 }
 
 message *
@@ -144,12 +285,12 @@ db_is_child_of (int msg) {
 
 rule *
 db_fetch_rules (int *numrows) {
+    sqlite3_stmt *stmt;
     const char **results = NULL, **colnames = NULL, **pzTail = NULL;
     char *buf = NULL;
     rule *rules, *r;
     int rval;
     const char stmt_str[] = "select name,sort,regex,mbox,piece from rules order by sort";
-    sqlite3_stmt *stmt;
 
     *numrows = 0;
     r = rules = malloc(sizeof(rule) * MAXRULES);
@@ -184,10 +325,21 @@ db_pref_set (char *pref, char *val) {
 	exit(-1);
 }
 
-char *	/* TODO */
+char *
 db_pref_get (char *pref) {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    char *ret, stmt_str[BUFSIZ];
+    const char **pzTail = NULL;
+    sqlite3_stmt *stmt;
+
+    snprintf(stmt_str, BUFSIZ, "select value from preferences where name='%s';", pref);
+    if(sqlite3_prepare_v2(sqldb, stmt_str, strlen(stmt_str)+1, &stmt, pzTail) != SQLITE_OK) {
+	oops("Problem generating statement to fetch rules", sqlite3_errmsg(sqldb));
+	return NULL;
+    }
+    sqlite3_step(stmt);
+    ret = strdup(sqlite3_column_text(stmt,0));
+    sqlite3_finalize(stmt);
+    return ret;
 }
 
 void

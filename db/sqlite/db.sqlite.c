@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.sqlite.c,v 1.7 2011/01/03 14:39:02 erik Exp $
+ * $Id: db.sqlite.c,v 1.8 2011/01/05 01:30:38 erik Exp $
  */
 
 #include <stdio.h>
@@ -96,7 +96,7 @@ db_insert_msg (char *mboxname, message * m) {
 	return GEMS_FALSE;
     }
 
-    sqlite3_snprintf(MBUFSIZ, buf, "insert into synopsis values(NULL,%d,'unread',%Q,%Q,%Q,%Q);", mbox, m->sender, m->subject, m->senddate, m->id);
+    sqlite3_snprintf(MBUFSIZ, buf, "insert into synopsis (id,mbox,status,sender,subject,senddate,charid) values(NULL,%d,'unread',%Q,%Q,%Q,%Q);", mbox, m->sender, m->subject, m->senddate, m->id);
     if(sqlite3_exec(sqldb, buf, NULL, NULL, &err) != SQLITE_OK) {
 	oops("failed insert synopsis", sqlite3_errmsg(sqldb));
 	sqlite3_exec(sqldb, "ROLLBACK;", NULL, NULL, &err);
@@ -173,10 +173,31 @@ synopsis **
 db_read_synopsis (int mbox, int status) {
     char buf[BUFSIZ], *stat;
     const char **pzTail = NULL;
-    sqlite3_stmt *stmt;
+    sqlite3_stmt *stmt = NULL;
     int i = 0, rval;
     synopsis **syn;
     
+    switch(status) {
+	case DB_ALL: snprintf(buf, BUFSIZ, "select count(*) from synopsis where mbox=%d;", mbox); break;
+	case DB_MARKED: snprintf(buf, BUFSIZ, "select count(*) from synopsis where mbox=%d and status='marked';", mbox); break;
+	case DB_READ: snprintf(buf, BUFSIZ, "select count(*) from synopsis where mbox=%d and status='read';", mbox); break;
+	case DB_UNREAD: snprintf(buf, BUFSIZ, "select count(*) from synopsis where mbox=%d and status!='read';", mbox); break;
+	default: return NULL;
+    }
+    if((rval = sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail)) != SQLITE_OK) {
+	oops("Problem generating statement to fetch synopsis count", sqlite3_errmsg(sqldb));
+	return NULL;
+    }
+    sqlite3_step(stmt);
+    i = sqlite3_column_int(stmt,0);
+    sqlite3_finalize(stmt);
+    if(i==0) 
+	return NULL;
+    syn = (synopsis **)malloc(sizeof(synopsis *)*(i+1));
+    stmt = NULL;
+    pzTail = NULL;
+    
+
     switch(status) {
 	case DB_ALL: snprintf(buf, BUFSIZ, "select id,sender,senddate,subject from synopsis where mbox=%d;", mbox); break;
 	case DB_MARKED: snprintf(buf, BUFSIZ, "select id,sender,senddate,subject from synopsis where mbox=%d and status='marked';", mbox); break;
@@ -185,12 +206,11 @@ db_read_synopsis (int mbox, int status) {
 	default: return NULL;
     };
     
-    syn = (synopsis **)malloc(sizeof(synopsis *)*1024);
-    printf("query: %s\n", buf);
-    if(sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail) != SQLITE_OK) {
-	oops("Problem generating statement to fetch rules", sqlite3_errmsg(sqldb));
+    if((rval = sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail)) != SQLITE_OK) {
+	oops("Problem generating statement to fetch synopsis", sqlite3_errmsg(sqldb));
 	return NULL;
     }
+    i=0;
     while((rval=sqlite3_step(stmt)) != SQLITE_DONE) {
 	syn[i] = (synopsis *)malloc(sizeof(synopsis));
 	syn[i]->id = sqlite3_column_int(stmt, 0);
@@ -200,12 +220,11 @@ db_read_synopsis (int mbox, int status) {
 	i++;
     }
     sqlite3_finalize(stmt);
-    printf("Read synopsis (%d,%d), %d\n", mbox, status, i);
     syn[i] = NULL;
-    syn = (synopsis **)realloc(syn, sizeof(synopsis *) * i+1);
     return syn;
 }
 
+static int mboxlistcount = -1;
 mboxs **
 db_read_mboxlist (void) {
     sqlite3_stmt *stmt;
@@ -215,11 +234,25 @@ db_read_mboxlist (void) {
     char buf[BUFSIZ];
     mboxs **mboxlist;
 
-    mboxlist = (mboxs **)malloc(sizeof(mboxs *) * MAXRULES);
+    if(mboxlistcount == -1) {
+	snprintf(buf, BUFSIZ, "select count(*) from mmbox;");
+	if(sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail) != SQLITE_OK) {
+	    oops("Problem generating statement to fetch mboxlist", sqlite3_errmsg(sqldb));
+	    return NULL;
+	}
+	i=0;
+	sqlite3_step(stmt);
+	mboxlistcount = sqlite3_column_int(stmt, 0);
+	sqlite3_finalize(stmt);
+	stmt = NULL;
+	pzTail = NULL;
+    }
+
+    mboxlist = (mboxs **)malloc(sizeof(mboxs *) * (mboxlistcount+1));
     memset(mboxlist, 0, sizeof(mboxs *) * MAXRULES);
     snprintf(buf, BUFSIZ, "select mboxname,mbox from mmbox order by mbox;");
     if(sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail) != SQLITE_OK) {
-	oops("Problem generating statement to fetch rules", sqlite3_errmsg(sqldb));
+	oops("Problem generating statement to fetch mboxlist", sqlite3_errmsg(sqldb));
 	return NULL;
     }
     i=0;
@@ -233,7 +266,6 @@ db_read_mboxlist (void) {
     }
     sqlite3_finalize(stmt);
     mboxlist[i] = NULL;
-    mboxlist = (mboxs **)realloc(mboxlist, sizeof(mboxs *) * i+1);
     while(i--) {
 	snprintf(buf, BUFSIZ, "select count(*) from synopsis where status='unread' and mbox=%d", mboxlist[i]->id);
 	if(sqlite3_prepare_v2(sqldb, buf, strlen(buf)+1, &stmt, pzTail) != SQLITE_OK) {
@@ -250,8 +282,8 @@ db_read_mboxlist (void) {
 
 char *	/* TODO */
 db_read_body (int id) {
-    char buf[BUFSIZ], *body, **err;
-    const char **pzTail;
+    char buf[BUFSIZ], *body = NULL, *err = NULL;
+    const char **pzTail = NULL;
     sqlite3_stmt *stmt;
 
     snprintf(buf, BUFSIZ, "select body from body where id=%d;", id);
@@ -263,7 +295,7 @@ db_read_body (int id) {
     body = strdup(sqlite3_column_text(stmt,0));
     sqlite3_finalize(stmt);
     snprintf(buf, BUFSIZ, "update synopsis set status='read' where id=%d", id);
-    sqlite3_exec(sqldb, buf, NULL, NULL, err);
+    sqlite3_exec(sqldb, buf, NULL, NULL, &err);
     return body;
 }
 

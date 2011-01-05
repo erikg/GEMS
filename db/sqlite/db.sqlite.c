@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.sqlite.c,v 1.8 2011/01/05 01:30:38 erik Exp $
+ * $Id: db.sqlite.c,v 1.9 2011/01/05 20:40:25 erik Exp $
  */
 
 #include <stdio.h>
@@ -355,8 +355,29 @@ db_set_rules (rule ** rulelist) {
 
 int /* TODO */
 db_pref_set (char *pref, char *val) {
-	oops(__FILE__,__FUNCTION__);
-	exit(-1);
+    char *ret, stmt_str[BUFSIZ];
+    const char **pzTail = NULL;
+    sqlite3_stmt *stmt;
+
+    snprintf(stmt_str, BUFSIZ, "delete from preferences where name='%s';", pref);
+    if(sqlite3_prepare_v2(sqldb, stmt_str, strlen(stmt_str)+1, &stmt, pzTail) != SQLITE_OK) {
+	oops("Problem generating statement to purge pref", sqlite3_errmsg(sqldb));
+	return GEMS_FALSE;
+    }
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+
+    pzTail = NULL;
+    stmt = NULL;
+
+    snprintf(stmt_str, BUFSIZ, "insert from preferences (name,value) values ('%s','%s');", pref, val);
+    if(sqlite3_prepare_v2(sqldb, stmt_str, strlen(stmt_str)+1, &stmt, pzTail) != SQLITE_OK) {
+	oops("Problem generating statement to set pref", sqlite3_errmsg(sqldb));
+	return GEMS_FALSE;
+    }
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+    return GEMS_TRUE;
 }
 
 char *

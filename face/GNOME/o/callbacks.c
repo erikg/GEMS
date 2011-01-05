@@ -21,7 +21,7 @@
  *****************************************************************************/
 
 /*
- * $Id: callbacks.c,v 1.31 2011/01/02 17:40:37 erik Exp $
+ * $Id: callbacks.c,v 1.32 2011/01/05 01:31:02 erik Exp $
  */
 
 #ifdef HAVE_CONFIG_H
@@ -180,33 +180,35 @@ on_mailboxlist_tree_select_row (GtkCTree * ctree,
 
     gtk_clist_freeze (clist);
 
-    mboxcount = 0;
-    while (syn[mboxcount] != NULL)
-	mboxcount++;
+    if(syn) {
+	mboxcount = 0;
+	while (syn[mboxcount] != NULL)
+	    mboxcount++;
 
-    while (syn[x] != NULL)
-    {
-	GtkCTreeNode *n;
+	while (syn[x] != NULL)
+	{
+	    GtkCTreeNode *n;
 
-	text[0] = syn[x]->sender;
-	text[1] = syn[x]->date;
-	text[2] = syn[x]->subject;
+	    text[0] = syn[x]->sender;
+	    text[1] = syn[x]->date;
+	    text[2] = syn[x]->subject;
 
-	n = gtk_ctree_insert_node (GTK_CTREE (mailbox), NULL, NULL, text, 5,
-	    NULL, NULL, NULL, NULL, TRUE, TRUE);
-	gtk_ctree_node_set_row_data (GTK_CTREE (mailbox), n, syn[x]);
+	    n = gtk_ctree_insert_node (GTK_CTREE (mailbox), NULL, NULL, text, 5,
+		    NULL, NULL, NULL, NULL, TRUE, TRUE);
+	    gtk_ctree_node_set_row_data (GTK_CTREE (mailbox), n, syn[x]);
 
-	gnome_appbar_set_progress (GNOME_APPBAR (appbar),
-	    (float)x / (float)mboxcount);
-	/*
-	 * pump the status bar 
-	 */
-	if (gtk_events_pending ())
-	    gtk_main_iteration ();
+	    gnome_appbar_set_progress (GNOME_APPBAR (appbar),
+		    (float)x / (float)mboxcount);
+	    /*
+	     * pump the status bar 
+	     */
+	    if (gtk_events_pending ())
+		gtk_main_iteration ();
 
-	x++;
+	    x++;
+	}
+	free (syn);
     }
-    free (syn);
     gtk_clist_set_sort_column (clist, 1);
     gtk_clist_set_sort_type (clist, GTK_SORT_ASCENDING);
     gtk_clist_sort (clist);

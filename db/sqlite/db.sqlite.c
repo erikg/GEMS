@@ -20,7 +20,7 @@
  *****************************************************************************/
 
 /*
- * $Id: db.sqlite.c,v 1.9 2011/01/05 20:40:25 erik Exp $
+ * $Id: db.sqlite.c,v 1.10 2011/01/07 01:10:25 erik Exp $
  */
 
 #include <stdio.h>
@@ -370,7 +370,7 @@ db_pref_set (char *pref, char *val) {
     pzTail = NULL;
     stmt = NULL;
 
-    snprintf(stmt_str, BUFSIZ, "insert from preferences (name,value) values ('%s','%s');", pref, val);
+    snprintf(stmt_str, BUFSIZ, "insert into preferences (name,value) values ('%s','%s');", pref, val);
     if(sqlite3_prepare_v2(sqldb, stmt_str, strlen(stmt_str)+1, &stmt, pzTail) != SQLITE_OK) {
 	oops("Problem generating statement to set pref", sqlite3_errmsg(sqldb));
 	return GEMS_FALSE;
@@ -382,17 +382,18 @@ db_pref_set (char *pref, char *val) {
 
 char *
 db_pref_get (char *pref) {
-    char *ret, stmt_str[BUFSIZ];
+    char *ret = NULL, stmt_str[BUFSIZ];
     const char **pzTail = NULL;
     sqlite3_stmt *stmt;
+    int rval;
 
     snprintf(stmt_str, BUFSIZ, "select value from preferences where name='%s';", pref);
     if(sqlite3_prepare_v2(sqldb, stmt_str, strlen(stmt_str)+1, &stmt, pzTail) != SQLITE_OK) {
 	oops("Problem generating statement to fetch rules", sqlite3_errmsg(sqldb));
 	return NULL;
     }
-    sqlite3_step(stmt);
-    ret = strdup(sqlite3_column_text(stmt,0));
+    if(sqlite3_step(stmt) == SQLITE_ROW)
+	ret = strdup(sqlite3_column_text(stmt,0));
     sqlite3_finalize(stmt);
     return ret;
 }
